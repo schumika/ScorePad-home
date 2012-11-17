@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="11E53" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="AJGame" representedClassName="AJGame" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rowId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="players" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AJPlayer" inverseName="game" inverseEntity="AJPlayer" syncable="YES"/>
+    </entity>
+    <entity name="AJPlayer" representedClassName="AJPlayer" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AJGame" inverseName="players" inverseEntity="AJGame" syncable="YES"/>
+        <relationship name="scores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AJScore" inverseName="player" inverseEntity="AJScore" syncable="YES"/>
+    </entity>
+    <entity name="AJScore" representedClassName="AJScore" syncable="YES">
+        <attribute name="round" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AJPlayer" inverseName="scores" inverseEntity="AJPlayer" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AJGame" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="AJPlayer" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="AJScore" positionX="0" positionY="0" width="128" height="90"/>
+    </elements>
+</model>

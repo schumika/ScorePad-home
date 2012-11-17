@@ -1,0 +1,577 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		521BC2D316255A5A000C2EE0 /* AJScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 521BC2D216255A5A000C2EE0 /* AJScrollView.m */; };
+		521E13391600B76300022B1E /* AJScore+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 521E13381600B76300022B1E /* AJScore+Additions.m */; };
+		521E133C1600C2AF00022B1E /* AJScoresTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 521E133B1600C2AF00022B1E /* AJScoresTableViewController.m */; };
+		52473BB6162BEDA1008455F3 /* round.png in Resources */ = {isa = PBXBuildFile; fileRef = 52473BB4162BEDA1008455F3 /* round.png */; };
+		52473BB7162BEDA1008455F3 /* round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52473BB5162BEDA1008455F3 /* round@2x.png */; };
+		5253287615FF115D00A28B84 /* ScorePad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5253287415FF115D00A28B84 /* ScorePad.xcdatamodeld */; };
+		5253287D15FF128600A28B84 /* AJScoresManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5253287C15FF128600A28B84 /* AJScoresManager.m */; };
+		5253287F15FF15D000A28B84 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5253287E15FF15D000A28B84 /* CoreData.framework */; };
+		525328A415FF213400A28B84 /* AJGame+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 525328A315FF213400A28B84 /* AJGame+Additions.m */; };
+		525328C315FF589700A28B84 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 525328C015FF589700A28B84 /* NSString+Additions.m */; };
+		525328C415FF589700A28B84 /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 525328C215FF589700A28B84 /* UIColor+Additions.m */; };
+		525CC22D15FE2A1F00E8F903 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525CC22C15FE2A1F00E8F903 /* UIKit.framework */; };
+		525CC22F15FE2A1F00E8F903 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525CC22E15FE2A1F00E8F903 /* Foundation.framework */; };
+		525CC23115FE2A1F00E8F903 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525CC23015FE2A1F00E8F903 /* CoreGraphics.framework */; };
+		525CC23715FE2A1F00E8F903 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 525CC23515FE2A1F00E8F903 /* InfoPlist.strings */; };
+		525CC23915FE2A1F00E8F903 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 525CC23815FE2A1F00E8F903 /* main.m */; };
+		525CC23D15FE2A1F00E8F903 /* AJAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 525CC23C15FE2A1F00E8F903 /* AJAppDelegate.m */; };
+		525CC24515FE2C8200E8F903 /* AJGamesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525CC24415FE2C8200E8F903 /* AJGamesTableViewController.m */; };
+		52634D7A16281C8600B46693 /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 52634D7816281C8600B46693 /* mask.png */; };
+		52634D7B16281C8600B46693 /* mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52634D7916281C8600B46693 /* mask@2x.png */; };
+		52634D7E1628292200B46693 /* AJNewItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52634D7D1628292200B46693 /* AJNewItemTableViewCell.m */; };
+		52634D81162831D300B46693 /* AJPlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52634D80162831D300B46693 /* AJPlayerTableViewCell.m */; };
+		5275B83715FF7D66006E19FE /* AJPlayer+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83615FF7D66006E19FE /* AJPlayer+Additions.m */; };
+		5275B83A15FF83FD006E19FE /* AJPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83915FF83FD006E19FE /* AJPlayersTableViewController.m */; };
+		5284384C162441CE00B471B5 /* AJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5284384B162441CE00B471B5 /* AJViewController.m */; };
+		529E0E601601D0E300711F5B /* UIImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E0E5F1601D0E300711F5B /* UIImage+Additions.m */; };
+		529E0E691601F6DB00711F5B /* AJSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E0E681601F6DB00711F5B /* AJSettingsViewController.m */; };
+		52A10859161F0C86006FCACD /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10851161F0C86006FCACD /* back-button.png */; };
+		52A1085A161F0C86006FCACD /* back-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10852161F0C86006FCACD /* back-button@2x.png */; };
+		52A1085B161F0C86006FCACD /* bar-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10853161F0C86006FCACD /* bar-button.png */; };
+		52A1085C161F0C86006FCACD /* bar-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10854161F0C86006FCACD /* bar-button@2x.png */; };
+		52A1085D161F0C86006FCACD /* cards_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10855161F0C86006FCACD /* cards_icon.png */; };
+		52A1085E161F0C86006FCACD /* main_tile_default_pic.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10856161F0C86006FCACD /* main_tile_default_pic.png */; };
+		52A1085F161F0C86006FCACD /* nav-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10857161F0C86006FCACD /* nav-bar.png */; };
+		52A10860161F0C86006FCACD /* nav-bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10858161F0C86006FCACD /* nav-bar@2x.png */; };
+		52A10863161F25B4006FCACD /* UIBarButtonItem+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A10862161F232F006FCACD /* UIBarButtonItem+Additions.m */; };
+		52A10866161F2976006FCACD /* table_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10864161F2975006FCACD /* table_background.png */; };
+		52A10867161F2976006FCACD /* table_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10865161F2975006FCACD /* table_background@2x.png */; };
+		52A59A251614249500AB4341 /* AJSettingsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A59A241614249500AB4341 /* AJSettingsInfo.m */; };
+		52A663E11624489000554254 /* AJPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A663E01624489000554254 /* AJPlayer.m */; };
+		52A663E51624489000554254 /* AJScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A663E41624489000554254 /* AJScore.m */; };
+		52A663E81624489000554254 /* AJGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A663E71624489000554254 /* AJGame.m */; };
+		52A663EB1624533500554254 /* landscape_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A663E91624533500554254 /* landscape_background.png */; };
+		52A663EC1624533500554254 /* landscape_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A663EA1624533500554254 /* landscape_background@2x.png */; };
+		52A663F01624561300554254 /* AJVerticalPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A663EF1624561300554254 /* AJVerticalPlayerView.m */; };
+		52AF6B691622FAE40034F06A /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF6B671622FAE40034F06A /* background.png */; };
+		52AF6B6A1622FAE40034F06A /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF6B681622FAE40034F06A /* background@2x.png */; };
+		52E5228B163AA49900E99702 /* AJPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E5228A163AA49900E99702 /* AJPlayerView.xib */; };
+		52E6695F1626F0880035CAAC /* AJGameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E6695E1626F0880035CAAC /* AJGameTableViewCell.m */; };
+		52E669661626FC7F0035CAAC /* separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E669641626FC7F0035CAAC /* separator.png */; };
+		52E669671626FC7F0035CAAC /* separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E669651626FC7F0035CAAC /* separator@2x.png */; };
+		52EF57EB161DB01B004B069B /* AJTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52EF57EA161DB01B004B069B /* AJTableViewController.m */; };
+		A97B35A71657902D0003A8BC /* AJPanDeleteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A97B35A61657902D0003A8BC /* AJPanDeleteTableViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		521BC2D116255A5A000C2EE0 /* AJScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScrollView.h; sourceTree = "<group>"; };
+		521BC2D216255A5A000C2EE0 /* AJScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScrollView.m; sourceTree = "<group>"; };
+		521E13371600B76300022B1E /* AJScore+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AJScore+Additions.h"; sourceTree = "<group>"; };
+		521E13381600B76300022B1E /* AJScore+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AJScore+Additions.m"; sourceTree = "<group>"; };
+		521E133A1600C2AF00022B1E /* AJScoresTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScoresTableViewController.h; sourceTree = "<group>"; };
+		521E133B1600C2AF00022B1E /* AJScoresTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScoresTableViewController.m; sourceTree = "<group>"; };
+		52473BB4162BEDA1008455F3 /* round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = round.png; sourceTree = "<group>"; };
+		52473BB5162BEDA1008455F3 /* round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "round@2x.png"; sourceTree = "<group>"; };
+		5253287515FF115D00A28B84 /* ScorePad.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ScorePad.xcdatamodel; sourceTree = "<group>"; };
+		5253287B15FF128600A28B84 /* AJScoresManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScoresManager.h; sourceTree = "<group>"; };
+		5253287C15FF128600A28B84 /* AJScoresManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScoresManager.m; sourceTree = "<group>"; };
+		5253287E15FF15D000A28B84 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		525328A215FF213400A28B84 /* AJGame+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AJGame+Additions.h"; sourceTree = "<group>"; };
+		525328A315FF213400A28B84 /* AJGame+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AJGame+Additions.m"; sourceTree = "<group>"; };
+		525328BF15FF589700A28B84 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
+		525328C015FF589700A28B84 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
+		525328C115FF589700A28B84 /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
+		525328C215FF589700A28B84 /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
+		525CC22815FE2A1F00E8F903 /* ScorePad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScorePad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		525CC22C15FE2A1F00E8F903 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		525CC22E15FE2A1F00E8F903 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		525CC23015FE2A1F00E8F903 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		525CC23415FE2A1F00E8F903 /* ScorePad-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ScorePad-Info.plist"; sourceTree = "<group>"; };
+		525CC23615FE2A1F00E8F903 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		525CC23815FE2A1F00E8F903 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		525CC23A15FE2A1F00E8F903 /* ScorePad-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ScorePad-Prefix.pch"; sourceTree = "<group>"; };
+		525CC23B15FE2A1F00E8F903 /* AJAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AJAppDelegate.h; sourceTree = "<group>"; };
+		525CC23C15FE2A1F00E8F903 /* AJAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AJAppDelegate.m; sourceTree = "<group>"; };
+		525CC24315FE2C8200E8F903 /* AJGamesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJGamesTableViewController.h; sourceTree = "<group>"; };
+		525CC24415FE2C8200E8F903 /* AJGamesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJGamesTableViewController.m; sourceTree = "<group>"; };
+		52634D7816281C8600B46693 /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = "<group>"; };
+		52634D7916281C8600B46693 /* mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mask@2x.png"; sourceTree = "<group>"; };
+		52634D7C1628292200B46693 /* AJNewItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJNewItemTableViewCell.h; sourceTree = "<group>"; };
+		52634D7D1628292200B46693 /* AJNewItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJNewItemTableViewCell.m; sourceTree = "<group>"; };
+		52634D7F162831D200B46693 /* AJPlayerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPlayerTableViewCell.h; sourceTree = "<group>"; };
+		52634D80162831D300B46693 /* AJPlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPlayerTableViewCell.m; sourceTree = "<group>"; };
+		5275B83515FF7D66006E19FE /* AJPlayer+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AJPlayer+Additions.h"; sourceTree = "<group>"; };
+		5275B83615FF7D66006E19FE /* AJPlayer+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AJPlayer+Additions.m"; sourceTree = "<group>"; };
+		5275B83815FF83FD006E19FE /* AJPlayersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPlayersTableViewController.h; sourceTree = "<group>"; };
+		5275B83915FF83FD006E19FE /* AJPlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPlayersTableViewController.m; sourceTree = "<group>"; };
+		5284384A162441CE00B471B5 /* AJViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJViewController.h; sourceTree = "<group>"; };
+		5284384B162441CE00B471B5 /* AJViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJViewController.m; sourceTree = "<group>"; };
+		529E0E5E1601D0E300711F5B /* UIImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additions.h"; sourceTree = "<group>"; };
+		529E0E5F1601D0E300711F5B /* UIImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additions.m"; sourceTree = "<group>"; };
+		529E0E671601F6DB00711F5B /* AJSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJSettingsViewController.h; sourceTree = "<group>"; };
+		529E0E681601F6DB00711F5B /* AJSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJSettingsViewController.m; sourceTree = "<group>"; };
+		52A10851161F0C86006FCACD /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button.png"; sourceTree = "<group>"; };
+		52A10852161F0C86006FCACD /* back-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button@2x.png"; sourceTree = "<group>"; };
+		52A10853161F0C86006FCACD /* bar-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-button.png"; sourceTree = "<group>"; };
+		52A10854161F0C86006FCACD /* bar-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-button@2x.png"; sourceTree = "<group>"; };
+		52A10855161F0C86006FCACD /* cards_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cards_icon.png; sourceTree = "<group>"; };
+		52A10856161F0C86006FCACD /* main_tile_default_pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_tile_default_pic.png; sourceTree = "<group>"; };
+		52A10857161F0C86006FCACD /* nav-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bar.png"; sourceTree = "<group>"; };
+		52A10858161F0C86006FCACD /* nav-bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bar@2x.png"; sourceTree = "<group>"; };
+		52A10861161F232F006FCACD /* UIBarButtonItem+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Additions.h"; sourceTree = "<group>"; };
+		52A10862161F232F006FCACD /* UIBarButtonItem+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Additions.m"; sourceTree = "<group>"; };
+		52A10864161F2975006FCACD /* table_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = table_background.png; sourceTree = "<group>"; };
+		52A10865161F2975006FCACD /* table_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table_background@2x.png"; sourceTree = "<group>"; };
+		52A59A231614249500AB4341 /* AJSettingsInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJSettingsInfo.h; sourceTree = "<group>"; };
+		52A59A241614249500AB4341 /* AJSettingsInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJSettingsInfo.m; sourceTree = "<group>"; };
+		52A663DF1624489000554254 /* AJPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPlayer.h; sourceTree = "<group>"; };
+		52A663E01624489000554254 /* AJPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPlayer.m; sourceTree = "<group>"; };
+		52A663E31624489000554254 /* AJScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScore.h; sourceTree = "<group>"; };
+		52A663E41624489000554254 /* AJScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScore.m; sourceTree = "<group>"; };
+		52A663E61624489000554254 /* AJGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJGame.h; sourceTree = "<group>"; };
+		52A663E71624489000554254 /* AJGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJGame.m; sourceTree = "<group>"; };
+		52A663E91624533500554254 /* landscape_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landscape_background.png; sourceTree = "<group>"; };
+		52A663EA1624533500554254 /* landscape_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "landscape_background@2x.png"; sourceTree = "<group>"; };
+		52A663EE1624561300554254 /* AJVerticalPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJVerticalPlayerView.h; sourceTree = "<group>"; };
+		52A663EF1624561300554254 /* AJVerticalPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJVerticalPlayerView.m; sourceTree = "<group>"; };
+		52AF6B671622FAE40034F06A /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		52AF6B681622FAE40034F06A /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		52E5228A163AA49900E99702 /* AJPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AJPlayerView.xib; sourceTree = "<group>"; };
+		52E6695D1626F0880035CAAC /* AJGameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJGameTableViewCell.h; sourceTree = "<group>"; };
+		52E6695E1626F0880035CAAC /* AJGameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJGameTableViewCell.m; sourceTree = "<group>"; };
+		52E669641626FC7F0035CAAC /* separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = separator.png; sourceTree = "<group>"; };
+		52E669651626FC7F0035CAAC /* separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "separator@2x.png"; sourceTree = "<group>"; };
+		52EF57E9161DB01B004B069B /* AJTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJTableViewController.h; sourceTree = "<group>"; };
+		52EF57EA161DB01B004B069B /* AJTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJTableViewController.m; sourceTree = "<group>"; };
+		A97B35A51657902D0003A8BC /* AJPanDeleteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPanDeleteTableViewCell.h; sourceTree = "<group>"; };
+		A97B35A61657902D0003A8BC /* AJPanDeleteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPanDeleteTableViewCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		525CC22515FE2A1F00E8F903 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5253287F15FF15D000A28B84 /* CoreData.framework in Frameworks */,
+				525CC22D15FE2A1F00E8F903 /* UIKit.framework in Frameworks */,
+				525CC22F15FE2A1F00E8F903 /* Foundation.framework in Frameworks */,
+				525CC23115FE2A1F00E8F903 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5253285B15FF0F1600A28B84 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5253287415FF115D00A28B84 /* ScorePad.xcdatamodeld */,
+				52A663E61624489000554254 /* AJGame.h */,
+				52A663E71624489000554254 /* AJGame.m */,
+				52A663E31624489000554254 /* AJScore.h */,
+				52A663E41624489000554254 /* AJScore.m */,
+				52A663DF1624489000554254 /* AJPlayer.h */,
+				52A663E01624489000554254 /* AJPlayer.m */,
+				525328A215FF213400A28B84 /* AJGame+Additions.h */,
+				525328A315FF213400A28B84 /* AJGame+Additions.m */,
+				5275B83515FF7D66006E19FE /* AJPlayer+Additions.h */,
+				5275B83615FF7D66006E19FE /* AJPlayer+Additions.m */,
+				521E13371600B76300022B1E /* AJScore+Additions.h */,
+				521E13381600B76300022B1E /* AJScore+Additions.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		5253287A15FF126700A28B84 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				52A59A231614249500AB4341 /* AJSettingsInfo.h */,
+				52A59A241614249500AB4341 /* AJSettingsInfo.m */,
+				5253287B15FF128600A28B84 /* AJScoresManager.h */,
+				5253287C15FF128600A28B84 /* AJScoresManager.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		525328BD15FF587C00A28B84 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				525328BF15FF589700A28B84 /* NSString+Additions.h */,
+				525328C015FF589700A28B84 /* NSString+Additions.m */,
+				525328C115FF589700A28B84 /* UIColor+Additions.h */,
+				525328C215FF589700A28B84 /* UIColor+Additions.m */,
+				529E0E5E1601D0E300711F5B /* UIImage+Additions.h */,
+				529E0E5F1601D0E300711F5B /* UIImage+Additions.m */,
+				52A10861161F232F006FCACD /* UIBarButtonItem+Additions.h */,
+				52A10862161F232F006FCACD /* UIBarButtonItem+Additions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		525CC21D15FE2A1F00E8F903 = {
+			isa = PBXGroup;
+			children = (
+				525CC23215FE2A1F00E8F903 /* ScorePad */,
+				525CC22B15FE2A1F00E8F903 /* Frameworks */,
+				525CC22915FE2A1F00E8F903 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		525CC22915FE2A1F00E8F903 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				525CC22815FE2A1F00E8F903 /* ScorePad.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		525CC22B15FE2A1F00E8F903 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5253287E15FF15D000A28B84 /* CoreData.framework */,
+				525CC22C15FE2A1F00E8F903 /* UIKit.framework */,
+				525CC22E15FE2A1F00E8F903 /* Foundation.framework */,
+				525CC23015FE2A1F00E8F903 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		525CC23215FE2A1F00E8F903 /* ScorePad */ = {
+			isa = PBXGroup;
+			children = (
+				52A663ED162455FA00554254 /* Widgets */,
+				525328BD15FF587C00A28B84 /* Categories */,
+				5253285B15FF0F1600A28B84 /* Model */,
+				525CC24615FE2C8900E8F903 /* Controllers */,
+				5253287A15FF126700A28B84 /* Utils */,
+				525CC23B15FE2A1F00E8F903 /* AJAppDelegate.h */,
+				525CC23C15FE2A1F00E8F903 /* AJAppDelegate.m */,
+				525CC23315FE2A1F00E8F903 /* Supporting Files */,
+			);
+			path = ScorePad;
+			sourceTree = "<group>";
+		};
+		525CC23315FE2A1F00E8F903 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52A10850161F0C86006FCACD /* Images */,
+				525CC23415FE2A1F00E8F903 /* ScorePad-Info.plist */,
+				525CC23515FE2A1F00E8F903 /* InfoPlist.strings */,
+				525CC23815FE2A1F00E8F903 /* main.m */,
+				525CC23A15FE2A1F00E8F903 /* ScorePad-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		525CC24615FE2C8900E8F903 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5284384A162441CE00B471B5 /* AJViewController.h */,
+				5284384B162441CE00B471B5 /* AJViewController.m */,
+				52EF57E9161DB01B004B069B /* AJTableViewController.h */,
+				52EF57EA161DB01B004B069B /* AJTableViewController.m */,
+				525CC24315FE2C8200E8F903 /* AJGamesTableViewController.h */,
+				525CC24415FE2C8200E8F903 /* AJGamesTableViewController.m */,
+				5275B83815FF83FD006E19FE /* AJPlayersTableViewController.h */,
+				5275B83915FF83FD006E19FE /* AJPlayersTableViewController.m */,
+				521E133A1600C2AF00022B1E /* AJScoresTableViewController.h */,
+				521E133B1600C2AF00022B1E /* AJScoresTableViewController.m */,
+				529E0E671601F6DB00711F5B /* AJSettingsViewController.h */,
+				529E0E681601F6DB00711F5B /* AJSettingsViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		52A10850161F0C86006FCACD /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				52473BB4162BEDA1008455F3 /* round.png */,
+				52473BB5162BEDA1008455F3 /* round@2x.png */,
+				52634D7816281C8600B46693 /* mask.png */,
+				52634D7916281C8600B46693 /* mask@2x.png */,
+				52E669641626FC7F0035CAAC /* separator.png */,
+				52E669651626FC7F0035CAAC /* separator@2x.png */,
+				52A663E91624533500554254 /* landscape_background.png */,
+				52A663EA1624533500554254 /* landscape_background@2x.png */,
+				52AF6B671622FAE40034F06A /* background.png */,
+				52AF6B681622FAE40034F06A /* background@2x.png */,
+				52A10851161F0C86006FCACD /* back-button.png */,
+				52A10852161F0C86006FCACD /* back-button@2x.png */,
+				52A10853161F0C86006FCACD /* bar-button.png */,
+				52A10854161F0C86006FCACD /* bar-button@2x.png */,
+				52A10855161F0C86006FCACD /* cards_icon.png */,
+				52A10856161F0C86006FCACD /* main_tile_default_pic.png */,
+				52A10857161F0C86006FCACD /* nav-bar.png */,
+				52A10858161F0C86006FCACD /* nav-bar@2x.png */,
+				52A10864161F2975006FCACD /* table_background.png */,
+				52A10865161F2975006FCACD /* table_background@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		52A663ED162455FA00554254 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				52E6695B1626F0580035CAAC /* TableViewCells */,
+				52A663EE1624561300554254 /* AJVerticalPlayerView.h */,
+				52A663EF1624561300554254 /* AJVerticalPlayerView.m */,
+				521BC2D116255A5A000C2EE0 /* AJScrollView.h */,
+				521BC2D216255A5A000C2EE0 /* AJScrollView.m */,
+			);
+			name = Widgets;
+			sourceTree = "<group>";
+		};
+		52E6695B1626F0580035CAAC /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				52634D7C1628292200B46693 /* AJNewItemTableViewCell.h */,
+				52634D7D1628292200B46693 /* AJNewItemTableViewCell.m */,
+				52E6695D1626F0880035CAAC /* AJGameTableViewCell.h */,
+				52E6695E1626F0880035CAAC /* AJGameTableViewCell.m */,
+				52634D7F162831D200B46693 /* AJPlayerTableViewCell.h */,
+				52634D80162831D300B46693 /* AJPlayerTableViewCell.m */,
+				52E5228A163AA49900E99702 /* AJPlayerView.xib */,
+				A97B35A51657902D0003A8BC /* AJPanDeleteTableViewCell.h */,
+				A97B35A61657902D0003A8BC /* AJPanDeleteTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		525CC22715FE2A1F00E8F903 /* ScorePad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 525CC24015FE2A1F00E8F903 /* Build configuration list for PBXNativeTarget "ScorePad" */;
+			buildPhases = (
+				525CC22415FE2A1F00E8F903 /* Sources */,
+				525CC22515FE2A1F00E8F903 /* Frameworks */,
+				525CC22615FE2A1F00E8F903 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScorePad;
+			productName = ScorePad;
+			productReference = 525CC22815FE2A1F00E8F903 /* ScorePad.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		525CC21F15FE2A1F00E8F903 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = AJ;
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = "Anca Julean";
+			};
+			buildConfigurationList = 525CC22215FE2A1F00E8F903 /* Build configuration list for PBXProject "ScorePad" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 525CC21D15FE2A1F00E8F903;
+			productRefGroup = 525CC22915FE2A1F00E8F903 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				525CC22715FE2A1F00E8F903 /* ScorePad */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		525CC22615FE2A1F00E8F903 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				525CC23715FE2A1F00E8F903 /* InfoPlist.strings in Resources */,
+				52A10859161F0C86006FCACD /* back-button.png in Resources */,
+				52A1085A161F0C86006FCACD /* back-button@2x.png in Resources */,
+				52A1085B161F0C86006FCACD /* bar-button.png in Resources */,
+				52A1085C161F0C86006FCACD /* bar-button@2x.png in Resources */,
+				52A1085D161F0C86006FCACD /* cards_icon.png in Resources */,
+				52A1085E161F0C86006FCACD /* main_tile_default_pic.png in Resources */,
+				52A1085F161F0C86006FCACD /* nav-bar.png in Resources */,
+				52A10860161F0C86006FCACD /* nav-bar@2x.png in Resources */,
+				52A10866161F2976006FCACD /* table_background.png in Resources */,
+				52A10867161F2976006FCACD /* table_background@2x.png in Resources */,
+				52AF6B691622FAE40034F06A /* background.png in Resources */,
+				52AF6B6A1622FAE40034F06A /* background@2x.png in Resources */,
+				52A663EB1624533500554254 /* landscape_background.png in Resources */,
+				52A663EC1624533500554254 /* landscape_background@2x.png in Resources */,
+				52E669661626FC7F0035CAAC /* separator.png in Resources */,
+				52E669671626FC7F0035CAAC /* separator@2x.png in Resources */,
+				52634D7A16281C8600B46693 /* mask.png in Resources */,
+				52634D7B16281C8600B46693 /* mask@2x.png in Resources */,
+				52473BB6162BEDA1008455F3 /* round.png in Resources */,
+				52473BB7162BEDA1008455F3 /* round@2x.png in Resources */,
+				52E5228B163AA49900E99702 /* AJPlayerView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		525CC22415FE2A1F00E8F903 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				525CC23915FE2A1F00E8F903 /* main.m in Sources */,
+				525CC23D15FE2A1F00E8F903 /* AJAppDelegate.m in Sources */,
+				525CC24515FE2C8200E8F903 /* AJGamesTableViewController.m in Sources */,
+				5253287615FF115D00A28B84 /* ScorePad.xcdatamodeld in Sources */,
+				5253287D15FF128600A28B84 /* AJScoresManager.m in Sources */,
+				525328A415FF213400A28B84 /* AJGame+Additions.m in Sources */,
+				525328C315FF589700A28B84 /* NSString+Additions.m in Sources */,
+				525328C415FF589700A28B84 /* UIColor+Additions.m in Sources */,
+				5275B83715FF7D66006E19FE /* AJPlayer+Additions.m in Sources */,
+				5275B83A15FF83FD006E19FE /* AJPlayersTableViewController.m in Sources */,
+				521E13391600B76300022B1E /* AJScore+Additions.m in Sources */,
+				521E133C1600C2AF00022B1E /* AJScoresTableViewController.m in Sources */,
+				529E0E601601D0E300711F5B /* UIImage+Additions.m in Sources */,
+				529E0E691601F6DB00711F5B /* AJSettingsViewController.m in Sources */,
+				52A59A251614249500AB4341 /* AJSettingsInfo.m in Sources */,
+				52EF57EB161DB01B004B069B /* AJTableViewController.m in Sources */,
+				52A10863161F25B4006FCACD /* UIBarButtonItem+Additions.m in Sources */,
+				5284384C162441CE00B471B5 /* AJViewController.m in Sources */,
+				52A663E11624489000554254 /* AJPlayer.m in Sources */,
+				52A663E51624489000554254 /* AJScore.m in Sources */,
+				52A663E81624489000554254 /* AJGame.m in Sources */,
+				52A663F01624561300554254 /* AJVerticalPlayerView.m in Sources */,
+				521BC2D316255A5A000C2EE0 /* AJScrollView.m in Sources */,
+				52E6695F1626F0880035CAAC /* AJGameTableViewCell.m in Sources */,
+				52634D7E1628292200B46693 /* AJNewItemTableViewCell.m in Sources */,
+				52634D81162831D300B46693 /* AJPlayerTableViewCell.m in Sources */,
+				A97B35A71657902D0003A8BC /* AJPanDeleteTableViewCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		525CC23515FE2A1F00E8F903 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				525CC23615FE2A1F00E8F903 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		525CC23E15FE2A1F00E8F903 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		525CC23F15FE2A1F00E8F903 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		525CC24115FE2A1F00E8F903 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ScorePad/ScorePad-Prefix.pch";
+				INFOPLIST_FILE = "ScorePad/ScorePad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		525CC24215FE2A1F00E8F903 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ScorePad/ScorePad-Prefix.pch";
+				INFOPLIST_FILE = "ScorePad/ScorePad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		525CC22215FE2A1F00E8F903 /* Build configuration list for PBXProject "ScorePad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				525CC23E15FE2A1F00E8F903 /* Debug */,
+				525CC23F15FE2A1F00E8F903 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		525CC24015FE2A1F00E8F903 /* Build configuration list for PBXNativeTarget "ScorePad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				525CC24115FE2A1F00E8F903 /* Debug */,
+				525CC24215FE2A1F00E8F903 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5253287415FF115D00A28B84 /* ScorePad.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5253287515FF115D00A28B84 /* ScorePad.xcdatamodel */,
+			);
+			currentVersion = 5253287515FF115D00A28B84 /* ScorePad.xcdatamodel */;
+			path = ScorePad.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 525CC21F15FE2A1F00E8F903 /* Project object */;
+}
