@@ -19,7 +19,7 @@
 
 @implementation AJPanDeleteTableViewCell
 
-@synthesize delegate = _delegate;
+@synthesize panGesturedelegate = _panGesturedelegate;
 
 const float LABEL_LEFT_MARGIN = 15.0f;
 const float UI_CUES_MARGIN = 5.0f;
@@ -106,8 +106,8 @@ const float DRAG_LABEL_WIDTH = 150.0;
                              }];
         }
         if (_shouldDelete) {
-            if ([self.delegate respondsToSelector:@selector(panDeleteCellDraggedToDelete:)]) {
-                [self.delegate panDeleteCellDraggedToDelete:self];
+            if ([self.panGesturedelegate respondsToSelector:@selector(panDeleteCellDraggedToDelete:)]) {
+                [self.panGesturedelegate panDeleteCellDraggedToDelete:self];
             }
         }
     }

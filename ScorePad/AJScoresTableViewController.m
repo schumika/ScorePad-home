@@ -119,7 +119,7 @@
         
         if (!cell) {
             cell = [[[AJPanDeleteTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ScoreCellIdentifier] autorelease];
-            cell.delegate = self;
+            cell.panGesturedelegate = self;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         AJScore *score = [self.scoresArray objectAtIndex:indexPath.row];
