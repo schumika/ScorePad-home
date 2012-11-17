@@ -66,7 +66,7 @@ const float DRAG_LABEL_WIDTH = 150.0;
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     CGPoint translation = [gestureRecognizer translationInView:[self superview]];
     // check if is a horizontal gesture
-    if (fabs(translation.x) > fabs(translation.y)) {
+    if (fabs(translation.x) > fabs(translation.y) && (translation.x < 0)) {
         return YES;
     }
     return NO;
