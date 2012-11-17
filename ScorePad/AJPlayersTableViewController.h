@@ -16,7 +16,7 @@
 #import "AJSettingsViewController.h"
 
 @interface AJPlayersTableViewController : AJTableViewController <UITextFieldDelegate, AJSettingsViewControllerDelegate,
-                                            AJVerticalPlayerViewDelegate, AJPlayerTableViewCellDelegate> {
+                                            AJVerticalPlayerViewDelegate, AJPlayerTableViewCellDelegate, AJPanDeleteTableViewCellDelegate> {
     AJGame *_game;
     
     NSArray *_playersArray;

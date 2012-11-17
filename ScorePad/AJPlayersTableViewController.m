@@ -153,6 +153,7 @@
         if (!aCell) {
             aCell = [[[AJPlayerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:playerCellIdentifier] autorelease];
             aCell.delegate = self;
+            aCell.panGesturedelegate = self;
             aCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
@@ -191,22 +192,6 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     return cell;
-}
-
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return (indexPath.section == 0);
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [[AJScoresManager sharedInstance] deletePlayer:[self.playersArray objectAtIndex:indexPath.row]];
-        [self loadDataAndUpdateUI:NO];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
-        [tableView reloadData];
-    }
 }
 
 
@@ -351,6 +336,20 @@
 
 - (void)playerCellShouldStartEditingScore:(AJPlayerTableViewCell *)cell {
     _indexPathOfSelectedTextField = [self.tableView indexPathForCell:cell];
+}
+
+#pragma mark - AJPanDeleteTableViewCellDelegate methods
+
+- (void)panDeleteCellDraggedToDelete:(AJPanDeleteTableViewCell *)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    [[AJScoresManager sharedInstance] deletePlayer:[self.playersArray objectAtIndex:indexPath.row]];
+    [self loadDataAndUpdateUI:NO];
+    
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadData];
+    [self.tableView endUpdates];
 }
 
 @end

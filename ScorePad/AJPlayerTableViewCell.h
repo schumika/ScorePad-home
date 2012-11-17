@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AJPanDeleteTableViewCell.h"
 
 @protocol AJPlayerTableViewCellDelegate;
 
-@interface AJPlayerTableViewCell : UITableViewCell <UITextFieldDelegate> {
+@interface AJPlayerTableViewCell : AJPanDeleteTableViewCell <UITextFieldDelegate> {
     NSString *_name;
     NSString *_color;
     UIImage *_picture;
