@@ -105,7 +105,7 @@
         _minusButton.titleLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:17.0];
         [_minusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
         [_minusButton setTitle:@"-" forState:UIControlStateNormal];
-        [_minusButton addTarget:self action:@selector(minusButtonClicked:) forControlEvents:UIControlEventAllEvents];
+        [_minusButton addTarget:self action:@selector(minusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_minusButton];
     }
     return self;
@@ -175,17 +175,19 @@
 #pragma mark - Buttons actions
 
 - (IBAction)plusButtonClicked:(id)sender {
+    [self moveToOriginalFrameAnimated];
+    
     if ([self.delegate respondsToSelector:@selector(playerCellClickedPlusButton:)]) {
         [self.delegate playerCellClickedPlusButton:self];
     }
 }
 
 - (IBAction)minusButtonClicked:(id)sender {
+    [self moveToOriginalFrameAnimated];
+    
     if ([self.delegate respondsToSelector:@selector(playerCellClickedMinusButton:)]) {
         [self.delegate playerCellClickedMinusButton:self];
     }
-    
-    [self moveToOriginalFrameAnimated];
 }
 
 #pragma mark - UITextFieldDelegate methods
