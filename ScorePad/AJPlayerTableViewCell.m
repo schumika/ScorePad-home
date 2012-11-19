@@ -79,7 +79,7 @@
         [self.contentView addSubview:_roundsPlayedLabel];
         [_roundsPlayedLabel release];
         
-       /* _scoreTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _scoreTextField = [[UITextField alloc] initWithFrame:CGRectZero];
         _scoreTextField.borderStyle = UITextBorderStyleNone;
         _scoreTextField.background = [UIImage roundTextFieldImage];
         _scoreTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -89,7 +89,7 @@
         _scoreTextField.textAlignment = UITextAlignmentCenter;
         _scoreTextField.delegate = self;
         _scoreTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        [self.contentView addSubview:_scoreTextField];
+        [self addSubview:_scoreTextField];
         [_scoreTextField release];
         
         _plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -98,7 +98,7 @@
         [_plusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
         [_plusButton setTitle:@"+" forState:UIControlStateNormal];
         [_plusButton addTarget:self action:@selector(plusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:_plusButton];
+        [self addSubview:_plusButton];
         
         _minusButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_minusButton setBackgroundImage:[UIImage roundTextFieldImage] forState:UIControlStateNormal];
@@ -106,11 +106,7 @@
         [_minusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
         [_minusButton setTitle:@"-" forState:UIControlStateNormal];
         [_minusButton addTarget:self action:@selector(minusButtonClicked:) forControlEvents:UIControlEventAllEvents];
-        [self.contentView addSubview:_minusButton];*/
-        
-        butt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [butt addTarget:self action:@selector(buttClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:butt];
+        [self addSubview:_minusButton];
     }
     return self;
 }
@@ -119,28 +115,14 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGFloat cellWidth = self.contentView.bounds.size.width;
-
-    /*CGSize nameSize = [_nameLabel sizeThatFits:CGSizeMake(0.0, 30.0)];
-    _nameLabel.frame = CGRectMake(37.0, 0.0, nameSize.width, 30.0);
-    _pictureView.frame = CGRectMake(10.0, 3.0, 25.0, 25.0);
-    _totalScoresLabel.frame = CGRectMake(10.0, 27.0, CGRectGetMaxX(_nameLabel.frame) - 10.0, 40.0);
-    _roundsPlayedLabel.frame = CGRectMake(20.0, 69.0, CGRectGetMaxX(_nameLabel.frame) - 10.0, 10.0);*/
-    
     _pictureView.frame = CGRectMake(12.0, 10.0, 60.0, 60.0);
     _nameLabel.frame = CGRectMake(80.0, 13.0, 140.0, 53.0);
     _totalScoresLabel.frame = CGRectMake(192.0, 15.0, 91.0, 40.0);
     _roundsPlayedLabel.frame = CGRectMake(192.0, 63.0, 91.0, 10.0);
     
-   /* CGFloat pictureMaxX = CGRectGetMaxX(_pictureView.frame) + 10.0;
-    _totalScoresLabel.frame = CGRectMake(pictureMaxX + 10.0, 28.0, cellWidth - pictureMaxX - 10.0, 40.0;
-    _roundsPlayedLabel.frame = CGRectMake(25.0, cellHeight - 11.0, cellWidth - pictureMaxX, 10.0);*/
-    
-    _scoreTextField.frame = CGRectMake(cellWidth - 90.0, 5.0, 85.0, 31.0);
-    _plusButton.frame = CGRectMake(cellWidth - 90.0, 40.0, 40.0, 31.0);
-    _minusButton.frame = CGRectMake(cellWidth - 45.0, 40.0, 40.0, 31.0);
-    
-    butt.frame = CGRectMake(-50.0, 5.0, 45.0, 31.0);
+    _scoreTextField.frame = CGRectMake(-95.0, 5.0, 85.0, 31.0);
+    _plusButton.frame = CGRectMake(-95.0, 40.0, 40.0, 31.0);
+    _minusButton.frame = CGRectMake(-50.0, 40.0, 40.0, 31.0);
 }
 
 - (void)dealloc {
@@ -204,10 +186,6 @@
     }
     
     [self moveToOriginalFrameAnimated];
-}
-
-- (void)buttClicked:(id)sender {
-    NSLog(@"button clicked");
 }
 
 #pragma mark - UITextFieldDelegate methods
