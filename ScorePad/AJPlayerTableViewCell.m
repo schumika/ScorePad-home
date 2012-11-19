@@ -22,6 +22,9 @@
     UITextField *_scoreTextField;
     UIButton *_plusButton;
     UIButton *_minusButton;
+    
+    BOOL _shouldDisplayLeftSide;
+    UIButton *butt;
 }
 
 @end
@@ -102,8 +105,12 @@
         _minusButton.titleLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:17.0];
         [_minusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
         [_minusButton setTitle:@"-" forState:UIControlStateNormal];
-        [_minusButton addTarget:self action:@selector(minusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_minusButton addTarget:self action:@selector(minusButtonClicked:) forControlEvents:UIControlEventAllEvents];
         [self.contentView addSubview:_minusButton];*/
+        
+        butt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [butt addTarget:self action:@selector(buttClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:butt];
     }
     return self;
 }
@@ -132,6 +139,8 @@
     _scoreTextField.frame = CGRectMake(cellWidth - 90.0, 5.0, 85.0, 31.0);
     _plusButton.frame = CGRectMake(cellWidth - 90.0, 40.0, 40.0, 31.0);
     _minusButton.frame = CGRectMake(cellWidth - 45.0, 40.0, 40.0, 31.0);
+    
+    butt.frame = CGRectMake(-50.0, 5.0, 45.0, 31.0);
 }
 
 - (void)dealloc {
@@ -193,6 +202,12 @@
     if ([self.delegate respondsToSelector:@selector(playerCellClickedMinusButton:)]) {
         [self.delegate playerCellClickedMinusButton:self];
     }
+    
+    [self moveToOriginalFrameAnimated];
+}
+
+- (void)buttClicked:(id)sender {
+    NSLog(@"button clicked");
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -214,5 +229,57 @@
     
     return YES;
 }
+
+#pragma mark - horizontal pan gesture methods
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    CGPoint translation = [gestureRecognizer translationInView:[self superview]];
+    // check if is a horizontal gesture
+    if (fabs(translation.x) > fabs(translation.y)) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - pan gesture handler overriden from base class
+
+- (void)moveToOriginalFrameAnimated {
+    CGRect originalFrame = CGRectMake(0.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         self.frame = originalFrame;
+                     }];
+}
+
+- (void)panGestureHandler:(UIPanGestureRecognizer *)panGesture {
+    [super panGestureHandler:panGesture];
+    
+    if (panGesture.state == UIGestureRecognizerStateChanged) {
+        
+        _shouldDisplayLeftSide = self.frame.origin.x > self.frame.size.width / 3.0;
+        if (_shouldDisplayLeftSide) {
+            [butt setTitle:@"release" forState:UIControlStateNormal];
+        } else {
+            [butt setTitle:@"drag" forState:UIControlStateNormal];
+        }
+    }
+    
+    if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
+        if (_shouldDisplayLeftSide == NO) {
+            [self moveToOriginalFrameAnimated];
+        } else {
+            self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+        }
+    }
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    if (_shouldDisplayLeftSide && point.x < 0) {
+        return YES;
+    }
+    
+    return [super pointInside:point withEvent:event];
+}
+
+
 
 @end

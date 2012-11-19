@@ -82,7 +82,7 @@ const float DRAG_LABEL_WIDTH = 150.0;
     if (panGesture.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [panGesture translationInView:self];
         self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
-        _shouldDelete = self.frame.origin.x < -self.frame.size.width / 2;
+        _shouldDelete = self.frame.origin.x < -self.frame.size.width / 2.0;
         //float crossAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
         //_crossLabel.alpha = crossAlpha;
         if (_shouldDelete) {
