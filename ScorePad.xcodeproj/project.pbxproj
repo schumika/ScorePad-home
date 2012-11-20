@@ -59,6 +59,7 @@
 		52E669661626FC7F0035CAAC /* separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E669641626FC7F0035CAAC /* separator.png */; };
 		52E669671626FC7F0035CAAC /* separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E669651626FC7F0035CAAC /* separator@2x.png */; };
 		52EF57EB161DB01B004B069B /* AJTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52EF57EA161DB01B004B069B /* AJTableViewController.m */; };
+		52FD7A6F165BDA0500BCD571 /* AJUnderlinedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD7A6E165BDA0500BCD571 /* AJUnderlinedView.m */; };
 		A97B35A71657902D0003A8BC /* AJPanDeleteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A97B35A61657902D0003A8BC /* AJPanDeleteTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -142,6 +143,8 @@
 		52E669651626FC7F0035CAAC /* separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "separator@2x.png"; sourceTree = "<group>"; };
 		52EF57E9161DB01B004B069B /* AJTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJTableViewController.h; sourceTree = "<group>"; };
 		52EF57EA161DB01B004B069B /* AJTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJTableViewController.m; sourceTree = "<group>"; };
+		52FD7A6D165BDA0500BCD571 /* AJUnderlinedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJUnderlinedView.h; sourceTree = "<group>"; };
+		52FD7A6E165BDA0500BCD571 /* AJUnderlinedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJUnderlinedView.m; sourceTree = "<group>"; };
 		A97B35A51657902D0003A8BC /* AJPanDeleteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPanDeleteTableViewCell.h; sourceTree = "<group>"; };
 		A97B35A61657902D0003A8BC /* AJPanDeleteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPanDeleteTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -312,6 +315,8 @@
 			isa = PBXGroup;
 			children = (
 				52E6695B1626F0580035CAAC /* TableViewCells */,
+				52FD7A6D165BDA0500BCD571 /* AJUnderlinedView.h */,
+				52FD7A6E165BDA0500BCD571 /* AJUnderlinedView.m */,
 				52A663EE1624561300554254 /* AJVerticalPlayerView.h */,
 				52A663EF1624561300554254 /* AJVerticalPlayerView.m */,
 				521BC2D116255A5A000C2EE0 /* AJScrollView.h */,
@@ -447,6 +452,7 @@
 				52634D7E1628292200B46693 /* AJNewItemTableViewCell.m in Sources */,
 				52634D81162831D300B46693 /* AJPlayerTableViewCell.m in Sources */,
 				A97B35A71657902D0003A8BC /* AJPanDeleteTableViewCell.m in Sources */,
+				52FD7A6F165BDA0500BCD571 /* AJUnderlinedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,10 +7,12 @@
 //
 
 #import "AJPlayerTableViewCell.h"
+#import "AJUnderlinedView.h"
 
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
 #import "NSString+Additions.h"
+
 
 
 @interface AJPlayerTableViewCell () {
@@ -18,6 +20,7 @@
     UILabel *_nameLabel;
     UILabel *_totalScoresLabel;
     UILabel *_roundsPlayedLabel;
+    AJUnderlinedView *_underlinedView;
     
     UITextField *_scoreTextField;
     UIButton *_plusButton;
@@ -79,6 +82,11 @@
         [self.contentView addSubview:_roundsPlayedLabel];
         [_roundsPlayedLabel release];
         
+        _underlinedView = [[AJUnderlinedView alloc] initWithFrame:CGRectZero];
+        _underlinedView.underlineColor = [UIColor lightGrayColor];
+        [self addSubview:_underlinedView];
+        [_underlinedView release];
+        
         _scoreTextField = [[UITextField alloc] initWithFrame:CGRectZero];
         _scoreTextField.borderStyle = UITextBorderStyleNone;
         _scoreTextField.background = [UIImage roundTextFieldImage];
@@ -89,7 +97,7 @@
         _scoreTextField.textAlignment = UITextAlignmentCenter;
         _scoreTextField.delegate = self;
         _scoreTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        [self addSubview:_scoreTextField];
+        [_underlinedView addSubview:_scoreTextField];
         [_scoreTextField release];
         
         _plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -98,7 +106,7 @@
         [_plusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
         [_plusButton setTitle:@"+" forState:UIControlStateNormal];
         [_plusButton addTarget:self action:@selector(plusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_plusButton];
+        [_underlinedView addSubview:_plusButton];
         
         _minusButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_minusButton setBackgroundImage:[UIImage roundTextFieldImage] forState:UIControlStateNormal];
@@ -106,7 +114,7 @@
         [_minusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
         [_minusButton setTitle:@"-" forState:UIControlStateNormal];
         [_minusButton addTarget:self action:@selector(minusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_minusButton];
+        [_underlinedView addSubview:_minusButton];
     }
     return self;
 }
@@ -120,9 +128,11 @@
     _totalScoresLabel.frame = CGRectMake(192.0, 15.0, 91.0, 40.0);
     _roundsPlayedLabel.frame = CGRectMake(192.0, 63.0, 91.0, 10.0);
     
-    _scoreTextField.frame = CGRectMake(-95.0, 5.0, 85.0, 31.0);
-    _plusButton.frame = CGRectMake(-95.0, 40.0, 40.0, 31.0);
-    _minusButton.frame = CGRectMake(-50.0, 40.0, 40.0, 31.0);
+    CGFloat width = ceil(self.frame.size.width / 3.0);
+    _underlinedView.frame = CGRectMake(-width, 0, width, self.frame.size.height);
+    _scoreTextField.frame = CGRectMake(5.0, 5.0, 85.0, 31.0);
+    _plusButton.frame = CGRectMake(5.0, 40.0, 40.0, 31.0);
+    _minusButton.frame = CGRectMake(50.0, 40.0, 40.0, 31.0);
 }
 
 - (void)dealloc {
@@ -259,7 +269,5 @@
     
     return [super pointInside:point withEvent:event];
 }
-
-
 
 @end
