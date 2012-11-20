@@ -7,12 +7,15 @@
 //
 
 #import "AJPanDeleteTableViewCell.h"
+#import "AJUnderlinedView.h"
 
 @interface AJPanDeleteTableViewCell() {
     CGPoint _originalCenter;
     BOOL _shouldDelete;
     UILabel *_crossLabel;
     UILabel *_dragToDeleteLabel;
+    
+    AJUnderlinedView *_underlinedView;
 }
 
 @end
@@ -30,19 +33,24 @@ const float DRAG_LABEL_WIDTH = 150.0;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _underlinedView = [[AJUnderlinedView alloc] initWithFrame:CGRectZero];
+        _underlinedView.underlineColor = [UIColor lightGrayColor];
+        [self addSubview:_underlinedView];
+        [_underlinedView release];
+        
         _crossLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _crossLabel.textColor = [UIColor clearColor];
         _crossLabel.text = @"\u2717";
         _crossLabel.font = [UIFont boldSystemFontOfSize:32.0];
         _crossLabel.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:_crossLabel];
+        [_underlinedView addSubview:_crossLabel];
         [_crossLabel release];
         
         _dragToDeleteLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _dragToDeleteLabel.textColor = [UIColor lightGrayColor];
         _dragToDeleteLabel.font = [UIFont systemFontOfSize:15.0];
         _dragToDeleteLabel.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:_dragToDeleteLabel];
+        [_underlinedView addSubview:_dragToDeleteLabel];
         [_dragToDeleteLabel release];
         
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureHandler:)];
@@ -56,8 +64,9 @@ const float DRAG_LABEL_WIDTH = 150.0;
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _crossLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0.0,
-                                   UI_CUES_WIDTH, self.bounds.size.height);
+    _underlinedView.frame = CGRectMake(self.bounds.size.width, 0.0, 200.0, self.bounds.size.height);
+    
+    _crossLabel.frame = CGRectMake(UI_CUES_MARGIN, 0.0, UI_CUES_WIDTH, self.bounds.size.height);
     _dragToDeleteLabel.frame = CGRectMake(CGRectGetMaxX(_crossLabel.frame) + 5.0, 0.0,
                                           DRAG_LABEL_WIDTH, self.bounds.size.height);
 }
