@@ -115,7 +115,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _pictureView.frame = CGRectMake(12.0, 10.0, 60.0, 60.0);
+    _pictureView.frame = CGRectMake(12.0, 15.0, 50.0, 50.0);
     _nameLabel.frame = CGRectMake(80.0, 13.0, 140.0, 53.0);
     _totalScoresLabel.frame = CGRectMake(192.0, 15.0, 91.0, 40.0);
     _roundsPlayedLabel.frame = CGRectMake(192.0, 63.0, 91.0, 10.0);
