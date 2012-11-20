@@ -60,6 +60,7 @@
 		52E669671626FC7F0035CAAC /* separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E669651626FC7F0035CAAC /* separator@2x.png */; };
 		52EF57EB161DB01B004B069B /* AJTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52EF57EA161DB01B004B069B /* AJTableViewController.m */; };
 		52FD7A6F165BDA0500BCD571 /* AJUnderlinedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD7A6E165BDA0500BCD571 /* AJUnderlinedView.m */; };
+		A92B67FA165C21C100F85CC8 /* AJScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A92B67F9165C21C100F85CC8 /* AJScoreTableViewCell.m */; };
 		A97B35A71657902D0003A8BC /* AJPanDeleteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A97B35A61657902D0003A8BC /* AJPanDeleteTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +146,8 @@
 		52EF57EA161DB01B004B069B /* AJTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJTableViewController.m; sourceTree = "<group>"; };
 		52FD7A6D165BDA0500BCD571 /* AJUnderlinedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJUnderlinedView.h; sourceTree = "<group>"; };
 		52FD7A6E165BDA0500BCD571 /* AJUnderlinedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJUnderlinedView.m; sourceTree = "<group>"; };
+		A92B67F8165C21C100F85CC8 /* AJScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScoreTableViewCell.h; sourceTree = "<group>"; };
+		A92B67F9165C21C100F85CC8 /* AJScoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScoreTableViewCell.m; sourceTree = "<group>"; };
 		A97B35A51657902D0003A8BC /* AJPanDeleteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPanDeleteTableViewCell.h; sourceTree = "<group>"; };
 		A97B35A61657902D0003A8BC /* AJPanDeleteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPanDeleteTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -334,6 +337,8 @@
 				52E6695E1626F0880035CAAC /* AJGameTableViewCell.m */,
 				52634D7F162831D200B46693 /* AJPlayerTableViewCell.h */,
 				52634D80162831D300B46693 /* AJPlayerTableViewCell.m */,
+				A92B67F8165C21C100F85CC8 /* AJScoreTableViewCell.h */,
+				A92B67F9165C21C100F85CC8 /* AJScoreTableViewCell.m */,
 				52E5228A163AA49900E99702 /* AJPlayerView.xib */,
 				A97B35A51657902D0003A8BC /* AJPanDeleteTableViewCell.h */,
 				A97B35A61657902D0003A8BC /* AJPanDeleteTableViewCell.m */,
@@ -453,6 +458,7 @@
 				52634D81162831D300B46693 /* AJPlayerTableViewCell.m in Sources */,
 				A97B35A71657902D0003A8BC /* AJPanDeleteTableViewCell.m in Sources */,
 				52FD7A6F165BDA0500BCD571 /* AJUnderlinedView.m in Sources */,
+				A92B67FA165C21C100F85CC8 /* AJScoreTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

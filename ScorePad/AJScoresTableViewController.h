@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AJPlayer+Additions.h"
 #import "AJSettingsViewController.h"
-#import "AJPanDeleteTableViewCell.h"
+#import "AJScoreTableViewCell.h"
 
 @interface AJScoresTableViewController : AJTableViewController <UITextFieldDelegate, AJSettingsViewControllerDelegate, AJPanDeleteTableViewCellDelegate> {
     NSArray *_scoresArray;
