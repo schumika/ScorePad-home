@@ -120,7 +120,7 @@
         
         if (!cell) {
             cell = [[[AJScoreTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ScoreCellIdentifier] autorelease];
-            cell.panGesturedelegate = self;
+            cell.panGestureDelegate = self;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         AJScore *score = [self.scoresArray objectAtIndex:indexPath.row];

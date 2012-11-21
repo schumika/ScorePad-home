@@ -105,6 +105,7 @@
         if (cell == nil) {
             cell = [[[AJGameTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:gameCellIdentifier] autorelease];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.panGestureDelegate = self;
         }
         
         AJGame *game = (AJGame *)[self.gamesArray objectAtIndex:indexPath.row];
@@ -141,18 +142,6 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return (indexPath.section == 0);
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [[AJScoresManager sharedInstance] deleteGame:[self.gamesArray objectAtIndex:indexPath.row]];
-        [self loadDataAndUpdateUI:NO];
-        [self updateRowIdsForGames];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
-        [tableView reloadData];
-    }  
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
@@ -239,6 +228,17 @@
     [self setGamesArray:mutableArray];
     
     [[AJScoresManager sharedInstance] saveContext];
+}
+
+#pragma mark - AJPanDeleteTableViewCellDelegate methods
+- (void)panDeleteCellDraggedToDelete:(AJPanDeleteTableViewCell *)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    [[AJScoresManager sharedInstance] deleteGame:[self.gamesArray objectAtIndex:indexPath.row]];
+    [self loadDataAndUpdateUI:NO];
+    [self updateRowIdsForGames];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.tableView reloadData];
 }
 
 @end

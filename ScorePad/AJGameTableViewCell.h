@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AJPanDeleteTableViewCell.h"
 
-@interface AJGameTableViewCell : UITableViewCell {
+@interface AJGameTableViewCell : AJPanDeleteTableViewCell {
     NSString *_name;
     NSString *_color;
     UIImage *_picture;

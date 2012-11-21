@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "AJTableViewController.h"
+#import "AJPanDeleteTableViewCell.h"
 
-@interface AJGamesTableViewController : AJTableViewController <UITextFieldDelegate> {
+@interface AJGamesTableViewController : AJTableViewController <UITextFieldDelegate, AJPanDeleteTableViewCellDelegate> {
     NSArray *_gamesArray;
     
     UIBarButtonItem *_editBarButton;

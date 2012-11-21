@@ -153,7 +153,7 @@
         if (!aCell) {
             aCell = [[[AJPlayerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:playerCellIdentifier] autorelease];
             aCell.delegate = self;
-            aCell.panGesturedelegate = self;
+            aCell.panGestureDelegate = self;
             aCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
