@@ -156,12 +156,14 @@
         
         UILabel *roundLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, thirdOfTableWidth, 20.0)];
         roundLabel.text = @"Round";
+        roundLabel.textColor = [UIColor whiteColor];
         roundLabel.backgroundColor = [UIColor clearColor];
         [headerView addSubview:roundLabel];
         [roundLabel release];
         
         UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(thirdOfTableWidth, 0.0, thirdOfTableWidth, 20.0)];
         scoreLabel.text = @"Score";
+        scoreLabel.textColor = [UIColor whiteColor];
         scoreLabel.font = [UIFont boldSystemFontOfSize:17.0];
         scoreLabel.backgroundColor = [UIColor clearColor];
         scoreLabel.textAlignment = UITextAlignmentCenter;
@@ -170,6 +172,7 @@
         
         UILabel *intemediateLabel = [[UILabel alloc] initWithFrame:CGRectMake(2 * thirdOfTableWidth, 0.0, thirdOfTableWidth, 20.0)];
         intemediateLabel.text = @"Intermediate";
+        intemediateLabel.textColor = [UIColor whiteColor];
         intemediateLabel.backgroundColor = [UIColor clearColor];
         intemediateLabel.textAlignment = UITextAlignmentCenter;
         intemediateLabel.adjustsFontSizeToFitWidth = YES;
