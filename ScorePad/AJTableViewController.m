@@ -30,7 +30,7 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         self.view.backgroundColor = [UIColor brownColor];
-        _tableView = [[UITableView alloc] initWithFrame:/*CGRectInset(*/self.view.bounds/*, 10.0, 0.0)*/ style:tableViewStyle];
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:tableViewStyle];
         _tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
         _tableView.delegate = self;
         _tableView.dataSource = self;
