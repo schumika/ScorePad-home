@@ -271,12 +271,12 @@
     
     [self.tableView beginUpdates];
     [[AJScoresManager sharedInstance] deleteScore:[self.scoresArray objectAtIndex:indexPath.row]];
-    [self loadDataAndUpdateUI:YES];
+    [self loadDataAndUpdateUI:NO];
     [self updateRoundsForScores];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
-    
-    //[self loadDataAndUpdateUI:YES];
+
+    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
 }
 
 

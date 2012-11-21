@@ -234,11 +234,14 @@
 - (void)panDeleteCellDraggedToDelete:(AJPanDeleteTableViewCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
+    [self.tableView beginUpdates];
     [[AJScoresManager sharedInstance] deleteGame:[self.gamesArray objectAtIndex:indexPath.row]];
     [self loadDataAndUpdateUI:NO];
     [self updateRowIdsForGames];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView reloadData];
+    [self.tableView endUpdates];
+    
+    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
 }
 
 @end
