@@ -1,3 +1,11 @@
 .xcodeproj/!*.xcodeproj/project.pbxproj
 
 *.xcuserstate
+
+.DS_Store
+
+*.xcuserstate
+
+ScorePad.xcodeproj/project.xcworkspace/xcuserdata/ancajulean.xcuserdatad/UserInterfaceState.xcuserstate
+
+*.xcuserstate
