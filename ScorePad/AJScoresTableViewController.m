@@ -162,6 +162,7 @@
         
         UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(thirdOfTableWidth, 0.0, thirdOfTableWidth, 20.0)];
         scoreLabel.text = @"Score";
+        scoreLabel.font = [UIFont boldSystemFontOfSize:17.0];
         scoreLabel.backgroundColor = [UIColor clearColor];
         scoreLabel.textAlignment = UITextAlignmentCenter;
         [headerView addSubview:scoreLabel];
