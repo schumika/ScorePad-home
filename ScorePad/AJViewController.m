@@ -22,7 +22,7 @@
 
 @end
 
-@implementation AJViewController
+@implementation AJViewController // comentariu
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
