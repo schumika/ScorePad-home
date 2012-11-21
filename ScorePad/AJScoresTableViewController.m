@@ -124,8 +124,6 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         AJScore *score = [self.scoresArray objectAtIndex:indexPath.row];
-        //cell.textLabel.text = [NSString stringWithFormat:@"%g", score.value.doubleValue];
-        //cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", score.round.intValue];
         cell.round = score.round.intValue;
         cell.score = score.value.doubleValue;
         cell.intermediateTotal = [self intermediateTotalAtRound:indexPath.row];
