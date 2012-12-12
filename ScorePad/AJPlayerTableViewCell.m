@@ -256,8 +256,10 @@
     if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
         if (_shouldDisplayLeftSide == NO) {
             [self moveToOriginalFrameAnimated];
+            [_scoreTextField resignFirstResponder];
         } else {
             self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+            [_scoreTextField becomeFirstResponder];
         }
     }
 }
