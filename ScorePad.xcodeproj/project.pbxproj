@@ -25,6 +25,7 @@
 		525CC23915FE2A1F00E8F903 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 525CC23815FE2A1F00E8F903 /* main.m */; };
 		525CC23D15FE2A1F00E8F903 /* AJAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 525CC23C15FE2A1F00E8F903 /* AJAppDelegate.m */; };
 		525CC24515FE2C8200E8F903 /* AJGamesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525CC24415FE2C8200E8F903 /* AJGamesTableViewController.m */; };
+		525E008F1678DD8D00D0D944 /* AJAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 525E008E1678DD8D00D0D944 /* AJAlertView.m */; };
 		52634D7A16281C8600B46693 /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 52634D7816281C8600B46693 /* mask.png */; };
 		52634D7B16281C8600B46693 /* mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52634D7916281C8600B46693 /* mask@2x.png */; };
 		52634D7E1628292200B46693 /* AJNewItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52634D7D1628292200B46693 /* AJNewItemTableViewCell.m */; };
@@ -95,6 +96,8 @@
 		525CC23C15FE2A1F00E8F903 /* AJAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AJAppDelegate.m; sourceTree = "<group>"; };
 		525CC24315FE2C8200E8F903 /* AJGamesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJGamesTableViewController.h; sourceTree = "<group>"; };
 		525CC24415FE2C8200E8F903 /* AJGamesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJGamesTableViewController.m; sourceTree = "<group>"; };
+		525E008D1678DD8D00D0D944 /* AJAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJAlertView.h; sourceTree = "<group>"; };
+		525E008E1678DD8D00D0D944 /* AJAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJAlertView.m; sourceTree = "<group>"; };
 		52634D7816281C8600B46693 /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = "<group>"; };
 		52634D7916281C8600B46693 /* mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mask@2x.png"; sourceTree = "<group>"; };
 		52634D7C1628292200B46693 /* AJNewItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJNewItemTableViewCell.h; sourceTree = "<group>"; };
@@ -209,6 +212,8 @@
 				529E0E5F1601D0E300711F5B /* UIImage+Additions.m */,
 				52A10861161F232F006FCACD /* UIBarButtonItem+Additions.h */,
 				52A10862161F232F006FCACD /* UIBarButtonItem+Additions.m */,
+				525E008D1678DD8D00D0D944 /* AJAlertView.h */,
+				525E008E1678DD8D00D0D944 /* AJAlertView.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 				A97B35A71657902D0003A8BC /* AJPanDeleteTableViewCell.m in Sources */,
 				52FD7A6F165BDA0500BCD571 /* AJUnderlinedView.m in Sources */,
 				A92B67FA165C21C100F85CC8 /* AJScoreTableViewCell.m in Sources */,
+				525E008F1678DD8D00D0D944 /* AJAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

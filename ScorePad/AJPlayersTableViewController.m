@@ -15,6 +15,7 @@
 #import "NSString+Additions.h"
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
+#import "AJAlertView.h"
 
 
 @interface AJPlayersTableViewController () {
@@ -341,15 +342,32 @@
 #pragma mark - AJPanDeleteTableViewCellDelegate methods
 
 - (void)panDeleteCellDraggedToDelete:(AJPanDeleteTableViewCell *)cell {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    
-    [self.tableView beginUpdates];
-    [[AJScoresManager sharedInstance] deletePlayer:[self.playersArray objectAtIndex:indexPath.row]];
-    [self loadDataAndUpdateUI:NO];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
-    
-    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+    AJAlertView *alertView = [[AJAlertView alloc] initWithTitle:nil
+                                                        message:@"Are you sure you want to delete this player?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Delete", nil];
+    alertView.userInfo = @{@"cell" : cell};
+    [alertView show];
+    [alertView release];
+}
+
+#pragma mark - UIAlertViewDelegate methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != alertView.cancelButtonIndex) { // User clicked "delete"
+        AJPlayerTableViewCell *cell = (AJPlayerTableViewCell *)[(AJAlertView *)alertView userInfo][@"cell"];
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        
+        [self.tableView beginUpdates];
+        [[AJScoresManager sharedInstance] deletePlayer:[self.playersArray objectAtIndex:indexPath.row]];
+        [self loadDataAndUpdateUI:NO];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+        
+        [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+    }
 }
 
 @end

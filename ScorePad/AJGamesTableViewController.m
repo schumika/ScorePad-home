@@ -12,6 +12,7 @@
 #import "AJTableViewController.h"
 #import "AJGameTableViewCell.h"
 #import "AJNewItemTableViewCell.h"
+#import "AJAlertView.h"
 
 #import "AJGame+Additions.h"
 #import "NSString+Additions.h"
@@ -277,16 +278,33 @@
 
 #pragma mark - AJPanDeleteTableViewCellDelegate methods
 - (void)panDeleteCellDraggedToDelete:(AJPanDeleteTableViewCell *)cell {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    
-    [self.tableView beginUpdates];
-    [[AJScoresManager sharedInstance] deleteGame:[self.gamesArray objectAtIndex:indexPath.row]];
-    [self loadDataAndUpdateUI:NO];
-    [self updateRowIdsForGames];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
-    
-    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+    AJAlertView *alertView = [[AJAlertView alloc] initWithTitle:nil
+                                                        message:@"Are you sure you want to delete this game?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Delete", nil];
+    alertView.userInfo = @{@"cell" : cell};
+    [alertView show];
+    [alertView release];
+}
+
+#pragma mark - UIAlertViewDelegate methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != alertView.cancelButtonIndex) { // User clicked "delete"
+        AJGameTableViewCell *cell = (AJGameTableViewCell *)[(AJAlertView *)alertView userInfo][@"cell"];
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        
+        [self.tableView beginUpdates];
+        [[AJScoresManager sharedInstance] deleteGame:[self.gamesArray objectAtIndex:indexPath.row]];
+        [self loadDataAndUpdateUI:NO];
+        [self updateRowIdsForGames];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+        [self.tableView endUpdates];
+        
+        [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate methods
