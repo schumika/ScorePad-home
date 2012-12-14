@@ -81,6 +81,14 @@ const float DRAG_LABEL_WIDTH = 150.0;
     return NO;
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+	if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 #pragma mark - pan gesture handler
 
 - (void)panGestureHandler:(UIPanGestureRecognizer *)panGesture {
