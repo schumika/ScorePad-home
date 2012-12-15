@@ -18,6 +18,8 @@
     double _totalScores;
     int _numberOfRounds;
     
+    BOOL _displaysLeftSide;;
+    
     id<AJPlayerTableViewCellDelegate> _delegate;
 }
 
@@ -26,6 +28,8 @@
 @property (nonatomic, retain) UIImage *picture;
 @property (nonatomic, assign) double totalScores;
 @property (nonatomic, assign) int numberOfRounds;
+
+@property (nonatomic, assign) BOOL displaysLeftSide;
 
 @property (nonatomic, assign) id<AJPlayerTableViewCellDelegate> delegate;
 

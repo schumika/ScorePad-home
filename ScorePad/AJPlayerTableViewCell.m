@@ -26,7 +26,6 @@
     UIButton *_plusButton;
     UIButton *_minusButton;
     
-    BOOL _shouldDisplayLeftSide;
     UIButton *butt;
 }
 
@@ -40,6 +39,8 @@
 @synthesize picture = _picture;
 @synthesize totalScores = _totalScores;
 @synthesize numberOfRounds = _numberOfRounds;
+
+@synthesize displaysLeftSide = _displaysLeftSide;
 
 @synthesize scoreTextField = _scoreTextField;
 
@@ -245,8 +246,8 @@
     
     if (panGesture.state == UIGestureRecognizerStateChanged) {
         
-        _shouldDisplayLeftSide = self.frame.origin.x > self.frame.size.width / 3.0;
-        if (_shouldDisplayLeftSide) {
+        self.displaysLeftSide = self.frame.origin.x > self.frame.size.width / 3.0;
+        if (self.displaysLeftSide) {
             [butt setTitle:@"release" forState:UIControlStateNormal];
         } else {
             [butt setTitle:@"drag" forState:UIControlStateNormal];
@@ -254,7 +255,7 @@
     }
     
     if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
-        if (_shouldDisplayLeftSide == NO) {
+        if (self.displaysLeftSide == NO) {
             [self moveToOriginalFrameAnimated];
             [_scoreTextField resignFirstResponder];
         } else {
@@ -265,7 +266,7 @@
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    if (_shouldDisplayLeftSide && point.x < 0) {
+    if (self.displaysLeftSide && point.x < 0) {
         return YES;
     }
     

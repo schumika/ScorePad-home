@@ -25,6 +25,8 @@
 
 - (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
+- (BOOL)addScoreViewIsDisplayed;
+
 @end
 
 
@@ -202,6 +204,8 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    if ([self addScoreViewIsDisplayed]) return;
+    
     if (self.tableView.editing) return;
     
     if (indexPath.section == 1) {
@@ -217,6 +221,8 @@
 #pragma mark - UITextFieldDelegate methods
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if ([self addScoreViewIsDisplayed]) return NO;
+    
     _indexPathOfSelectedTextField = nil;
     
     for (int cellIndex = 0; cellIndex < [self.game.players count]; cellIndex++) {
@@ -368,6 +374,22 @@
         
         [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
     }
+}
+
+#pragma mark - Helper methods
+
+- (BOOL)addScoreViewIsDisplayed {
+    BOOL leftSideIsDisplayed = NO;
+    
+    for (int playerCellIndex = 0; playerCellIndex < [self.tableView numberOfRowsInSection:0]; playerCellIndex++) {
+        AJPlayerTableViewCell *playerCell = (AJPlayerTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:playerCellIndex inSection:0]];
+        if (playerCell.displaysLeftSide) {
+            leftSideIsDisplayed = YES;
+            break;
+        }
+    }
+    
+    return leftSideIsDisplayed;
 }
 
 @end
