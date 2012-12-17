@@ -190,6 +190,7 @@
     
     if ([self.delegate respondsToSelector:@selector(playerCellClickedPlusButton:)]) {
         [self.delegate playerCellClickedPlusButton:self];
+        [self.delegate playerCellDidHideNewScoreView:self];
     }
 }
 
@@ -198,6 +199,7 @@
     
     if ([self.delegate respondsToSelector:@selector(playerCellClickedMinusButton:)]) {
         [self.delegate playerCellClickedMinusButton:self];
+        [self.delegate playerCellDidHideNewScoreView:self];
     }
 }
 
@@ -223,6 +225,8 @@
 
 #pragma mark - horizontal pan gesture methods
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]]) return NO;
+    
     CGPoint translation = [gestureRecognizer translationInView:[self superview]];
     // check if is a horizontal gesture
     if (fabs(translation.x) > fabs(translation.y)) {
@@ -256,11 +260,27 @@
     
     if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
         if (self.displaysLeftSide == NO) {
-            [self moveToOriginalFrameAnimated];
-            [_scoreTextField resignFirstResponder];
+            if (self.delegate && [self.delegate respondsToSelector:@selector(playerCellDidHideNewScoreView:)]) {
+                [self.delegate playerCellDidHideNewScoreView:self];
+                [self moveToOriginalFrameAnimated];
+                [_scoreTextField resignFirstResponder];
+            }
         } else {
-            self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
-            [_scoreTextField becomeFirstResponder];
+            if (self.delegate && [self.delegate respondsToSelector:@selector(playerCellShouldShowNewScoreView:)]) {
+                if ([self.delegate playerCellShouldShowNewScoreView:self]) {
+                    if ([self.delegate respondsToSelector:@selector(playerCellDidShowNewScoreView:)]) {
+                        [self.delegate playerCellDidShowNewScoreView:self];
+                        self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+                        [_scoreTextField becomeFirstResponder];
+                    }
+                } else {
+                    /*if ([self.delegate respondsToSelector:@selector(playerCellDidHideNewScoreView:)]) {
+                        [self.delegate playerCellDidHideNewScoreView:self];*/
+                        [self moveToOriginalFrameAnimated];
+                        [_scoreTextField resignFirstResponder];
+                    //}
+                }
+            }
         }
     }
 }

@@ -82,7 +82,7 @@ const float DRAG_LABEL_WIDTH = 150.0;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-	if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+	if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] == NO) {
         return NO;
     }
     

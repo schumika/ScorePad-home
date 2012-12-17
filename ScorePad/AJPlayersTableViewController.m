@@ -21,7 +21,11 @@
 @interface AJPlayersTableViewController () {
     UIImageView *_backView;
     NSIndexPath *_indexPathOfSelectedTextField;
+    
+    BOOL _addScoreViewIsDisplayed;
 }
+
+@property (nonatomic, assign) BOOL addScoreViewIsDisplayed;
 
 - (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
@@ -345,6 +349,18 @@
     _indexPathOfSelectedTextField = [self.tableView indexPathForCell:cell];
 }
 
+- (void)playerCellDidShowNewScoreView:(AJPlayerTableViewCell *)cell {
+    self.addScoreViewIsDisplayed = YES;
+}
+
+- (void)playerCellDidHideNewScoreView:(AJPlayerTableViewCell *)cell {
+    self.addScoreViewIsDisplayed = NO;
+}
+
+- (BOOL)playerCellShouldShowNewScoreView:(AJPlayerTableViewCell *)cell {
+    return !self.addScoreViewIsDisplayed;
+}
+
 #pragma mark - AJPanDeleteTableViewCellDelegate methods
 
 - (void)panDeleteCellDraggedToDelete:(AJPanDeleteTableViewCell *)cell {
@@ -375,7 +391,7 @@
         [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
     }
 }
-
+/*
 #pragma mark - Helper methods
 
 - (BOOL)addScoreViewIsDisplayed {
@@ -392,4 +408,5 @@
     return leftSideIsDisplayed;
 }
 
+ */
 @end

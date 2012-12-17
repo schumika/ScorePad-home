@@ -44,4 +44,8 @@
 - (void)playerCellClickedPlusButton:(AJPlayerTableViewCell *)cell;
 - (void)playerCellClickedMinusButton:(AJPlayerTableViewCell *)cell;
 
+- (BOOL)playerCellShouldShowNewScoreView:(AJPlayerTableViewCell *)cell;
+- (void)playerCellDidShowNewScoreView:(AJPlayerTableViewCell *)cell;
+- (void)playerCellDidHideNewScoreView:(AJPlayerTableViewCell *)cell;
+
 @end
