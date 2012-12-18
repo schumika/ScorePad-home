@@ -9,6 +9,8 @@
 #import "AJAppDelegate.h"
 #import "AJGamesTableViewController.h"
 
+#import <Crashlytics/Crashlytics.h>
+
 @implementation AJAppDelegate
 
 - (void)dealloc
@@ -19,6 +21,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Crashlytics startWithAPIKey:@"04be4a58b6b1895ef790a290305cc60b987111a3"];
+    
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     

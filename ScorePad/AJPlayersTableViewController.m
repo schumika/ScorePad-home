@@ -21,11 +21,13 @@
 @interface AJPlayersTableViewController () {
     UIImageView *_backView;
     NSIndexPath *_indexPathOfSelectedTextField;
+    NSIndexPath *_indexPathOfCellShowingLeftSide;
     
     BOOL _addScoreViewIsDisplayed;
 }
 
 @property (nonatomic, assign) BOOL addScoreViewIsDisplayed;
+@property (nonatomic, retain) NSIndexPath *indexPathOfSelectedTextField;
 
 - (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
@@ -38,6 +40,7 @@
 
 @synthesize game = _game;
 @synthesize playersArray = _playersArray;
+@synthesize indexPathOfSelectedTextField = _indexPathOfSelectedTextField;
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.playersArray = [[AJScoresManager sharedInstance] getAllPlayersForGame:self.game];
@@ -88,7 +91,7 @@
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
     self.navigationItem.leftBarButtonItem = [self backButtonItem];
     
-    _indexPathOfSelectedTextField = nil;
+    self.indexPathOfSelectedTextField = nil;
     
 }
 
@@ -105,6 +108,7 @@
 - (void)dealloc {
     [_game release];
     [_playersArray release];
+    [_indexPathOfSelectedTextField release];
     
     [super dealloc];
 }
@@ -130,8 +134,8 @@
 - (void)keyboardWillShow:(NSNotification *)aNotif {
     [super keyboardWillShow:aNotif];
     
-    if (_indexPathOfSelectedTextField != nil) {
-        [self.tableView scrollToRowAtIndexPath:_indexPathOfSelectedTextField atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (self.indexPathOfSelectedTextField != nil) {
+        [self.tableView scrollToRowAtIndexPath:self.indexPathOfSelectedTextField atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
     //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
@@ -227,19 +231,19 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if ([self addScoreViewIsDisplayed]) return NO;
     
-    _indexPathOfSelectedTextField = nil;
+    self.indexPathOfSelectedTextField = nil;
     
     for (int cellIndex = 0; cellIndex < [self.game.players count]; cellIndex++) {
         AJPlayerTableViewCell *cell = (AJPlayerTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:0]];
         if (cell.scoreTextField == textField) {
-            _indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:0];
+            self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:0];
             break;
         }
     }
     
     AJNewItemTableViewCell *cell = (AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     if (cell.textField == textField) {
-        _indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:0 inSection:1];
+        self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:0 inSection:1];
     }
     
     return !self.tableView.editing;
@@ -346,18 +350,26 @@
 }
 
 - (void)playerCellShouldStartEditingScore:(AJPlayerTableViewCell *)cell {
-    _indexPathOfSelectedTextField = [self.tableView indexPathForCell:cell];
+    self.indexPathOfSelectedTextField = [self.tableView indexPathForCell:cell];
 }
 
 - (void)playerCellDidShowNewScoreView:(AJPlayerTableViewCell *)cell {
     self.addScoreViewIsDisplayed = YES;
+    _indexPathOfCellShowingLeftSide = [self.tableView indexPathForCell:cell];
 }
 
 - (void)playerCellDidHideNewScoreView:(AJPlayerTableViewCell *)cell {
     self.addScoreViewIsDisplayed = NO;
+    _indexPathOfCellShowingLeftSide = nil;
 }
 
 - (BOOL)playerCellShouldShowNewScoreView:(AJPlayerTableViewCell *)cell {
+    if (self.addScoreViewIsDisplayed == YES) return NO;
+    
+    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+    if ( _indexPathOfCellShowingLeftSide!= nil && (cellIndexPath.row != _indexPathOfCellShowingLeftSide.row)) {
+        return NO;
+    }
     return !self.addScoreViewIsDisplayed;
 }
 

@@ -33,6 +33,7 @@
 		5275B83715FF7D66006E19FE /* AJPlayer+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83615FF7D66006E19FE /* AJPlayer+Additions.m */; };
 		5275B83A15FF83FD006E19FE /* AJPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83915FF83FD006E19FE /* AJPlayersTableViewController.m */; };
 		5284384C162441CE00B471B5 /* AJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5284384B162441CE00B471B5 /* AJViewController.m */; };
+		528980E7168068DD00FC2F09 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528980E6168068DD00FC2F09 /* Crashlytics.framework */; };
 		529E0E601601D0E300711F5B /* UIImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E0E5F1601D0E300711F5B /* UIImage+Additions.m */; };
 		529E0E691601F6DB00711F5B /* AJSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E0E681601F6DB00711F5B /* AJSettingsViewController.m */; };
 		52A10859161F0C86006FCACD /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10851161F0C86006FCACD /* back-button.png */; };
@@ -110,6 +111,7 @@
 		5275B83915FF83FD006E19FE /* AJPlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPlayersTableViewController.m; sourceTree = "<group>"; };
 		5284384A162441CE00B471B5 /* AJViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJViewController.h; sourceTree = "<group>"; };
 		5284384B162441CE00B471B5 /* AJViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJViewController.m; sourceTree = "<group>"; };
+		528980E6168068DD00FC2F09 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		529E0E5E1601D0E300711F5B /* UIImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additions.h"; sourceTree = "<group>"; };
 		529E0E5F1601D0E300711F5B /* UIImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additions.m"; sourceTree = "<group>"; };
 		529E0E671601F6DB00711F5B /* AJSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJSettingsViewController.h; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				525CC22D15FE2A1F00E8F903 /* UIKit.framework in Frameworks */,
 				525CC22F15FE2A1F00E8F903 /* Foundation.framework in Frameworks */,
 				525CC23115FE2A1F00E8F903 /* CoreGraphics.framework in Frameworks */,
+				528980E7168068DD00FC2F09 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +241,7 @@
 		525CC22B15FE2A1F00E8F903 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				528980E6168068DD00FC2F09 /* Crashlytics.framework */,
 				5253287E15FF15D000A28B84 /* CoreData.framework */,
 				525CC22C15FE2A1F00E8F903 /* UIKit.framework */,
 				525CC22E15FE2A1F00E8F903 /* Foundation.framework */,
@@ -361,6 +365,7 @@
 				525CC22415FE2A1F00E8F903 /* Sources */,
 				525CC22515FE2A1F00E8F903 /* Frameworks */,
 				525CC22615FE2A1F00E8F903 /* Resources */,
+				528980E41680689900FC2F09 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -429,6 +434,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		528980E41680689900FC2F09 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 04be4a58b6b1895ef790a290305cc60b987111a3";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		525CC22415FE2A1F00E8F903 /* Sources */ = {
@@ -534,6 +555,10 @@
 		525CC24115FE2A1F00E8F903 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ScorePad/ScorePad-Prefix.pch";
 				INFOPLIST_FILE = "ScorePad/ScorePad-Info.plist";
@@ -546,6 +571,10 @@
 		525CC24215FE2A1F00E8F903 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ScorePad/ScorePad-Prefix.pch";
 				INFOPLIST_FILE = "ScorePad/ScorePad-Info.plist";
