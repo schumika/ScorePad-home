@@ -93,7 +93,9 @@
 - (void)keyboardWillShow:(NSNotification *)aNotif {
     [super keyboardWillShow:aNotif];
     
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if ([self.gamesArray lastObject] != nil) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 #pragma mark - Table view data source
