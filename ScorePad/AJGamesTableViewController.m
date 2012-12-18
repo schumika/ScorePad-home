@@ -314,7 +314,7 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _pullDownInProgress = scrollView.contentOffset.y <= 0.0f;
     if (_pullDownInProgress) {
-        [_tableView insertSubview:_draggToAddLabel atIndex:0];
+        [self.tableView insertSubview:_draggToAddLabel atIndex:0];
     }
 }
 
@@ -322,7 +322,7 @@
     if (_pullDownInProgress && self.tableView.contentOffset.y <= 0.0f) {
         // maintain the location of the placeholder
         _draggToAddLabel.text = (scrollView.contentOffset.y > -60.0) ? @"Dragg to add new game..." : @"Release to add new game...";
-        _draggToAddLabel.alpha = MIN(1.0f, - _tableView.contentOffset.y / 60.0);
+        _draggToAddLabel.alpha = MIN(1.0f, - self.tableView.contentOffset.y / 60.0);
     } else {
         _pullDownInProgress = false;
     }
@@ -330,7 +330,7 @@
 
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (_pullDownInProgress && -_tableView.contentOffset.y > 60.0) {
+    if (_pullDownInProgress && - self.tableView.contentOffset.y > 60.0) {
         _shouldAddNewGameCell = YES;
         [self.tableView reloadData];
         [[(AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textField] becomeFirstResponder];
