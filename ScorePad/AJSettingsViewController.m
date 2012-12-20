@@ -22,11 +22,16 @@
 #define SELECT_PICTURE_WITHOUT_CAMERA_ACTION_SHEET_TAG (4)
 
 
-@interface AJSettingsViewController ()
+@interface AJSettingsViewController () {
+    UIView *_colorsContainerView;
+    NSArray *_pencilsArray;
+}
 
 - (IBAction)selectPictureButtonClicked;
 - (IBAction)takePictureButtonClicked;
 - (IBAction)setDefaultButtonClicked;
+
+- (void)loadSelectedPencil;
 
 @end
 
@@ -78,6 +83,9 @@
                     [UIColor AJGreenColor], [UIColor AJOrangeColor], [UIColor AJPinkColor], [UIColor AJPurpleColor],
                     [UIColor AJRedColor], [UIColor AJYellowColor], [UIColor whiteColor], nil];
     
+    _pencilsArray = @[@"pencil_black.png", @"pencil_blue.png", @"pencil_brown.png", @"pencil_green.png", @"pencil_orange.png",
+                        @"pencil_pink.png", @"pencil_purple.png", @"pencil_red.png", @"pencil_yellow.png", @"pencil_white.png"];
+    
     return self;
 }
 
@@ -120,37 +128,56 @@
     [self.view addSubview:_headerView];
     [_headerView release];
     
-    UIView *colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 130.0, 300.0, 100.0)];
-    colorsContainerView.backgroundColor = [UIColor clearColor];
+    _colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 130.0, 300.0, 100.0)];
+    _colorsContainerView.backgroundColor = [UIColor clearColor];
     UIImageView *containerFrameImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]];
-    containerFrameImageView.frame = colorsContainerView.bounds;
-    [colorsContainerView addSubview:containerFrameImageView];
+    containerFrameImageView.frame = _colorsContainerView.bounds;
+    [_colorsContainerView addSubview:containerFrameImageView];
     [containerFrameImageView release];
-    [self.view addSubview:colorsContainerView];
-    [colorsContainerView release];
-    
-    NSArray *pencilsArray = @[@"pencil_black.png", @"pencil_blue.png", @"pencil_brown.png", @"pencil_green.png", @"pencil_orange.png",
-    @"pencil_pink.png", @"pencil_purple.png", @"pencil_red.png", @"pencil_yellow.png", @"pencil_white.png"];
+    [self.view addSubview:_colorsContainerView];
+    [_colorsContainerView release];
     
     CGSize pencilSize = CGSizeMake(25.0, 35.0);
-    CGFloat pencilOffset = (colorsContainerView.frame.size.width) / (pencilsArray.count);
+    CGFloat pencilOffset = (_colorsContainerView.frame.size.width) / (_pencilsArray.count);
     CGFloat xOffset = 10.0;
     CGFloat yOffset = 10.0;
     
-    for (NSString *pencilImageName in pencilsArray) {
-        UIImage *pencilImage = [UIImage imageNamed:pencilImageName];
+    for (NSString *pencilImageName in _pencilsArray) {
         UIButton *pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [pencilButton setBackgroundImage:pencilImage forState:UIControlStateNormal];
         [pencilButton setFrame:CGRectMake(xOffset, yOffset, pencilSize.width, pencilSize.height)];
-        if (xOffset + pencilSize.width > colorsContainerView.frame.size.width - 2 * pencilOffset) {
+        
+        if (xOffset + pencilSize.width > _colorsContainerView.frame.size.width - 2 * pencilOffset) {
             xOffset = pencilSize.width + ceil(pencilOffset / 2.0);
             yOffset += pencilSize.width + 20.0;
         } else {
             xOffset += pencilSize.width + pencilOffset;
         }
-        [pencilButton setTag:[pencilsArray indexOfObject:pencilImageName]];
+    
+        [pencilButton setTag:[_pencilsArray indexOfObject:pencilImageName]];
+        
+        UIImage *pencilImage = [UIImage imageNamed:pencilImageName];
+        [pencilButton setImage:pencilImage forState:UIControlStateNormal];
+        
         [pencilButton addTarget:self action:@selector(pencilButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [colorsContainerView addSubview:pencilButton];
+        [_colorsContainerView addSubview:pencilButton];
+    }
+    
+    [self loadSelectedPencil];
+}
+
+- (void)loadSelectedPencil {
+    for (UIView *pencilButton in _colorsContainerView.subviews) {
+        if ([pencilButton isKindOfClass:[UIButton class]]) {
+            int colorIndex = pencilButton.tag;
+            
+            UIColor *pencilColor = [_colorsArray objectAtIndex:colorIndex];
+            if ([self.settingsInfo.colorString isEqualToString:[pencilColor toHexString:YES]]) {
+                [(UIButton *)pencilButton setBackgroundImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]
+                                                    forState:UIControlStateNormal];
+            } else {
+                [(UIButton *)pencilButton setBackgroundImage:nil forState:UIControlStateNormal];
+            }
+        }
     }
 }
 
@@ -245,6 +272,8 @@
 
 -(IBAction)pencilButtonClicked:(UIButton *)sender {
     [self.settingsInfo setColorString:[(UIColor *)[_colorsArray objectAtIndex:sender.tag] toHexString:YES]];
+    
+    [self loadSelectedPencil];
 }
 
 - (IBAction)cancelButtonClicked:(id)sender {
@@ -351,7 +380,6 @@
     [_headerView setImage:defaultImage];
     [self.settingsInfo setImageData:UIImagePNGRepresentation(defaultImage)];
 }
-
 
 @end
 
