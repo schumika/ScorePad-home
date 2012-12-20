@@ -14,4 +14,14 @@
 + (UIColor*)colorWithHexString:(NSString *)color;
 - (NSString*)toHexString:(BOOL)ignoreAlpha;
 
+// custom colors
++ (UIColor *)AJBlueColor;
++ (UIColor *)AJBrownColor;
++ (UIColor *)AJGreenColor;
++ (UIColor *)AJOrangeColor;
++ (UIColor *)AJPinkColor;
++ (UIColor *)AJPurpleColor;
++ (UIColor *)AJRedColor;
++ (UIColor *)AJYellowColor;
+
 @end

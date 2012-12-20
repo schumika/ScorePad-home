@@ -54,4 +54,37 @@
 	return nil;
 }
 
+
++ (UIColor *)AJBlueColor {
+    return [UIColor colorWithHexString:@"0000ff"];
+}
+
++ (UIColor *)AJBrownColor {
+    return [UIColor colorWithHexString:@"653b24"];
+}
+
++ (UIColor *)AJGreenColor {
+    return [UIColor colorWithHexString:@"317d07"];
+}
+
++ (UIColor *)AJOrangeColor {
+    return [UIColor colorWithHexString:@"f77512"];
+}
+
++ (UIColor *)AJPinkColor {
+    return [UIColor colorWithHexString:@"de5694"];
+}
+
++ (UIColor *)AJPurpleColor {
+    return [UIColor colorWithHexString:@"8c41b0"];
+}
+
++ (UIColor *)AJRedColor {
+    return [UIColor colorWithHexString:@"ff0000"];
+}
+
++ (UIColor *)AJYellowColor {
+    return [UIColor colorWithHexString:@"ffff00"];
+}
+
 @end

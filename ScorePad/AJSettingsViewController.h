@@ -18,7 +18,8 @@ typedef enum {
     AJPlayerItem
 } AJItemType;
 
-@interface AJSettingsViewController : AJTableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface AJSettingsViewController : AJViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,
+                                                        UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     AJItemType _itemType;
     AJSettingsInfo *_settingsInfo;
     NSArray *_colorsArray;

@@ -124,7 +124,7 @@ static AJScoresManager *sharedAJScoresManager = nil;
 
 - (void)addGameWithName:(NSString *)name andRowId:(int)rowId {
     AJGame *game = [AJGame createGameWithName:name inManagedObjectContext:self.managedObjectContext];
-    game.color = [[UIColor colorWithRed:0.6 green:0.2 blue:0.8 alpha:1.0] toHexString:YES];
+    game.color = [[UIColor AJPurpleColor] toHexString:YES];
     game.rowId = [NSNumber numberWithInt:rowId];
     
     [self saveContext];
@@ -148,7 +148,7 @@ static AJScoresManager *sharedAJScoresManager = nil;
 
 - (AJPlayer *)createPlayerWithName:(NSString *)playerName forGame:(AJGame *)game {
     AJPlayer *player = [AJPlayer createPlayerWithName:playerName forGame:game];
-    player.color = [[UIColor colorWithRed:0.3 green:0.6 blue:0.2 alpha:1.0] toHexString:YES];
+    player.color = [[UIColor AJGreenColor] toHexString:YES];
     
     if (![self saveContext]) return nil;
     

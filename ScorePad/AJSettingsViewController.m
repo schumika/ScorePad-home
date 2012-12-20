@@ -67,14 +67,16 @@
 @synthesize delegate = _delegate;
 
 - (id)initWithSettingsInfo:(AJSettingsInfo *)settingsInfo andItemType:(AJItemType)itemType {
-    self = [super initWithStyle:UITableViewStyleGrouped];
+    //self = [super initWithStyle:UITableViewStyleGrouped];
+    self = [super initWithNibName:nil bundle:nil];
     
     if (!self) return nil;
     
     self.settingsInfo = settingsInfo;
     self.itemType = itemType;
-    _colorsArray = [[NSArray alloc] initWithObjects:[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor],
-                    [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor], nil];
+    _colorsArray = [[NSArray alloc] initWithObjects:[UIColor blackColor], [UIColor AJBlueColor], [UIColor AJBrownColor],
+                    [UIColor AJGreenColor], [UIColor AJOrangeColor], [UIColor AJPinkColor], [UIColor AJPurpleColor],
+                    [UIColor AJRedColor], [UIColor AJYellowColor], [UIColor whiteColor], nil];
     
     return self;
 }
@@ -100,8 +102,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self reloadTitleView];
-    self.tableView.tag = COLORS_TABLE_VIEW_TAG;
+    //[self reloadTitleView];
+    //self.tableView.tag = COLORS_TABLE_VIEW_TAG;
+    //self.tableView.backgroundColor = [UIColor clearColor];
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
     CGRect bounds = self.view.bounds;
     _headerView = [[AJImageAndNameView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(bounds), 95.0)
@@ -111,8 +116,42 @@
     _headerView.tableView.delegate = self;
     _headerView.tableView.tag = NAME_TABLE_VIEW_TAG;
     [_headerView.pictureButton addTarget:self action:@selector(pictureButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    self.tableView.tableHeaderView = _headerView;
+    //self.tableView.tableHeaderView = _headerView;
+    [self.view addSubview:_headerView];
     [_headerView release];
+    
+    UIView *colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 130.0, 300.0, 100.0)];
+    colorsContainerView.backgroundColor = [UIColor clearColor];
+    UIImageView *containerFrameImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]];
+    containerFrameImageView.frame = colorsContainerView.bounds;
+    [colorsContainerView addSubview:containerFrameImageView];
+    [containerFrameImageView release];
+    [self.view addSubview:colorsContainerView];
+    [colorsContainerView release];
+    
+    NSArray *pencilsArray = @[@"pencil_black.png", @"pencil_blue.png", @"pencil_brown.png", @"pencil_green.png", @"pencil_orange.png",
+    @"pencil_pink.png", @"pencil_purple.png", @"pencil_red.png", @"pencil_yellow.png", @"pencil_white.png"];
+    
+    CGSize pencilSize = CGSizeMake(25.0, 35.0);
+    CGFloat pencilOffset = (colorsContainerView.frame.size.width) / (pencilsArray.count);
+    CGFloat xOffset = 10.0;
+    CGFloat yOffset = 10.0;
+    
+    for (NSString *pencilImageName in pencilsArray) {
+        UIImage *pencilImage = [UIImage imageNamed:pencilImageName];
+        UIButton *pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [pencilButton setBackgroundImage:pencilImage forState:UIControlStateNormal];
+        [pencilButton setFrame:CGRectMake(xOffset, yOffset, pencilSize.width, pencilSize.height)];
+        if (xOffset + pencilSize.width > colorsContainerView.frame.size.width - 2 * pencilOffset) {
+            xOffset = pencilSize.width + ceil(pencilOffset / 2.0);
+            yOffset += pencilSize.width + 20.0;
+        } else {
+            xOffset += pencilSize.width + pencilOffset;
+        }
+        [pencilButton setTag:[pencilsArray indexOfObject:pencilImageName]];
+        [pencilButton addTarget:self action:@selector(pencilButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [colorsContainerView addSubview:pencilButton];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -126,17 +165,17 @@
 
 #pragma mark - Keyboard notifications
 
-- (void)keyboardWillShow:(NSNotification *)aNotif {
+/*- (void)keyboardWillShow:(NSNotification *)aNotif {
     [super keyboardWillShow:aNotif];
     
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-}
+}*/
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (tableView.tag == COLORS_TABLE_VIEW_TAG) ? [_colorsArray count] : 1;
+    return (tableView.tag == COLORS_TABLE_VIEW_TAG) ? 0 : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -203,6 +242,10 @@
 }
 
 #pragma mark - Buttons Actions
+
+-(IBAction)pencilButtonClicked:(UIButton *)sender {
+    [self.settingsInfo setColorString:[(UIColor *)[_colorsArray objectAtIndex:sender.tag] toHexString:YES]];
+}
 
 - (IBAction)cancelButtonClicked:(id)sender {
     if ([self.delegate respondsToSelector:@selector(settingsViewControllerDidFinishEditing:withSettingsInfo:)]) {
