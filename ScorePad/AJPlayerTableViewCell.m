@@ -274,11 +274,11 @@
                         [_scoreTextField becomeFirstResponder];
                     }
                 } else {
-                    /*if ([self.delegate respondsToSelector:@selector(playerCellDidHideNewScoreView:)]) {
-                        [self.delegate playerCellDidHideNewScoreView:self];*/
+                    if ([self.delegate respondsToSelector:@selector(playerCellDidHideNewScoreView:)]) {
+                        [self.delegate playerCellDidHideNewScoreView:self];
                         [self moveToOriginalFrameAnimated];
                         [_scoreTextField resignFirstResponder];
-                    //}
+                    }
                 }
             }
         }

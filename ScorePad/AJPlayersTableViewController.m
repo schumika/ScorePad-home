@@ -28,6 +28,7 @@
 
 @property (nonatomic, assign) BOOL addScoreViewIsDisplayed;
 @property (nonatomic, retain) NSIndexPath *indexPathOfSelectedTextField;
+@property (nonatomic, retain) NSIndexPath *indexPathOfCellShowingLeftSide;
 
 - (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
@@ -41,6 +42,7 @@
 @synthesize game = _game;
 @synthesize playersArray = _playersArray;
 @synthesize indexPathOfSelectedTextField = _indexPathOfSelectedTextField;
+@synthesize indexPathOfCellShowingLeftSide = _indexPathOfCellShowingLeftSide;
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.playersArray = [[AJScoresManager sharedInstance] getAllPlayersForGame:self.game];
@@ -48,6 +50,10 @@
     if (updateUI) {
         if (self.tableView.hidden == NO) {
             [self.tableView reloadData];
+            //self.tableView.contentInset = UIEdgeInsetsMake(-100.0, 0.0, 0.0, 0.0);
+            if (self.playersArray.count > 0) {
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewRowAnimationTop animated:NO];
+            }
         } else {
             // remove old vertical columns
             for (UIView *subView in [_scrollView subviews]) {
@@ -91,6 +97,17 @@
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
     self.navigationItem.leftBarButtonItem = [self backButtonItem];
     
+//    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.width, 100.0)];
+//    tableHeaderView.backgroundColor = [UIColor clearColor];
+//    [self.tableView setTableHeaderView:tableHeaderView];
+//    [tableHeaderView release];
+//    
+//    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [doneButton setTitle:@"done" forState:UIControlStateNormal];
+//    [doneButton setFrame:CGRectMake(200.0, 60.0, 60.0, 35.0)];
+//    [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [tableHeaderView addSubview:doneButton];
+    
     self.indexPathOfSelectedTextField = nil;
     
 }
@@ -103,12 +120,17 @@
     
     [self prepareUIForInterfaceOrientation:self.interfaceOrientation];
     [self loadDataAndUpdateUI:YES];
+    
+    if (self.playersArray.count > 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 
 - (void)dealloc {
     [_game release];
     [_playersArray release];
     [_indexPathOfSelectedTextField release];
+    [_indexPathOfCellShowingLeftSide release];
     
     [super dealloc];
 }
@@ -274,6 +296,11 @@
     [settingsViewController release];
 }
 
+- (IBAction)doneButtonClicked:(id)sender {
+    //self.tableView.contentOffset = CGPointMake(0, 100.0);
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewRowAnimationTop animated:YES];
+}
+
 #pragma mark - AJSettingsViewControllerDelegate methods
 
 - (void)settingsViewControllerDidFinishEditing:(AJSettingsViewController *)settingsViewController withSettingsInfo:(AJSettingsInfo *)settingsInfo {
@@ -355,19 +382,22 @@
 
 - (void)playerCellDidShowNewScoreView:(AJPlayerTableViewCell *)cell {
     self.addScoreViewIsDisplayed = YES;
-    _indexPathOfCellShowingLeftSide = [self.tableView indexPathForCell:cell];
+    self.indexPathOfCellShowingLeftSide = [self.tableView indexPathForCell:cell];
 }
 
 - (void)playerCellDidHideNewScoreView:(AJPlayerTableViewCell *)cell {
-    self.addScoreViewIsDisplayed = NO;
-    _indexPathOfCellShowingLeftSide = nil;
+    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+    if (self.indexPathOfCellShowingLeftSide!= nil && (cellIndexPath.row == self.indexPathOfCellShowingLeftSide.row)) {
+        self.addScoreViewIsDisplayed = NO;
+     self.indexPathOfCellShowingLeftSide = nil;
+    }
 }
 
 - (BOOL)playerCellShouldShowNewScoreView:(AJPlayerTableViewCell *)cell {
     if (self.addScoreViewIsDisplayed == YES) return NO;
     
     NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-    if ( _indexPathOfCellShowingLeftSide!= nil && (cellIndexPath.row != _indexPathOfCellShowingLeftSide.row)) {
+    if ( self.indexPathOfCellShowingLeftSide!= nil && (cellIndexPath.row != self.indexPathOfCellShowingLeftSide.row)) {
         return NO;
     }
     return !self.addScoreViewIsDisplayed;
