@@ -25,7 +25,13 @@
 @interface AJSettingsViewController () {
     UIView *_colorsContainerView;
     NSArray *_pencilsArray;
+    NSArray *_colorsArray;
+    
+    UIButton *_pictureButton;
+    UITextField *_nameTextField;
 }
+
+@property (nonatomic, retain) NSArray *pencilsArray;
 
 - (IBAction)selectPictureButtonClicked;
 - (IBAction)takePictureButtonClicked;
@@ -36,43 +42,14 @@
 @end
 
 
-@interface AJColorTableViewCell : UITableViewCell {
-    UIColor *_color;
-    UIView *_colorView;
-}
-
-@property (nonatomic, retain) UIColor *color;
-
-@end
-
-
-
-@interface AJImageAndNameView : UIView {
-    UIImage *_image;
-    NSString *_name;
-    
-    UIButton *_pictureButton;
-    UITableView *_tableView;
-}
-
-@property (nonatomic, retain) UIImage *image;
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) UIButton *pictureButton;
-
-- (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image andName:(NSString *)name;
-
-@end
-
-
 @implementation AJSettingsViewController
 
 @synthesize settingsInfo = _settingsInfo;
 @synthesize itemType = _itemType;
 @synthesize delegate = _delegate;
+@synthesize pencilsArray = _pencilsArray;
 
 - (id)initWithSettingsInfo:(AJSettingsInfo *)settingsInfo andItemType:(AJItemType)itemType {
-    //self = [super initWithStyle:UITableViewStyleGrouped];
     self = [super initWithNibName:nil bundle:nil];
     
     if (!self) return nil;
@@ -94,8 +71,6 @@
     [_colorsArray release];
     
     [_nameTextField setDelegate:nil];
-    _headerView.tableView.dataSource = nil;
-    _headerView.tableView.delegate = nil;
     
     [super dealloc];
 }
@@ -104,31 +79,37 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Cancel" target:self action:@selector(cancelButtonClicked:)];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    //[self reloadTitleView];
-    //self.tableView.tag = COLORS_TABLE_VIEW_TAG;
-    //self.tableView.backgroundColor = [UIColor clearColor];
-    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
-    CGRect bounds = self.view.bounds;
-    _headerView = [[AJImageAndNameView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(bounds), 95.0)
-                                                   andImage:[UIImage imageWithData:self.settingsInfo.imageData]
-                                                    andName:self.settingsInfo.name];
-    _headerView.tableView.dataSource = self;
-    _headerView.tableView.delegate = self;
-    _headerView.tableView.tag = NAME_TABLE_VIEW_TAG;
-    [_headerView.pictureButton addTarget:self action:@selector(pictureButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    //self.tableView.tableHeaderView = _headerView;
-    [self.view addSubview:_headerView];
-    [_headerView release];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Cancel" target:self action:@selector(cancelButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
     
-    _colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 130.0, 300.0, 100.0)];
+    _pictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _pictureButton.frame = CGRectMake(20.0, 20.0, 70.0, 70.0);
+    [_pictureButton setImage:[UIImage imageWithData:self.settingsInfo.imageData] forState:UIControlStateNormal];
+    [self.view addSubview:_pictureButton];
+    [_pictureButton addTarget:self action:@selector(pictureButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 70.0, 20.0)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textAlignment = UITextAlignmentCenter;
+    label.font = [UIFont boldSystemFontOfSize:16.0];
+    label.text = @"edit";
+    [_pictureButton addSubview:label];
+    [label release];
+    
+    _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(120.0, 40.0, 190.0, 31.0)];
+    _nameTextField.borderStyle = UITextBorderStyleRoundedRect;
+    _nameTextField.backgroundColor = [UIColor clearColor];
+    _nameTextField.delegate = self;
+    _nameTextField.placeholder = @"Enter the Name";
+    _nameTextField.returnKeyType = UIReturnKeyDone;
+    _nameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _nameTextField.text = self.settingsInfo.name;
+    [self.view addSubview:_nameTextField];
+    [_nameTextField release];
+
+    _colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 95.0, 300.0, 100.0)];
     _colorsContainerView.backgroundColor = [UIColor clearColor];
     UIImageView *containerFrameImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]];
     containerFrameImageView.frame = _colorsContainerView.bounds;
@@ -152,7 +133,7 @@
         } else {
             xOffset += pencilSize.width + pencilOffset;
         }
-    
+        
         [pencilButton setTag:[_pencilsArray indexOfObject:pencilImageName]];
         
         UIImage *pencilImage = [UIImage imageNamed:pencilImageName];
@@ -161,6 +142,11 @@
         [pencilButton addTarget:self action:@selector(pencilButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_colorsContainerView addSubview:pencilButton];
     }
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     [self loadSelectedPencil];
 }
@@ -190,84 +176,6 @@
     return self.settingsInfo.name;
 }
 
-#pragma mark - Keyboard notifications
-
-/*- (void)keyboardWillShow:(NSNotification *)aNotif {
-    [super keyboardWillShow:aNotif];
-    
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-}*/
-
-#pragma mark - Table view data source
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return (tableView.tag == COLORS_TABLE_VIEW_TAG) ? 0 : 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *ColorCellIdentifier = @"ColorCell";
-    static NSString *NameCellIdentifier = @"NameCell";
-    
-    UITableViewCell *aCell = nil;
-    
-    if (tableView.tag == COLORS_TABLE_VIEW_TAG) {
-        AJColorTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ColorCellIdentifier];
-        
-        if (!cell) {
-            cell = [[[AJColorTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ColorCellIdentifier] autorelease];
-        }
-        
-        UIColor *rowColor = [_colorsArray objectAtIndex:indexPath.row];
-        [cell setColor:rowColor];
-        cell.accessoryType = ([self.settingsInfo.colorString isEqualToString:[rowColor toHexString:YES]]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-        
-        aCell = cell;
-    } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NameCellIdentifier];
-        
-        if (!cell) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NameCellIdentifier] autorelease];
-            
-            CGRect cellBounds = cell.contentView.bounds;
-            _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10.0, ceil((CGRectGetHeight(cellBounds) - 31.0) / 2.0), 190.0, 31.0)];
-            _nameTextField.delegate = self;
-            _nameTextField.borderStyle = UITextBorderStyleNone;
-            _nameTextField.placeholder = @"Enter the Name";
-            _nameTextField.returnKeyType = UIReturnKeyDone;
-            _nameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-            [cell.contentView addSubview:_nameTextField];
-            [_nameTextField release];
-        }
-        
-         _nameTextField.text = self.settingsInfo.name;
-        
-        aCell = cell;
-    }
-    
-    return aCell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return  (tableView.tag == COLORS_TABLE_VIEW_TAG) ? @"Name Color" : @"Name";
-}
-
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (tableView.tag == COLORS_TABLE_VIEW_TAG) {
-        [self.settingsInfo setColorString:[(UIColor *)[_colorsArray objectAtIndex:indexPath.row] toHexString:YES]];
-        [tableView reloadData];
-    } else {
-        [_nameTextField becomeFirstResponder];
-    }
-}
-
 #pragma mark - Buttons Actions
 
 -(IBAction)pencilButtonClicked:(UIButton *)sender {
@@ -294,7 +202,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [_nameTextField resignFirstResponder];
-    [self.settingsInfo  setName:[textField text]];
+    [self.settingsInfo setName:[textField text]];
     
     return YES;
 }
@@ -348,7 +256,7 @@
 		UIImageWriteToSavedPhotosAlbum(originalImage, nil, NULL, NULL);
 	}
     
-    [_headerView setImage:editedImage];
+    [_pictureButton setImage:editedImage forState:UIControlStateNormal];
     [self.settingsInfo setImageData:UIImagePNGRepresentation(editedImage)];
 }
 
@@ -377,89 +285,8 @@
 - (IBAction)setDefaultButtonClicked {
     UIImage *defaultImage = (_itemType == AJGameItem) ? [UIImage defaultGamePicture] : [UIImage defaultPlayerPicture];
     
-    [_headerView setImage:defaultImage];
+    [_pictureButton setImage:defaultImage forState:UIControlStateNormal];
     [self.settingsInfo setImageData:UIImagePNGRepresentation(defaultImage)];
-}
-
-@end
-
-
-@implementation AJColorTableViewCell
-
-@synthesize color = _color;
-
-- (void)setColor:(UIColor *)color {
-    if (color != _color) {
-        if (!_colorView) {
-            CGRect cellBounds = self.contentView.bounds;
-            _colorView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 3.0, 250.0, CGRectGetHeight(cellBounds) - 6.0)];
-            [self.contentView addSubview:_colorView];
-            [_colorView release];
-        }
-        [_colorView setBackgroundColor:color];
-        [_color release];
-        _color = [color retain];
-    }
-}
-
-- (void)dealloc {
-    [_color release];
-    
-    [super dealloc];
-}
-
-@end
-
-
-@implementation AJImageAndNameView
-
-@synthesize image = _image, name = _name, tableView = _tableView;
-
-- (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image andName:(NSString *)name {
-    self = [super initWithFrame:frame];
-    
-    if (!self) return nil;
-    
-    self.image = image;
-    self.name = name;
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(100.0, 0.0, frame.size.width - 100.0, frame.size.height) style:UITableViewStyleGrouped];
-    _tableView.backgroundColor = [UIColor clearColor];
-    _tableView.scrollEnabled = NO;
-    [self addSubview:_tableView];
-    
-    _pictureButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-    _pictureButton.frame = CGRectMake(20.0, 20.0, 70.0, 70.0);
-    [_pictureButton setImage:self.image forState:UIControlStateNormal];
-    [self addSubview:_pictureButton];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 70.0, 20.0)];
-    label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = UITextAlignmentCenter;
-    label.font = [UIFont boldSystemFontOfSize:16.0];
-    label.text = @"edit";
-    [_pictureButton addSubview:label];
-    [label release];
-    
-    return self;
-}
-
-- (void)setImage:(UIImage *)image {
-    if (image != _image) {
-        [_image release];
-        _image = [image retain];
-        
-        [_pictureButton setImage:image forState:UIControlStateNormal];
-    }
-}
-
-- (void)dealloc {
-    [_image release];
-    [_name release];
-    [_tableView release];
-    [_pictureButton release];
-    
-    [super dealloc];
 }
 
 @end
