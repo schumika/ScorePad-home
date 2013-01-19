@@ -39,7 +39,7 @@
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70.0, 3.0, 240.0, 40.0)];
     _nameLabel.backgroundColor = [UIColor clearColor];
     _nameLabel.textColor = [UIColor brownColor];
-    _nameLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:30.0];
+    _nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
     _nameLabel.adjustsFontSizeToFitWidth = YES;
     _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:_nameLabel];
@@ -71,7 +71,7 @@
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
     _pictureView.frame = CGRectMake(5.0, ceil((cellHeight - 50.0) / 2.0), 50.0, 50.0);
     CGFloat pictureMaxX = CGRectGetMaxX(_pictureView.frame) + 10.0;
-    _nameLabel.frame = CGRectMake(pictureMaxX, 3.0, cellWidth - pictureMaxX, 40.0);
+    _nameLabel.frame = CGRectMake(pictureMaxX, 10.0, cellWidth - pictureMaxX, 40.0);
     _playersLabel.frame = CGRectMake(pictureMaxX, cellHeight - 17.0, cellWidth - pictureMaxX, 15.0);
 }
 

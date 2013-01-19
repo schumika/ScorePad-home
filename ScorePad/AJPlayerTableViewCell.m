@@ -56,7 +56,7 @@
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _nameLabel.backgroundColor = [UIColor clearColor];
         _nameLabel.textColor = [UIColor brownColor];
-        _nameLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:30.0];
+        _nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
         _nameLabel.adjustsFontSizeToFitWidth = YES;
         _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:_nameLabel];
@@ -124,10 +124,10 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _pictureView.frame = CGRectMake(12.0, 15.0, 50.0, 50.0);
-    _nameLabel.frame = CGRectMake(80.0, 13.0, 140.0, 53.0);
-    _totalScoresLabel.frame = CGRectMake(192.0, 15.0, 91.0, 40.0);
-    _roundsPlayedLabel.frame = CGRectMake(192.0, 63.0, 91.0, 10.0);
+    _pictureView.frame = CGRectMake(22.0, 15.0, 50.0, 50.0);
+    _nameLabel.frame = CGRectMake(80.0, 18.0, 130.0, 65.0);
+    _totalScoresLabel.frame = CGRectMake(212.0, 15.0, 91.0, 40.0);
+    _roundsPlayedLabel.frame = CGRectMake(212.0, 63.0, 91.0, 10.0);
     
     CGFloat width = ceil(self.frame.size.width / 3.0);
     _underlinedView.frame = CGRectMake(-width, 0, width, self.frame.size.height);
@@ -216,9 +216,16 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
+    [self moveToOriginalFrameAnimated];
+    
     if (![NSString isNilOrEmpty:textField.text]) {
-        [self.delegate playerCellClickedPlusButton:self];
+        if ([self.delegate respondsToSelector:@selector(playerCellClickedPlusButton:)]) {
+            [self.delegate playerCellClickedPlusButton:self];
+            [self.delegate playerCellDidHideNewScoreView:self];
+        }
     }
+    
+    [self.delegate playerCellDidHideNewScoreView:self];
     
     return YES;
 }
