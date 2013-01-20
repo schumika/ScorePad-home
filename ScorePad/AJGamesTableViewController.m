@@ -68,6 +68,8 @@
     
     _shouldAddNewGameCell = NO;
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     self.navigationItem.rightBarButtonItem = _editBarButton;
     self.navigationItem.leftBarButtonItem = nil;
 }
@@ -149,7 +151,7 @@
         
         if (cell == nil) {
             cell = [[[AJGameTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:gameCellIdentifier] autorelease];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.panGestureDelegate = self;
         }
         
