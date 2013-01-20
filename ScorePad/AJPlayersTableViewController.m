@@ -116,7 +116,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.tableView.rowHeight = 80.0;
+    self.tableView.rowHeight = 70.0;
     
     [self prepareUIForInterfaceOrientation:self.interfaceOrientation];
     [self loadDataAndUpdateUI:YES];

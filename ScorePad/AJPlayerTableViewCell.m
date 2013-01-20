@@ -124,16 +124,16 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _pictureView.frame = CGRectMake(22.0, 15.0, 50.0, 50.0);
-    _nameLabel.frame = CGRectMake(80.0, 18.0, 130.0, 65.0);
-    _totalScoresLabel.frame = CGRectMake(212.0, 15.0, 91.0, 40.0);
-    _roundsPlayedLabel.frame = CGRectMake(212.0, 63.0, 91.0, 10.0);
+    _pictureView.frame = CGRectMake(22.0, 10.0, 50.0, 50.0);
+    _nameLabel.frame = CGRectMake(80.0, 13.0, 130.0, 65.0);
+    _totalScoresLabel.frame = CGRectMake(212.0, 10.0, 91.0, 40.0);
+    _roundsPlayedLabel.frame = CGRectMake(212.0, 55.0, 91.0, 10.0);
     
     CGFloat width = ceil(self.frame.size.width / 3.0);
     _underlinedView.frame = CGRectMake(-width, 0, width, self.frame.size.height);
-    _scoreTextField.frame = CGRectMake(5.0, 5.0, 85.0, 31.0);
-    _plusButton.frame = CGRectMake(5.0, 40.0, 40.0, 31.0);
-    _minusButton.frame = CGRectMake(50.0, 40.0, 40.0, 31.0);
+    _scoreTextField.frame = CGRectMake(5.0, 2.0, 85.0, 31.0);
+    _plusButton.frame = CGRectMake(5.0, 35.0, 40.0, 31.0);
+    _minusButton.frame = CGRectMake(50.0, 35.0, 40.0, 31.0);
 }
 
 - (void)dealloc {

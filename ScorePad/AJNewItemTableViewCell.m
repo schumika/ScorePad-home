@@ -24,6 +24,7 @@
         _textField.textColor = [UIColor darkGrayColor];
         _textField.textAlignment = UITextAlignmentCenter;
         _textField.returnKeyType = UIReturnKeyDone;
+        _textField.autocorrectionType = UITextAutocorrectionTypeNo;
         [self.contentView addSubview:_textField];
         [_textField release];
     }

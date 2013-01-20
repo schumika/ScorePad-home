@@ -71,8 +71,8 @@
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
     _pictureView.frame = CGRectMake(5.0, ceil((cellHeight - 50.0) / 2.0), 50.0, 50.0);
     CGFloat pictureMaxX = CGRectGetMaxX(_pictureView.frame) + 10.0;
-    _nameLabel.frame = CGRectMake(pictureMaxX, 10.0, cellWidth - pictureMaxX, 40.0);
-    _playersLabel.frame = CGRectMake(pictureMaxX, cellHeight - 17.0, cellWidth - pictureMaxX, 15.0);
+    _nameLabel.frame = CGRectMake(pictureMaxX, 5.0, cellWidth - pictureMaxX, 58.0);
+    _playersLabel.frame = CGRectMake(pictureMaxX, cellHeight - 15.0, cellWidth - pictureMaxX, 15.0);
 }
 
 - (void)setName:(NSString *)name {

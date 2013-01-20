@@ -118,7 +118,7 @@
     [self.view addSubview:_colorsContainerView];
     [_colorsContainerView release];
     
-    CGSize pencilSize = CGSizeMake(25.0, 35.0);
+    CGSize pencilSize = CGSizeMake(40.0, 40.0);
     CGFloat pencilOffset = (_colorsContainerView.frame.size.width) / (_pencilsArray.count);
     CGFloat xOffset = 10.0;
     CGFloat yOffset = 10.0;
@@ -127,14 +127,15 @@
         UIButton *pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [pencilButton setFrame:CGRectMake(xOffset, yOffset, pencilSize.width, pencilSize.height)];
         
-        if (xOffset + pencilSize.width > _colorsContainerView.frame.size.width - 2 * pencilOffset) {
-            xOffset = pencilSize.width + ceil(pencilOffset / 2.0);
-            yOffset += pencilSize.width + 20.0;
+        if (xOffset + (pencilSize.width - 15.0) > _colorsContainerView.frame.size.width - 2 * pencilOffset) {
+            xOffset = pencilSize.width - 15.0 + ceil(pencilOffset / 2.0);
+            yOffset += pencilSize.height + 5.0;
         } else {
-            xOffset += pencilSize.width + pencilOffset;
+            xOffset += pencilSize.width - 15.0 + pencilOffset;
         }
         
         [pencilButton setTag:[_pencilsArray indexOfObject:pencilImageName]];
+        [pencilButton setImageEdgeInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
         
         UIImage *pencilImage = [UIImage imageNamed:pencilImageName];
         [pencilButton setImage:pencilImage forState:UIControlStateNormal];

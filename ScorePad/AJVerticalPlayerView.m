@@ -61,6 +61,7 @@
             double value = [[scores objectAtIndex:scoreIndex] doubleValue];
             sum += value;
             [scoreLabel setText:[NSString stringWithFormat:@"%g", value]];
+            scoreLabel.textColor = (value >= 0.0) ? [UIColor blackColor] : [UIColor brownColor];
             [self addSubview:scoreLabel];
             [scoreLabel release];
         }
