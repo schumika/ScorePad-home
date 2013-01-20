@@ -299,7 +299,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         
         [self.tableView beginUpdates];
-        [[AJScoresManager sharedInstance] deleteGame:[self.gamesArray objectAtIndex:indexPath.row]];
+        [[AJScoresManager sharedInstance] deleteGame:self.gamesArray[indexPath.row]];
         [self loadDataAndUpdateUI:NO];
         [self updateRowIdsForGames];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
