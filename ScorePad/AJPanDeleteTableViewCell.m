@@ -103,8 +103,7 @@ const float DRAG_LABEL_WIDTH = 150.0;
         CGPoint translation = [panGesture translationInView:self];
         self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
         _shouldDelete = self.frame.origin.x < -self.frame.size.width / 2.0;
-        //float crossAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
-        //_crossLabel.alpha = crossAlpha;
+
         if (_shouldDelete) {
             _crossLabel.text = @"\u2717";
             _crossLabel.textColor = [UIColor redColor];
@@ -119,12 +118,12 @@ const float DRAG_LABEL_WIDTH = 150.0;
     
     if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
         CGRect originalFrame = CGRectMake(0.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
-        if (!_shouldDelete) {
-            [UIView animateWithDuration:0.2
-                             animations:^{
-                                 self.frame = originalFrame;
-                             }];
-        }
+        
+        [UIView animateWithDuration:0.2
+                         animations:^{
+                             self.frame = originalFrame;
+                         }];
+        
         if (_shouldDelete) {
             if ([self.panGestureDelegate respondsToSelector:@selector(panDeleteCellDraggedToDelete:)]) {
                 [self.panGestureDelegate panDeleteCellDraggedToDelete:self];
