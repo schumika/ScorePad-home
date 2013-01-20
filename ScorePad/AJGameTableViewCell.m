@@ -17,6 +17,7 @@
     UILabel *_playersLabel;
     
     UIImageView *_separatorView;
+    UIImageView *_disclosureView;
 }
 
 @end
@@ -56,10 +57,13 @@
     [self.contentView addSubview:_playersLabel];
     [_playersLabel release];
     
-    _separatorView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    _separatorView.image = [UIImage imageNamed:@"separator_new2.png"];
+    _separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator_new2.png"]];
     [self.contentView addSubview:_separatorView];
     [_separatorView release];
+    
+    _disclosureView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure.png"]];
+    [self.contentView addSubview:_disclosureView];
+    [_disclosureView release];
     
     return self;
 }
@@ -80,7 +84,9 @@
     CGFloat pictureMaxX = CGRectGetMaxX(_pictureView.frame) + 10.0;
     _nameLabel.frame = CGRectMake(pictureMaxX, 5.0, cellWidth - pictureMaxX, 58.0);
     _playersLabel.frame = CGRectMake(pictureMaxX, cellHeight - 18.0, cellWidth - pictureMaxX, 15.0);
-    _separatorView.frame = CGRectMake(0.0, cellHeight - 1.0, cellWidth, 2.0);
+
+    _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
+    _disclosureView.frame = CGRectMake(cellWidth - 30.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);
 }
 
 - (void)setName:(NSString *)name {
