@@ -110,6 +110,8 @@
     
     self.indexPathOfSelectedTextField = nil;
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -187,7 +189,7 @@
             aCell = [[[AJPlayerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:playerCellIdentifier] autorelease];
             aCell.delegate = self;
             aCell.panGestureDelegate = self;
-            aCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            aCell.accessoryType = UITableViewCellAccessoryNone;
         }
         
         AJPlayer *player = (AJPlayer *)[self.playersArray objectAtIndex:indexPath.row];

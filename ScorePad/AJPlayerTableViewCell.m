@@ -21,6 +21,9 @@
     UILabel *_totalScoresLabel;
     UILabel *_roundsPlayedLabel;
     AJUnderlinedView *_underlinedView;
+    UIImageView *_grabImageView;
+    UIImageView *_separatorView;
+    UIImageView *_disclosureView;
     
     UITextField *_scoreTextField;
     UIButton *_plusButton;
@@ -48,6 +51,12 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
+        _grabImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grabImage.png"]];
+        _grabImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        [self.contentView addSubview:_grabImageView];
+        [_grabImageView release];
+        
         _pictureView = [[UIImageView alloc] initWithFrame:CGRectZero];
         _pictureView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [self.contentView addSubview:_pictureView];
@@ -82,6 +91,14 @@
         _roundsPlayedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:_roundsPlayedLabel];
         [_roundsPlayedLabel release];
+        
+        _separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator_new2.png"]];
+        [self.contentView addSubview:_separatorView];
+        [_separatorView release];
+        
+        _disclosureView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure.png"]];
+        [self.contentView addSubview:_disclosureView];
+        [_disclosureView release];
         
         _underlinedView = [[AJUnderlinedView alloc] initWithFrame:CGRectZero];
         _underlinedView.underlineColor = [UIColor lightGrayColor];
@@ -124,10 +141,16 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
+    
+    _grabImageView.frame = CGRectMake(3.0, 25.0, 18.0, 19.0);
     _pictureView.frame = CGRectMake(22.0, 10.0, 50.0, 50.0);
     _nameLabel.frame = CGRectMake(80.0, 13.0, 130.0, 65.0);
     _totalScoresLabel.frame = CGRectMake(212.0, 10.0, 91.0, 40.0);
     _roundsPlayedLabel.frame = CGRectMake(212.0, 55.0, 91.0, 10.0);
+    
+    _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
+    _disclosureView.frame = CGRectMake(cellWidth - 22.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);
     
     CGFloat width = ceil(self.frame.size.width / 3.0);
     _underlinedView.frame = CGRectMake(-width, 0, width, self.frame.size.height);
