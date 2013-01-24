@@ -7,6 +7,7 @@
 //
 
 #import "AJPlayerTableViewCell.h"
+#import "AJBrownUnderlinedView.h"
 #import "AJUnderlinedView.h"
 
 #import "UIColor+Additions.h"
@@ -20,7 +21,7 @@
     UILabel *_nameLabel;
     UILabel *_totalScoresLabel;
     UILabel *_roundsPlayedLabel;
-    AJUnderlinedView *_underlinedView;
+    AJBrownUnderlinedView *_underlinedView;
     UIImageView *_grabImageView;
     UIImageView *_separatorView;
     UIImageView *_disclosureView;
@@ -103,8 +104,7 @@
         [self.contentView addSubview:_disclosureView];
         [_disclosureView release];
         
-        _underlinedView = [[AJUnderlinedView alloc] initWithFrame:CGRectZero];
-        _underlinedView.underlineColor = [UIColor lightGrayColor];
+        _underlinedView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         [self addSubview:_underlinedView];
         [_underlinedView release];
         
@@ -159,11 +159,10 @@
     _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
     _disclosureView.frame = CGRectMake(cellWidth - 22.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);
     
-    CGFloat width = ceil(cellWidth / 3.0);
-    _underlinedView.frame = CGRectMake(-width, 0, width, self.frame.size.height);
-    _scoreTextField.frame = CGRectMake(5.0, 2.0, 85.0, 31.0);
-    _plusButton.frame = CGRectMake(5.0, 35.0, 40.0, 31.0);
-    _minusButton.frame = CGRectMake(50.0, 35.0, 40.0, 31.0);
+    _underlinedView.frame = CGRectMake(-cellWidth, 0, cellWidth, self.frame.size.height);
+    _scoreTextField.frame = CGRectMake(cellWidth - 100.0, 2.0, 85.0, 31.0);
+    _plusButton.frame = CGRectMake(cellWidth - 100.0, 35.0, 40.0, 31.0);
+    _minusButton.frame = CGRectMake(cellWidth - 55.0, 35.0, 40.0, 31.0);
 }
 
 - (void)dealloc {

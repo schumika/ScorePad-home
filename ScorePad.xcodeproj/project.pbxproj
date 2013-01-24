@@ -70,6 +70,7 @@
 		52AF6B6A1622FAE40034F06A /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF6B681622FAE40034F06A /* background@2x.png */; };
 		52B38F2016AEA37C00D6BD2F /* grabImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B38F1E16AEA37C00D6BD2F /* grabImage.png */; };
 		52B38F2116AEA37C00D6BD2F /* grabImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B38F1F16AEA37C00D6BD2F /* grabImage@2x.png */; };
+		52D6C29C16B175B1005A7069 /* AJBrownUnderlinedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D6C29B16B175B1005A7069 /* AJBrownUnderlinedView.m */; };
 		52E2465816B125A1006E61AC /* UIFont+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E2465716B125A1006E61AC /* UIFont+Additions.m */; };
 		52E2466C16B12D52006E61AC /* handwriting53-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E2466B16B12D52006E61AC /* handwriting53-regular.ttf */; };
 		52E2468D16B158C6006E61AC /* rip.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E2468B16B158C6006E61AC /* rip.png */; };
@@ -202,6 +203,8 @@
 		52AF6B681622FAE40034F06A /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		52B38F1E16AEA37C00D6BD2F /* grabImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grabImage.png; sourceTree = "<group>"; };
 		52B38F1F16AEA37C00D6BD2F /* grabImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grabImage@2x.png"; sourceTree = "<group>"; };
+		52D6C29A16B175B1005A7069 /* AJBrownUnderlinedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJBrownUnderlinedView.h; sourceTree = "<group>"; };
+		52D6C29B16B175B1005A7069 /* AJBrownUnderlinedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJBrownUnderlinedView.m; sourceTree = "<group>"; };
 		52E2465616B125A1006E61AC /* UIFont+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Additions.h"; sourceTree = "<group>"; };
 		52E2465716B125A1006E61AC /* UIFont+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Additions.m"; sourceTree = "<group>"; };
 		52E2466B16B12D52006E61AC /* handwriting53-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "handwriting53-regular.ttf"; sourceTree = "<group>"; };
@@ -475,6 +478,8 @@
 			isa = PBXGroup;
 			children = (
 				52E6695B1626F0580035CAAC /* TableViewCells */,
+				52D6C29A16B175B1005A7069 /* AJBrownUnderlinedView.h */,
+				52D6C29B16B175B1005A7069 /* AJBrownUnderlinedView.m */,
 				52FD7A6D165BDA0500BCD571 /* AJUnderlinedView.h */,
 				52FD7A6E165BDA0500BCD571 /* AJUnderlinedView.m */,
 				52A663EE1624561300554254 /* AJVerticalPlayerView.h */,
@@ -680,6 +685,7 @@
 				A92B67FA165C21C100F85CC8 /* AJScoreTableViewCell.m in Sources */,
 				525E008F1678DD8D00D0D944 /* AJAlertView.m in Sources */,
 				52E2465816B125A1006E61AC /* UIFont+Additions.m in Sources */,
+				52D6C29C16B175B1005A7069 /* AJBrownUnderlinedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
