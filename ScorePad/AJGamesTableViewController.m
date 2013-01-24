@@ -142,9 +142,10 @@
         if (cell == nil) {
             cell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:addNewGameCellIdentifier] autorelease];
             cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.textField.placeholder = @"game name";
+            cell.textField.placeholder = @"Tap to Add new game ...";
             cell.textField.text = @"";
             cell.textField.delegate = self;
+            cell.textField.font = [UIFont DKCrayonFontWithSize:30.0];
         }
         aCell = cell;
     } else if (indexPath.section == 1) {
@@ -175,10 +176,10 @@
         if (cell == nil) {
             cell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:newGameCellIdentifier] autorelease];
             cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.textField.placeholder = @"Add New Game ...";
+            cell.textField.placeholder = @"Tap to Add new game ...";
             cell.textField.text = @"";
-            cell.textField.font = [UIFont DKCrayonFontWithSize:30.0];
             cell.textField.delegate = self;
+            cell.textField.font = [UIFont DKCrayonFontWithSize:30.0];
         }
         aCell = cell;
     }

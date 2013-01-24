@@ -45,15 +45,15 @@ static NSString *DKCrayonFontFamilyName = @"DK Crayon Crumble";
 }
 
 + (UIFont *)LDBrushFontWithSize:(CGFloat)size {
-    static UIFont *font = nil;
+    UIFont *font = nil;
     
     if (font == nil) {
         if ([[self fontNamesForLDBrushFamilyName] lastObject] != nil) {
-            font = [[UIFont fontWithName:[self fontNamesForLDBrushFamilyName][0] size:size] retain];
+            font = [UIFont fontWithName:[self fontNamesForLDBrushFamilyName][0] size:size];
         }
         
         if (font == nil) {
-            font = [[UIFont fontWithName:@"Thonburi-Bold" size:size] retain];
+            font = [UIFont fontWithName:@"Thonburi-Bold" size:size];
         }
     }
     
@@ -71,15 +71,15 @@ static NSString *DKCrayonFontFamilyName = @"DK Crayon Crumble";
 }
 
 + (UIFont *)DKCrayonFontWithSize:(CGFloat)size {
-    static UIFont *font = nil;
+    UIFont *font = nil;
     
     if (font == nil) {
         if ([[self fontNamesForDKCrayonFamilyName] lastObject] != nil) {
-            font = [[UIFont fontWithName:[self fontNamesForDKCrayonFamilyName][0] size:size] retain];
+            font = [UIFont fontWithName:[self fontNamesForDKCrayonFamilyName][0] size:size];
         }
         
         if (font == nil) {
-            font = [[UIFont fontWithName:@"Thonburi-Bold" size:size] retain];
+            font = [UIFont fontWithName:@"Thonburi-Bold" size:size];
         }
     }
     
@@ -87,18 +87,18 @@ static NSString *DKCrayonFontFamilyName = @"DK Crayon Crumble";
 }
 
 + (UIFont *)handwritingBoldFontWithSize:(CGFloat)size {
-    static UIFont *font = nil;
+    UIFont *font = nil;
     
     if (font == nil) {
         for (NSString *fontName in [self fontNamesForHandwritingFamilyName]) {
             if ([fontName rangeOfString:@"Bold"].location != NSNotFound) {
-                font = [[UIFont fontWithName:fontName size:size] retain];
+                font = [UIFont fontWithName:fontName size:size];
                 break;
             }
         }
 
         if (font == nil) {
-            font = [[UIFont fontWithName:@"Thonburi-Bold" size:size] retain];
+            font = [UIFont fontWithName:@"Thonburi-Bold" size:size];
         }
     }
 
@@ -106,18 +106,18 @@ static NSString *DKCrayonFontFamilyName = @"DK Crayon Crumble";
 }
 
 + (UIFont *)handwritingFontWithSize:(CGFloat)size {
-    static UIFont *font = nil;
+    UIFont *font = nil;
     
     if (font == nil) {
         for (NSString *fontName in [self fontNamesForHandwritingFamilyName]) {
             if ([fontName rangeOfString:@"Ext"].location != NSNotFound) {
-                font = [[UIFont fontWithName:fontName size:size] retain];
+                font = [UIFont fontWithName:fontName size:size];
                 break;
             }
         }
         
         if (font == nil) {
-            font = [[UIFont fontWithName:@"Thonburi" size:size] retain];
+            font = [UIFont fontWithName:@"Thonburi" size:size];
         }
     }
     

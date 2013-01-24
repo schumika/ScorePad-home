@@ -218,10 +218,10 @@
         if (!aCell) {
             aCell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:newPlayerCellIdentifier] autorelease];
             aCell.accessoryType = UITableViewCellAccessoryNone;
-            aCell.textField.placeholder = @"Add New Player ...";
+            aCell.textField.placeholder = @"Tap to add New Player ...";
             aCell.textField.text = @"";
             aCell.textField.delegate = self;
-            aCell.textField.font = [UIFont LDBrushFontWithSize:25.0];
+            aCell.textField.font = [UIFont LDBrushFontWithSize:43.0];
         }
         
         cell = aCell;
