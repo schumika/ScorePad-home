@@ -8,6 +8,7 @@
 
 #import "AJPanDeleteTableViewCell.h"
 #import "AJUnderlinedView.h"
+#import "AJBrownUnderlinedView.h"
 
 @interface AJPanDeleteTableViewCell() {
     CGPoint _originalCenter;
@@ -15,7 +16,7 @@
     UILabel *_crossLabel;
     UILabel *_dragToDeleteLabel;
     
-    AJUnderlinedView *_underlinedView;
+    AJBrownUnderlinedView *_underlinedView;
 }
 
 @end
@@ -33,8 +34,7 @@ const float DRAG_LABEL_WIDTH = 150.0;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _underlinedView = [[AJUnderlinedView alloc] initWithFrame:CGRectZero];
-        _underlinedView.underlineColor = [UIColor lightGrayColor];
+        _underlinedView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         [self addSubview:_underlinedView];
         [_underlinedView release];
         
@@ -64,7 +64,7 @@ const float DRAG_LABEL_WIDTH = 150.0;
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _underlinedView.frame = CGRectMake(self.bounds.size.width, 0.0, 200.0, self.bounds.size.height);
+    _underlinedView.frame = CGRectMake(self.bounds.size.width, 0.0, 320.0, self.bounds.size.height);
     
     _crossLabel.frame = CGRectMake(UI_CUES_MARGIN, 0.0, UI_CUES_WIDTH, self.bounds.size.height);
     _dragToDeleteLabel.frame = CGRectMake(CGRectGetMaxX(_crossLabel.frame) + 5.0, 0.0,

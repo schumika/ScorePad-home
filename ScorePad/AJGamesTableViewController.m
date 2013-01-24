@@ -18,6 +18,7 @@
 #import "NSString+Additions.h"
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
+#import "UIFont+Additions.h"
 
 @interface AJGamesTableViewController () {
     UILabel *_draggToAddLabel;
@@ -176,6 +177,7 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textField.placeholder = @"Add New Game ...";
             cell.textField.text = @"";
+            cell.textField.font = [UIFont DKCrayonFontWithSize:50.0];
             cell.textField.delegate = self;
         }
         aCell = cell;

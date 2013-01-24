@@ -7,6 +7,13 @@
 //
 
 #import "AJNewItemTableViewCell.h"
+#import "AJBrownUnderlinedView.h"
+
+@interface AJNewItemTableViewCell () {
+    AJBrownUnderlinedView *_underlinedView;
+}
+
+@end
 
 @implementation AJNewItemTableViewCell
 
@@ -16,6 +23,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _underlinedView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        [self.contentView addSubview:_underlinedView];
+        [_underlinedView release];
+        
         _textField = [[UITextField alloc] initWithFrame:CGRectZero];
         _textField.borderStyle = UITextBorderStyleNone;
         _textField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -25,7 +36,7 @@
         _textField.textAlignment = UITextAlignmentCenter;
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.autocorrectionType = UITextAutocorrectionTypeNo;
-        [self.contentView addSubview:_textField];
+        [_underlinedView addSubview:_textField];
         [_textField release];
     }
     return self;
@@ -35,8 +46,9 @@
     [super layoutSubviews];
     
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
-    CGFloat tfY = ceil((cellHeight - 31.0) / 2.0);
-    _textField.frame = CGRectMake(0.0, tfY, cellWidth, 31.0);
+    _underlinedView.frame = CGRectMake(0.0, 0.0, cellWidth, cellHeight);
+    CGFloat tfY = ceil((cellHeight - 40.0) / 2.0);
+    _textField.frame = CGRectMake(0.0, tfY, cellWidth, 40.0);
 }
 
 @end

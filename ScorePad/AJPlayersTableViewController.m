@@ -221,6 +221,7 @@
         aCell.textField.placeholder = @"Add New Player ...";
         aCell.textField.text = @"";
         aCell.textField.delegate = self;
+        aCell.textField.font = [UIFont LDBrushFontWithSize:50.0];
         
         cell = aCell;
     }
