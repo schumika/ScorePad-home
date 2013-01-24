@@ -177,7 +177,7 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textField.placeholder = @"Add New Game ...";
             cell.textField.text = @"";
-            cell.textField.font = [UIFont DKCrayonFontWithSize:50.0];
+            cell.textField.font = [UIFont DKCrayonFontWithSize:30.0];
             cell.textField.delegate = self;
         }
         aCell = cell;

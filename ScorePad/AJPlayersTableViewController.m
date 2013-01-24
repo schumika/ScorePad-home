@@ -17,6 +17,7 @@
 #import "UIImage+Additions.h"
 #import "AJAlertView.h"
 
+#import "UIFont+Additions.h"
 
 @interface AJPlayersTableViewController () {
     UIImageView *_backView;
@@ -217,11 +218,11 @@
         if (!aCell) {
             aCell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:newPlayerCellIdentifier] autorelease];
             aCell.accessoryType = UITableViewCellAccessoryNone;
+            aCell.textField.placeholder = @"Add New Player ...";
+            aCell.textField.text = @"";
+            aCell.textField.delegate = self;
+            aCell.textField.font = [UIFont LDBrushFontWithSize:25.0];
         }
-        aCell.textField.placeholder = @"Add New Player ...";
-        aCell.textField.text = @"";
-        aCell.textField.delegate = self;
-        aCell.textField.font = [UIFont LDBrushFontWithSize:50.0];
         
         cell = aCell;
     }
