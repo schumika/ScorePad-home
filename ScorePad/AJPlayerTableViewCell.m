@@ -12,7 +12,7 @@
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
 #import "NSString+Additions.h"
-
+#import "UIFont+Additions.h"
 
 
 @interface AJPlayerTableViewCell () {
@@ -52,7 +52,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        _grabImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grabImage.png"]];
+        _grabImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rip.png"]];
         _grabImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [self.contentView addSubview:_grabImageView];
         [_grabImageView release];
@@ -65,7 +65,9 @@
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _nameLabel.backgroundColor = [UIColor clearColor];
         _nameLabel.textColor = [UIColor brownColor];
-        _nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
+        //_nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
+        //_nameLabel.font = [UIFont handwritingBoldFontWithSize:45.0];
+        _nameLabel.font = [UIFont LDBrushFontWithSize:55.0];
         _nameLabel.adjustsFontSizeToFitWidth = YES;
         _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:_nameLabel];
@@ -74,11 +76,12 @@
         _totalScoresLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _totalScoresLabel.backgroundColor = [UIColor clearColor];
         _totalScoresLabel.textColor = [UIColor brownColor];
-        _totalScoresLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:40.0];
+        //_totalScoresLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:40.0];
+        //_totalScoresLabel.font = [UIFont handwritingFontWithSize:45.0];
+        _totalScoresLabel.font = [UIFont LDBrushFontWithSize:65.0];
         _totalScoresLabel.adjustsFontSizeToFitWidth = YES;
         _totalScoresLabel.textAlignment = UITextAlignmentCenter;
         _totalScoresLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        _totalScoresLabel.textAlignment = UITextAlignmentCenter;
         [self.contentView addSubview:_totalScoresLabel];
         [_totalScoresLabel release];
         
@@ -143,16 +146,20 @@
     
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
     
-    _grabImageView.frame = CGRectMake(3.0, 25.0, 18.0, 19.0);
-    _pictureView.frame = CGRectMake(22.0, 10.0, 50.0, 50.0);
-    _nameLabel.frame = CGRectMake(80.0, 13.0, 130.0, 65.0);
-    _totalScoresLabel.frame = CGRectMake(212.0, 10.0, 91.0, 40.0);
+    //_grabImageView.frame = CGRectMake(3.0, 25.0, 18.0, 19.0);
+    _grabImageView.frame = CGRectMake(3.0, 0.0, 12.0, 70.0);
+    //_pictureView.frame = CGRectMake(22.0, 10.0, 50.0, 50.0);
+    _pictureView.frame = CGRectMake(30.0, 17.0, 35.0, 35.0);
+    //_nameLabel.frame = CGRectMake(80.0, 13.0, 130.0, 65.0);
+    _nameLabel.frame = CGRectMake(70.0, 5.0, 130.0, 65.0);
+    //_totalScoresLabel.frame = CGRectMake(212.0, 10.0, 91.0, 40.0);
+    _totalScoresLabel.frame = CGRectMake(212.0, 10.0, 91.0, 50.0);
     _roundsPlayedLabel.frame = CGRectMake(212.0, 55.0, 91.0, 10.0);
     
     _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
     _disclosureView.frame = CGRectMake(cellWidth - 22.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);
     
-    CGFloat width = ceil(self.frame.size.width / 3.0);
+    CGFloat width = ceil(cellWidth / 3.0);
     _underlinedView.frame = CGRectMake(-width, 0, width, self.frame.size.height);
     _scoreTextField.frame = CGRectMake(5.0, 2.0, 85.0, 31.0);
     _plusButton.frame = CGRectMake(5.0, 35.0, 40.0, 31.0);

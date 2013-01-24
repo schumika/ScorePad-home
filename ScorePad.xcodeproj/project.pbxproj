@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		520FE04D16B00AE800CDD0B2 /* handwriting53-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 520FE04B16B00AE800CDD0B2 /* handwriting53-bold.ttf */; };
 		521BC2D316255A5A000C2EE0 /* AJScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 521BC2D216255A5A000C2EE0 /* AJScrollView.m */; };
 		521E13391600B76300022B1E /* AJScore+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 521E13381600B76300022B1E /* AJScore+Additions.m */; };
 		521E133C1600C2AF00022B1E /* AJScoresTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 521E133B1600C2AF00022B1E /* AJScoresTableViewController.m */; };
@@ -69,6 +70,12 @@
 		52AF6B6A1622FAE40034F06A /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF6B681622FAE40034F06A /* background@2x.png */; };
 		52B38F2016AEA37C00D6BD2F /* grabImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B38F1E16AEA37C00D6BD2F /* grabImage.png */; };
 		52B38F2116AEA37C00D6BD2F /* grabImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B38F1F16AEA37C00D6BD2F /* grabImage@2x.png */; };
+		52E2465816B125A1006E61AC /* UIFont+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E2465716B125A1006E61AC /* UIFont+Additions.m */; };
+		52E2466C16B12D52006E61AC /* handwriting53-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E2466B16B12D52006E61AC /* handwriting53-regular.ttf */; };
+		52E2468D16B158C6006E61AC /* rip.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E2468B16B158C6006E61AC /* rip.png */; };
+		52E2468E16B158C6006E61AC /* rip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E2468C16B158C6006E61AC /* rip@2x.png */; };
+		52E2469616B166A3006E61AC /* DK Crayon Crumble.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E2469416B166A3006E61AC /* DK Crayon Crumble.ttf */; };
+		52E2469716B166A3006E61AC /* ld-brush-stroke.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E2469516B166A3006E61AC /* ld-brush-stroke.ttf */; };
 		52E5228B163AA49900E99702 /* AJPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E5228A163AA49900E99702 /* AJPlayerView.xib */; };
 		52E6695F1626F0880035CAAC /* AJGameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E6695E1626F0880035CAAC /* AJGameTableViewCell.m */; };
 		52E669661626FC7F0035CAAC /* separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E669641626FC7F0035CAAC /* separator.png */; };
@@ -106,6 +113,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		520FE04B16B00AE800CDD0B2 /* handwriting53-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "handwriting53-bold.ttf"; sourceTree = "<group>"; };
 		521BC2D116255A5A000C2EE0 /* AJScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScrollView.h; sourceTree = "<group>"; };
 		521BC2D216255A5A000C2EE0 /* AJScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScrollView.m; sourceTree = "<group>"; };
 		521E13371600B76300022B1E /* AJScore+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AJScore+Additions.h"; sourceTree = "<group>"; };
@@ -194,6 +202,13 @@
 		52AF6B681622FAE40034F06A /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		52B38F1E16AEA37C00D6BD2F /* grabImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grabImage.png; sourceTree = "<group>"; };
 		52B38F1F16AEA37C00D6BD2F /* grabImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grabImage@2x.png"; sourceTree = "<group>"; };
+		52E2465616B125A1006E61AC /* UIFont+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Additions.h"; sourceTree = "<group>"; };
+		52E2465716B125A1006E61AC /* UIFont+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Additions.m"; sourceTree = "<group>"; };
+		52E2466B16B12D52006E61AC /* handwriting53-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "handwriting53-regular.ttf"; sourceTree = "<group>"; };
+		52E2468B16B158C6006E61AC /* rip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rip.png; sourceTree = "<group>"; };
+		52E2468C16B158C6006E61AC /* rip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rip@2x.png"; sourceTree = "<group>"; };
+		52E2469416B166A3006E61AC /* DK Crayon Crumble.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DK Crayon Crumble.ttf"; sourceTree = "<group>"; };
+		52E2469516B166A3006E61AC /* ld-brush-stroke.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ld-brush-stroke.ttf"; sourceTree = "<group>"; };
 		52E5228A163AA49900E99702 /* AJPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AJPlayerView.xib; sourceTree = "<group>"; };
 		52E6695D1626F0880035CAAC /* AJGameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJGameTableViewCell.h; sourceTree = "<group>"; };
 		52E6695E1626F0880035CAAC /* AJGameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJGameTableViewCell.m; sourceTree = "<group>"; };
@@ -251,6 +266,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		520FE04816B00ADB00CDD0B2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				52E2469416B166A3006E61AC /* DK Crayon Crumble.ttf */,
+				52E2469516B166A3006E61AC /* ld-brush-stroke.ttf */,
+				52E2466B16B12D52006E61AC /* handwriting53-regular.ttf */,
+				520FE04B16B00AE800CDD0B2 /* handwriting53-bold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		5253285B15FF0F1600A28B84 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +311,8 @@
 		525328BD15FF587C00A28B84 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				52E2465616B125A1006E61AC /* UIFont+Additions.h */,
+				52E2465716B125A1006E61AC /* UIFont+Additions.m */,
 				525328BF15FF589700A28B84 /* NSString+Additions.h */,
 				525328C015FF589700A28B84 /* NSString+Additions.m */,
 				525328C115FF589700A28B84 /* UIColor+Additions.h */,
@@ -346,6 +374,7 @@
 		525CC23315FE2A1F00E8F903 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				520FE04816B00ADB00CDD0B2 /* Fonts */,
 				52A10850161F0C86006FCACD /* Images */,
 				525CC23415FE2A1F00E8F903 /* ScorePad-Info.plist */,
 				525CC23515FE2A1F00E8F903 /* InfoPlist.strings */,
@@ -377,6 +406,8 @@
 		52A10850161F0C86006FCACD /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				52E2468B16B158C6006E61AC /* rip.png */,
+				52E2468C16B158C6006E61AC /* rip@2x.png */,
 				52B38F1E16AEA37C00D6BD2F /* grabImage.png */,
 				52B38F1F16AEA37C00D6BD2F /* grabImage@2x.png */,
 				A9E14A6016AC119D00A2C1C7 /* disclosure.png */,
@@ -586,6 +617,12 @@
 				A9E14A6316AC119D00A2C1C7 /* disclosure@2x.png in Resources */,
 				52B38F2016AEA37C00D6BD2F /* grabImage.png in Resources */,
 				52B38F2116AEA37C00D6BD2F /* grabImage@2x.png in Resources */,
+				520FE04D16B00AE800CDD0B2 /* handwriting53-bold.ttf in Resources */,
+				52E2466C16B12D52006E61AC /* handwriting53-regular.ttf in Resources */,
+				52E2468D16B158C6006E61AC /* rip.png in Resources */,
+				52E2468E16B158C6006E61AC /* rip@2x.png in Resources */,
+				52E2469616B166A3006E61AC /* DK Crayon Crumble.ttf in Resources */,
+				52E2469716B166A3006E61AC /* ld-brush-stroke.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -642,6 +679,7 @@
 				52FD7A6F165BDA0500BCD571 /* AJUnderlinedView.m in Sources */,
 				A92B67FA165C21C100F85CC8 /* AJScoreTableViewCell.m in Sources */,
 				525E008F1678DD8D00D0D944 /* AJAlertView.m in Sources */,
+				52E2465816B125A1006E61AC /* UIFont+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
