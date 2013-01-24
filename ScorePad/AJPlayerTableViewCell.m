@@ -250,7 +250,6 @@
     if (![NSString isNilOrEmpty:textField.text]) {
         if ([self.delegate respondsToSelector:@selector(playerCellClickedPlusButton:)]) {
             [self.delegate playerCellClickedPlusButton:self];
-            [self.delegate playerCellDidHideNewScoreView:self];
         }
     }
     
