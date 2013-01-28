@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AJBrownUnderlinedView : UIView
+@interface AJBrownUnderlinedView : UIView {
+    UIImage *_backgroundImage;
+}
+
+@property (nonatomic, retain) UIImage *backgroundImage;
 
 @end

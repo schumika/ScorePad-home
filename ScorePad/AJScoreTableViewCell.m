@@ -7,8 +7,13 @@
 //
 
 #import "AJScoreTableViewCell.h"
+#import "AJBrownUnderlinedView.h"
+
+#import "UIFont+Additions.h"
 
 @interface AJScoreTableViewCell() {
+    AJBrownUnderlinedView *_backView;
+    
     UILabel *_roundLabel;
     UILabel *_scoreLabel;
     UILabel *_intermediateTotalLabel;
@@ -28,25 +33,29 @@
     
     if (!self) return nil;
     
+    _backView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+    [self.contentView addSubview:_backView];
+    [_backView release];
+    
     _roundLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _roundLabel.font = [UIFont fontWithName:@"Thonburi" size:17.0];
+    _roundLabel.font = [UIFont LDBrushFontWithSize:30.0];
     _roundLabel.backgroundColor = [UIColor clearColor];
     _roundLabel.textAlignment = UITextAlignmentCenter;
-    [self.contentView addSubview:_roundLabel];
+    [_backView addSubview:_roundLabel];
     [_roundLabel release];
     
     _scoreLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _scoreLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:22.0];
+    _scoreLabel.font = [UIFont LDBrushFontWithSize:40.0];
     _scoreLabel.backgroundColor = [UIColor clearColor];
     _scoreLabel.textAlignment = UITextAlignmentCenter;
-    [self.contentView addSubview:_scoreLabel];
+    [_backView addSubview:_scoreLabel];
     [_scoreLabel release];
     
     _intermediateTotalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _intermediateTotalLabel.font = [UIFont fontWithName:@"Thonburi" size:17.0];
+    _intermediateTotalLabel.font = [UIFont LDBrushFontWithSize:30.0];
     _intermediateTotalLabel.backgroundColor = [UIColor clearColor];
     _intermediateTotalLabel.textAlignment = UITextAlignmentCenter;
-    [self.contentView addSubview:_intermediateTotalLabel];
+    [_backView addSubview:_intermediateTotalLabel];
     [_intermediateTotalLabel release];
     
     return self;
@@ -56,6 +65,7 @@
     [super layoutSubviews];
     
     CGFloat labelHeight = self.contentView.bounds.size.height;
+    _backView.frame = self.contentView.bounds;
     _roundLabel.frame = CGRectMake(10.0, 0.0, 40.0, labelHeight);
     _scoreLabel.frame = CGRectMake(140.0, 0.0, 40.0, labelHeight);
     _intermediateTotalLabel.frame = CGRectMake(260.0, 0.0, 40.0, labelHeight);

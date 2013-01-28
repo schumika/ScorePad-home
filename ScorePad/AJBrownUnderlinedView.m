@@ -9,6 +9,7 @@
 #import "AJBrownUnderlinedView.h"
 
 @interface AJBrownUnderlinedView() {
+    UIImageView *_backgroundImageView;
     UIImageView *_underlinedImageView;
 }
 
@@ -19,6 +20,8 @@
 
 @implementation AJBrownUnderlinedView
 
+@synthesize backgroundImage = _backgroundImage;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -26,15 +29,44 @@
         _underlinedImageView = [[UIImageView alloc] initWithImage:[self underlinedImage]];
         [self addSubview:_underlinedImageView];
         [_underlinedImageView release];
+        
+        _backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        [self addSubview:_backgroundImageView];
+        [_backgroundImageView release];
     }
     return self;
+}
+
+- (void)dealloc {
+    [_backgroundImage release];
+    
+    [super dealloc];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    [self sendSubviewToBack:_backgroundImageView];
+    [self bringSubviewToFront:_underlinedImageView];
 }
 
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     
+    _backgroundImageView.frame = self.bounds;
     CGFloat imageHeight = [self underlinedImage].size.height;
     _underlinedImageView.frame = CGRectMake(0.0, frame.size.height - imageHeight, frame.size.width, imageHeight);
+}
+
+- (void)setBackgroundImage:(UIImage *)backgroundImage {
+    if (backgroundImage != _backgroundImage) {
+        [_backgroundImage release];
+        _backgroundImage = [backgroundImage retain];
+        
+        _backgroundImageView.image = _backgroundImage;
+        
+        [self setNeedsLayout];
+    }
 }
 
 - (UIImage *)underlinedImage {

@@ -7,11 +7,17 @@
 //
 
 #import "AJScoresTableViewController.h"
+#import "AJNewItemTableViewCell.h"
+#import "AJBrownUnderlinedView.h"
 #import "AJScoresManager.h"
 #import "AJSettingsInfo.h"
 
-
+#import "UIFont+Additions.h"
+#import "UIColor+Additions.h"
 #import "NSString+Additions.h"
+
+static CGFloat kHeaderViewHeight = 40.0;
+static CGFloat kFooterViewHeight = 40.0;
 
 @interface AJScoresTableViewController ()
 
@@ -44,7 +50,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.rowHeight = 35.0;
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
     self.navigationItem.leftBarButtonItem = [self backButtonItem];
@@ -93,25 +100,15 @@
     UITableViewCell *aCell = nil;
     
     if (indexPath.section == 1) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NewScoreCellIdentifier];
-        
+        AJNewItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NewScoreCellIdentifier];
         if (!cell) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:NewScoreCellIdentifier] autorelease];
-            
+            cell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NewScoreCellIdentifier] autorelease];
             cell.accessoryType = UITableViewCellAccessoryNone;
-            _newScoreTextField = [[UITextField alloc] initWithFrame:cell.contentView.bounds];
-            _newScoreTextField.borderStyle = UITextBorderStyleNone;
-            _newScoreTextField.backgroundColor = [UIColor clearColor];
-            _newScoreTextField.font = [UIFont boldSystemFontOfSize:20.0];
-            _newScoreTextField.textColor = [UIColor blueColor];
-            _newScoreTextField.placeholder = @"Add New Score ...";
-            _newScoreTextField.text = @"";
-            _newScoreTextField.delegate = self;
-            _newScoreTextField.textAlignment = UITextAlignmentCenter;
-            _newScoreTextField.returnKeyType = UIReturnKeyDone;
-            _newScoreTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-            [cell.contentView addSubview:_newScoreTextField];
-            [_newScoreTextField release];
+            cell.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            cell.textField.placeholder = @"Tap to add New Score ...";
+            cell.textField.text = @"";
+            cell.textField.delegate = self;
+            cell.textField.font = [UIFont LDBrushFontWithSize:43.0];
         }
         
         aCell = cell;
@@ -147,48 +144,76 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectZero];
-    
     if (section == 0) {
+        AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
         CGFloat thirdOfTableWidth = ceil(CGRectGetWidth(tableView.bounds) / 3.0);
-        headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), 20.0);
-        headerView.backgroundColor = [UIColor lightGrayColor];
+        headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
         
-        UILabel *roundLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, thirdOfTableWidth, 20.0)];
+        UILabel *roundLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         roundLabel.text = @"Round";
-        roundLabel.textColor = [UIColor whiteColor];
+        roundLabel.textColor = [UIColor AJBrownColor];
+        roundLabel.font = [UIFont LDBrushFontWithSize:35.0];
         roundLabel.backgroundColor = [UIColor clearColor];
         [headerView addSubview:roundLabel];
         [roundLabel release];
         
-        UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(thirdOfTableWidth, 0.0, thirdOfTableWidth, 20.0)];
+        UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(thirdOfTableWidth, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         scoreLabel.text = @"Score";
-        scoreLabel.textColor = [UIColor whiteColor];
-        scoreLabel.font = [UIFont boldSystemFontOfSize:17.0];
+        scoreLabel.textColor = [UIColor AJBrownColor];
+        scoreLabel.font = [UIFont LDBrushFontWithSize:45.0];
         scoreLabel.backgroundColor = [UIColor clearColor];
         scoreLabel.textAlignment = UITextAlignmentCenter;
         [headerView addSubview:scoreLabel];
         [scoreLabel release];
         
-        UILabel *intemediateLabel = [[UILabel alloc] initWithFrame:CGRectMake(2 * thirdOfTableWidth, 0.0, thirdOfTableWidth, 20.0)];
+        UILabel *intemediateLabel = [[UILabel alloc] initWithFrame:CGRectMake(2 * thirdOfTableWidth, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         intemediateLabel.text = @"Intermediate";
-        intemediateLabel.textColor = [UIColor whiteColor];
+        intemediateLabel.textColor = [UIColor AJBrownColor];
+        intemediateLabel.font = [UIFont LDBrushFontWithSize:35.0];
         intemediateLabel.backgroundColor = [UIColor clearColor];
         intemediateLabel.textAlignment = UITextAlignmentCenter;
         intemediateLabel.adjustsFontSizeToFitWidth = YES;
         [headerView addSubview:intemediateLabel];
         [intemediateLabel release];
+        
+        return [headerView autorelease];
     }
     
-    return [headerView autorelease];
+    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return (section == 0) ? kHeaderViewHeight : 0.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return (section == 0) ? kFooterViewHeight : 0.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section == 0) {
-        return [NSString stringWithFormat:@"Total: %g", [self.player totalScore]];
+        AJBrownUnderlinedView *footerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        footerView.backgroundImage = [UIImage imageNamed:@"background.png"];
+        footerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kFooterViewHeight);
+        
+        UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 0.0, CGRectGetWidth(tableView.bounds) - 20.0, kFooterViewHeight)];
+        totalLabel.text = [NSString stringWithFormat:@"Total: %g", [self.player totalScore]];
+        totalLabel.textColor = [UIColor AJBrownColor];
+        totalLabel.font = [UIFont LDBrushFontWithSize:45.0];
+        totalLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        totalLabel.backgroundColor = [UIColor clearColor];
+        [footerView addSubview:totalLabel];
+        [totalLabel release];
+        
+        return [footerView autorelease];
     }
     
-    return nil;
+    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return (indexPath.section == 0) ? 35.0 : 60.0;
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -203,7 +228,7 @@
     NSString *text = textField.text;
     if (![NSString isNilOrEmpty:text]) {
         [[AJScoresManager sharedInstance] createScoreWithValue:text.doubleValue inRound:([self.scoresArray count] +1) forPlayer:self.player];
-        [_newScoreTextField setText:nil];
+        [textField setText:nil];
         
         [self loadDataAndUpdateUI:YES];
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]
