@@ -64,7 +64,6 @@
 - (void)dealloc {
     [_tableView setDelegate:nil];
     [_tableView setDataSource:nil];
-    [_tableView release];
     
     [_titleView release];
     [_backButtonItem release];
