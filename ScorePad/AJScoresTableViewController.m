@@ -23,6 +23,7 @@ static CGFloat kFooterViewHeight = 40.0;
 
 - (void)updateRoundsForScores;
 - (double)intermediateTotalAtRound:(int)round;
+- (NSArray *)scoresArrayOrderedByRoundAscending:(BOOL)ascending;
 
 @end
 
@@ -40,7 +41,8 @@ static CGFloat kFooterViewHeight = 40.0;
 }
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
-     self.scoresArray = [[AJScoresManager sharedInstance] getAllScoresForPlayer:self.player];
+    //self.scoresArray = [[AJScoresManager sharedInstance] getAllScoresForPlayer:self.player];
+    self.scoresArray = [self scoresArrayOrderedByRoundAscending:YES];
     [self reloadTitleView];
     if (updateUI) {
         [self.tableView reloadData];
@@ -138,9 +140,9 @@ static CGFloat kFooterViewHeight = 40.0;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1) {
+    /*if (indexPath.section == 1) {
         [_newScoreTextField becomeFirstResponder];
-    }
+    }*/
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -152,7 +154,7 @@ static CGFloat kFooterViewHeight = 40.0;
         
         UILabel *roundLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         roundLabel.text = @"Round";
-        roundLabel.textColor = [UIColor AJBrownColor];
+        roundLabel.textColor = [UIColor AJGreenColor];
         roundLabel.font = [UIFont LDBrushFontWithSize:35.0];
         roundLabel.backgroundColor = [UIColor clearColor];
         [headerView addSubview:roundLabel];
@@ -223,7 +225,7 @@ static CGFloat kFooterViewHeight = 40.0;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [_newScoreTextField resignFirstResponder];
+    [textField resignFirstResponder];
     
     NSString *text = textField.text;
     if (![NSString isNilOrEmpty:text]) {
@@ -260,6 +262,19 @@ static CGFloat kFooterViewHeight = 40.0;
     }
     
     return total;
+}
+
+- (NSArray *)scoresArrayOrderedByRoundAscending:(BOOL)ascending {
+    NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[[AJScoresManager sharedInstance] getAllScoresForPlayer:self.player]];
+    [orderedArray sortUsingComparator:^NSComparisonResult(AJScore *score1, AJScore *score2) {
+        if (score1.round.intValue < score2.round.intValue) {
+            return ascending ? NSOrderedAscending : NSOrderedDescending;
+        } else {
+            return ascending ? NSOrderedDescending : NSOrderedAscending;
+        }
+    }];
+    
+    return orderedArray;
 }
 
 #pragma mark - Actions

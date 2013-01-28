@@ -13,8 +13,6 @@
 
 @interface AJScoresTableViewController : AJTableViewController <UITextFieldDelegate, AJSettingsViewControllerDelegate, AJPanDeleteTableViewCellDelegate> {
     NSArray *_scoresArray;
-    
-    UITextField *_newScoreTextField;
 }
 
 @property (nonatomic, retain) AJPlayer *player;

@@ -67,7 +67,7 @@
     CGFloat labelHeight = self.contentView.bounds.size.height;
     _backView.frame = self.contentView.bounds;
     _roundLabel.frame = CGRectMake(10.0, 0.0, 40.0, labelHeight);
-    _scoreLabel.frame = CGRectMake(140.0, 0.0, 40.0, labelHeight);
+    _scoreLabel.frame = CGRectMake(135.0, 0.0, 50.0, labelHeight);
     _intermediateTotalLabel.frame = CGRectMake(260.0, 0.0, 40.0, labelHeight);
 }
 
