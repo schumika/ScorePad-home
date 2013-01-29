@@ -29,8 +29,6 @@
     UITextField *_scoreTextField;
     UIButton *_plusButton;
     UIButton *_minusButton;
-    
-    UIButton *butt;
 }
 
 @end
@@ -284,13 +282,7 @@
     [super panGestureHandler:panGesture];
     
     if (panGesture.state == UIGestureRecognizerStateChanged) {
-        
         self.displaysLeftSide = self.frame.origin.x > self.frame.size.width / 3.0;
-        if (self.displaysLeftSide) {
-            [butt setTitle:@"release" forState:UIControlStateNormal];
-        } else {
-            [butt setTitle:@"drag" forState:UIControlStateNormal];
-        }
     }
     
     if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
