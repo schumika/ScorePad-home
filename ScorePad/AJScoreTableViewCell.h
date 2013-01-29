@@ -9,10 +9,37 @@
 #import <UIKit/UIKit.h>
 #import "AJPanDeleteTableViewCell.h"
 
-@interface AJScoreTableViewCell : AJPanDeleteTableViewCell
+@protocol AJScoreTableViewCellDelegate;
+
+@interface AJScoreTableViewCell : AJPanDeleteTableViewCell <UITextFieldDelegate> {
+    UITextField *_scoreTextField;
+    BOOL _displaysLeftSide;
+    
+    id<AJScoreTableViewCellDelegate> _delegate;
+}
+
+@property (nonatomic, readonly) UITextField *scoreTextField;
 
 @property (nonatomic, assign) int round;
 @property (nonatomic, assign) double score;
 @property (nonatomic, assign) double intermediateTotal;
+
+@property (nonatomic, assign) BOOL displaysLeftSide;
+
+@property (nonatomic, assign) id<AJScoreTableViewCellDelegate> delegate;
+
+@end
+
+
+@protocol AJScoreTableViewCellDelegate <NSObject>
+
+- (void)scoreCellShouldStartEditingScore:(AJScoreTableViewCell *)cell;
+- (void)scoreCellDidEndEditingScore:(AJScoreTableViewCell *)cell;
+//- (void)scoreCellClickedPlusButton:(AJScoreTableViewCell *)cell;
+//- (void)scoreCellClickedMinusButton:(AJScoreTableViewCell *)cell;
+
+- (BOOL)scoreCellShouldShowLeftView:(AJScoreTableViewCell *)cell;
+- (void)scoreCellDidShowLeftView:(AJScoreTableViewCell *)cell;
+- (void)scoreCellDidHideLeftView:(AJScoreTableViewCell *)cell;
 
 @end

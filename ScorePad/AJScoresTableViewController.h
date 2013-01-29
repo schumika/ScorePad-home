@@ -11,7 +11,7 @@
 #import "AJSettingsViewController.h"
 #import "AJScoreTableViewCell.h"
 
-@interface AJScoresTableViewController : AJTableViewController <UITextFieldDelegate, AJSettingsViewControllerDelegate, AJPanDeleteTableViewCellDelegate> {
+@interface AJScoresTableViewController : AJTableViewController <UITextFieldDelegate, AJSettingsViewControllerDelegate, AJPanDeleteTableViewCellDelegate, AJScoreTableViewCellDelegate> {
     NSArray *_scoresArray;
 }
 

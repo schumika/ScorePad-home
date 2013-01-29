@@ -10,9 +10,12 @@
 #import "AJBrownUnderlinedView.h"
 
 #import "UIFont+Additions.h"
+#import "UIImage+Additions.h"
+#import "NSString+Additions.h"
 
 @interface AJScoreTableViewCell() {
-    AJBrownUnderlinedView *_backView;
+    AJBrownUnderlinedView *_backgroundView;
+    AJBrownUnderlinedView *_leftBackgroundView;
     
     UILabel *_roundLabel;
     UILabel *_scoreLabel;
@@ -24,39 +27,62 @@
 
 @implementation AJScoreTableViewCell
 
+@synthesize scoreTextField = _scoreTextField;
+
 @synthesize round = _round;
 @synthesize score = _score;
 @synthesize intermediateTotal = _intermediateTotal;
+
+@synthesize displaysLeftSide = _displaysLeftSide;
+
+@synthesize delegate = _delegate;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (!self) return nil;
     
-    _backView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
-    [self.contentView addSubview:_backView];
-    [_backView release];
+    _backgroundView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+    [self.contentView addSubview:_backgroundView];
+    [_backgroundView release];
     
     _roundLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _roundLabel.font = [UIFont LDBrushFontWithSize:30.0];
     _roundLabel.backgroundColor = [UIColor clearColor];
     _roundLabel.textAlignment = UITextAlignmentCenter;
-    [_backView addSubview:_roundLabel];
+    [_backgroundView addSubview:_roundLabel];
     [_roundLabel release];
     
     _scoreLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _scoreLabel.font = [UIFont LDBrushFontWithSize:40.0];
     _scoreLabel.backgroundColor = [UIColor clearColor];
     _scoreLabel.textAlignment = UITextAlignmentCenter;
-    [_backView addSubview:_scoreLabel];
+    [_backgroundView addSubview:_scoreLabel];
     [_scoreLabel release];
     
     _intermediateTotalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _intermediateTotalLabel.font = [UIFont LDBrushFontWithSize:30.0];
     _intermediateTotalLabel.backgroundColor = [UIColor clearColor];
     _intermediateTotalLabel.textAlignment = UITextAlignmentCenter;
-    [_backView addSubview:_intermediateTotalLabel];
+    [_backgroundView addSubview:_intermediateTotalLabel];
     [_intermediateTotalLabel release];
+    
+    _leftBackgroundView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+    [self.contentView addSubview:_leftBackgroundView];
+    [_leftBackgroundView release];
+    
+    _scoreTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+    _scoreTextField.borderStyle = UITextBorderStyleNone;
+    _scoreTextField.background = [UIImage roundTextFieldImage];
+    _scoreTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    _scoreTextField.placeholder = [NSString stringWithFormat:@"%g",0.0];
+    _scoreTextField.font = [UIFont fontWithName:@"Thonburi" size:17.0];
+    _scoreTextField.textColor = [UIColor brownColor];
+    _scoreTextField.textAlignment = UITextAlignmentCenter;
+    _scoreTextField.delegate = self;
+    _scoreTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    [_leftBackgroundView addSubview:_scoreTextField];
+    [_scoreTextField release];
     
     return self;
 }
@@ -64,16 +90,22 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGFloat labelHeight = self.contentView.bounds.size.height;
-    _backView.frame = self.contentView.bounds;
-    _roundLabel.frame = CGRectMake(10.0, 0.0, 40.0, labelHeight);
-    _scoreLabel.frame = CGRectMake(135.0, 0.0, 50.0, labelHeight);
-    _intermediateTotalLabel.frame = CGRectMake(260.0, 0.0, 40.0, labelHeight);
+    CGFloat cellHeight = self.contentView.bounds.size.height;
+    CGFloat cellWidth = self.contentView.bounds.size.width;
+    
+    _backgroundView.frame = self.contentView.bounds;
+    _roundLabel.frame = CGRectMake(10.0, 0.0, 40.0, cellHeight);
+    _scoreLabel.frame = CGRectMake(135.0, 0.0, 50.0, cellHeight);
+    _intermediateTotalLabel.frame = CGRectMake(260.0, 0.0, 40.0, cellHeight);
+    
+    _leftBackgroundView.frame = CGRectMake(-cellWidth, 0.0, cellWidth, cellHeight);
+    _scoreTextField.frame = CGRectMake(cellWidth - 100.0, 1.0, 85.0, 31.0);
 }
 
 - (void)setScore:(double)score {
     _score = score;
     _scoreLabel.text = [NSString stringWithFormat:@"%g", score];
+    _scoreTextField.text = [NSString stringWithFormat:@"%g", score];
     
     if (score < 0) {
         _scoreLabel.textColor = [UIColor brownColor];
@@ -91,5 +123,96 @@
     _intermediateTotal = intermediateTotal;
     _intermediateTotalLabel.text = [NSString stringWithFormat:@"%g", intermediateTotal];
 }
+
+#pragma mark - horizontal pan gesture methods
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]]) return NO;
+    
+    CGPoint translation = [gestureRecognizer translationInView:[self superview]];
+    // check if is a horizontal gesture
+    if (fabs(translation.x) > fabs(translation.y)) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - UITextFieldDelegate methods
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if ([self.delegate respondsToSelector:@selector(scoreCellShouldStartEditingScore:)]) {
+        [self.delegate scoreCellShouldStartEditingScore:self];
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    [self moveToOriginalFrameAnimated];
+    
+    if (![NSString isNilOrEmpty:textField.text]) {
+        if ([self.delegate respondsToSelector:@selector(scoreCellDidEndEditingScore:)]) {
+            [self.delegate scoreCellDidEndEditingScore:self];
+        }
+    }
+    
+    [self.delegate scoreCellDidHideLeftView:self];
+    
+    return YES;
+}
+
+#pragma mark - pan gesture handler overriden from base class
+
+- (void)moveToOriginalFrameAnimated {
+    CGRect originalFrame = CGRectMake(0.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         self.frame = originalFrame;
+                     }];
+}
+
+- (void)panGestureHandler:(UIPanGestureRecognizer *)panGesture {
+    [super panGestureHandler:panGesture];
+    
+    if (panGesture.state == UIGestureRecognizerStateChanged) {
+        self.displaysLeftSide = self.frame.origin.x > self.frame.size.width / 3.0;
+    }
+    
+    if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
+        if (self.displaysLeftSide == NO) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(scoreCellDidHideLeftView:)]) {
+                [self.delegate scoreCellDidHideLeftView:self];
+                [self moveToOriginalFrameAnimated];
+                [_scoreTextField resignFirstResponder];
+            }
+       } else {
+           if (self.delegate && [self.delegate respondsToSelector:@selector(scoreCellShouldShowLeftView:)]) {
+                if ([self.delegate scoreCellShouldShowLeftView:self]) {
+                    if ([self.delegate respondsToSelector:@selector(scoreCellDidShowLeftView:)]) {
+                       [self.delegate scoreCellDidShowLeftView:self];
+                        self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+                        [_scoreTextField becomeFirstResponder];
+                    }
+                } else {
+                    if ([self.delegate respondsToSelector:@selector(scoreCellDidHideLeftView:)]) {
+                        [self.delegate scoreCellDidHideLeftView:self];
+                        [self moveToOriginalFrameAnimated];
+                        [_scoreTextField resignFirstResponder];
+                    }
+                }
+            }
+        }
+    }
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    if (self.displaysLeftSide && point.x < 0) {
+        return YES;
+    }
+    
+    return [super pointInside:point withEvent:event];
+}
+
 
 @end

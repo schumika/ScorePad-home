@@ -19,7 +19,15 @@
 static CGFloat kHeaderViewHeight = 40.0;
 static CGFloat kFooterViewHeight = 40.0;
 
-@interface AJScoresTableViewController ()
+@interface AJScoresTableViewController () {
+    BOOL _leftScoreViewIsDisplayed;
+    NSIndexPath *_indexPathOfSelectedTextField;
+    NSIndexPath *_indexPathOfCellShowingLeftSide;
+}
+
+@property (nonatomic, assign) BOOL leftScoreViewIsDisplayed;
+@property (nonatomic, retain) NSIndexPath *indexPathOfSelectedTextField;
+@property (nonatomic, retain) NSIndexPath *indexPathOfCellShowingLeftSide;
 
 - (void)updateRoundsForScores;
 - (double)intermediateTotalAtRound:(int)round;
@@ -33,9 +41,14 @@ static CGFloat kFooterViewHeight = 40.0;
 @synthesize player = _player;
 @synthesize scoresArray = _scoresArray;
 
+@synthesize indexPathOfSelectedTextField = _indexPathOfSelectedTextField;
+@synthesize indexPathOfCellShowingLeftSide = _indexPathOfCellShowingLeftSide;
+
 - (void)dealloc {
     [_player release];
     [_scoresArray release];
+    [_indexPathOfSelectedTextField release];
+    [_indexPathOfCellShowingLeftSide release];
     
     [super dealloc];
 }
@@ -57,6 +70,8 @@ static CGFloat kFooterViewHeight = 40.0;
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
     self.navigationItem.leftBarButtonItem = [self backButtonItem];
+    
+    self.indexPathOfSelectedTextField = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -75,7 +90,9 @@ static CGFloat kFooterViewHeight = 40.0;
 - (void)keyboardWillShow:(NSNotification *)aNotif {
     [super keyboardWillShow:aNotif];
     
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (self.indexPathOfSelectedTextField != nil) {
+        [self.tableView scrollToRowAtIndexPath:self.indexPathOfSelectedTextField atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 - (NSString*)titleViewText {
@@ -120,6 +137,7 @@ static CGFloat kFooterViewHeight = 40.0;
         if (!cell) {
             cell = [[[AJScoreTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ScoreCellIdentifier] autorelease];
             cell.panGestureDelegate = self;
+            cell.delegate = self;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         AJScore *score = [self.scoresArray objectAtIndex:indexPath.row];
@@ -140,9 +158,13 @@ static CGFloat kFooterViewHeight = 40.0;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    /*if (indexPath.section == 1) {
-        [_newScoreTextField becomeFirstResponder];
-    }*/
+    if (self.leftScoreViewIsDisplayed) return;
+    
+    if (indexPath.section == 1) {
+        [((AJNewItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).textField becomeFirstResponder];
+    } else {
+       // ...
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -220,8 +242,26 @@ static CGFloat kFooterViewHeight = 40.0;
 
 #pragma mark - UITextFieldDelegate methods
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (self.leftScoreViewIsDisplayed) return NO;
+    
+    self.indexPathOfSelectedTextField = nil;
+    
+    for (int cellIndex = 0; cellIndex < [self.player.scores count]; cellIndex++) {
+        AJScoreTableViewCell *cell = (AJScoreTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:0]];
+        if (cell.scoreTextField == textField) {
+            self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:0];
+            //break;
+            return !self.tableView.editing;
+        }
+    }
+    
+    AJNewItemTableViewCell *cell = (AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+    if (cell.textField == textField) {
+        self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:0 inSection:1];
+    }
+    
+    return !self.tableView.editing;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -307,6 +347,10 @@ static CGFloat kFooterViewHeight = 40.0;
 #pragma mark - AJPanDeleteTableViewCellDelegate methods
 
 - (void)panDeleteCellDraggedToDelete:(AJPanDeleteTableViewCell *)cell {
+    self.leftScoreViewIsDisplayed =  NO;
+    self.indexPathOfCellShowingLeftSide = nil;
+    self.indexPathOfSelectedTextField = nil;
+    
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
     [self.tableView beginUpdates];
@@ -317,6 +361,39 @@ static CGFloat kFooterViewHeight = 40.0;
     [self.tableView endUpdates];
 
     [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+}
+
+#pragma mark - AJScoreTableViewCellDelegate methods
+
+- (void)scoreCellDidEndEditingScore:(AJScoreTableViewCell *)cell {
+    NSLog(@"the new score is %@", cell.scoreTextField.text);
+}
+
+- (void)scoreCellShouldStartEditingScore:(AJScoreTableViewCell *)cell {
+    self.indexPathOfSelectedTextField = [self.tableView indexPathForCell:cell];
+}
+
+- (void)scoreCellDidShowLeftView:(AJScoreTableViewCell *)cell {
+    self.leftScoreViewIsDisplayed = YES;
+    self.indexPathOfCellShowingLeftSide = [self.tableView indexPathForCell:cell];
+}
+
+- (void)scoreCellDidHideLeftView:(AJScoreTableViewCell *)cell {
+    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+    
+    if (self.indexPathOfCellShowingLeftSide != nil && (cellIndexPath.row == self.indexPathOfCellShowingLeftSide.row)) {
+        self.leftScoreViewIsDisplayed = NO;
+        self.indexPathOfCellShowingLeftSide = nil;
+    }
+}
+
+- (BOOL)scoreCellShouldShowLeftView:(AJScoreTableViewCell *)cell {
+    if (self.leftScoreViewIsDisplayed) return NO;
+    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+    if (self.indexPathOfCellShowingLeftSide != nil && (cellIndexPath.row != self.indexPathOfCellShowingLeftSide.row)) {
+        return NO;
+    }
+    return !self.leftScoreViewIsDisplayed;
 }
 
 
