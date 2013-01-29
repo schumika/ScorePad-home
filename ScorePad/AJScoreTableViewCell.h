@@ -28,6 +28,8 @@
 
 @property (nonatomic, assign) id<AJScoreTableViewCellDelegate> delegate;
 
+- (void)showLeftView;
+
 @end
 
 

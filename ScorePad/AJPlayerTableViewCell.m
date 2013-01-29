@@ -19,7 +19,7 @@
 @interface AJPlayerTableViewCell () {
     UIImageView *_pictureView;
     UILabel *_nameLabel;
-    UILabel *_totalScoresLabel;
+    UIButton *_totalScoresButton;
     UILabel *_roundsPlayedLabel;
     AJBrownUnderlinedView *_underlinedView;
     UIImageView *_grabImageView;
@@ -72,17 +72,18 @@
         [self.contentView addSubview:_nameLabel];
         [_nameLabel release];
         
-        _totalScoresLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _totalScoresLabel.backgroundColor = [UIColor clearColor];
-        _totalScoresLabel.textColor = [UIColor brownColor];
+        _totalScoresButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _totalScoresButton.backgroundColor = [UIColor clearColor];
+        [_totalScoresButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
         //_totalScoresLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:40.0];
         //_totalScoresLabel.font = [UIFont handwritingFontWithSize:45.0];
-        _totalScoresLabel.font = [UIFont LDBrushFontWithSize:65.0];
-        _totalScoresLabel.adjustsFontSizeToFitWidth = YES;
-        _totalScoresLabel.textAlignment = UITextAlignmentCenter;
-        _totalScoresLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self.contentView addSubview:_totalScoresLabel];
-        [_totalScoresLabel release];
+        _totalScoresButton.titleLabel.font = [UIFont LDBrushFontWithSize:65.0];
+        _totalScoresButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+        _totalScoresButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        _totalScoresButton.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [_totalScoresButton addTarget:self action:@selector(totalScoresButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:_totalScoresButton];
+        [_totalScoresButton release];
         
         _roundsPlayedLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _roundsPlayedLabel.backgroundColor = [UIColor clearColor];
@@ -151,7 +152,7 @@
     //_nameLabel.frame = CGRectMake(80.0, 13.0, 130.0, 65.0);
     _nameLabel.frame = CGRectMake(70.0, 5.0, 130.0, 65.0);
     //_totalScoresLabel.frame = CGRectMake(212.0, 10.0, 91.0, 40.0);
-    _totalScoresLabel.frame = CGRectMake(212.0, 10.0, 91.0, 50.0);
+    _totalScoresButton.frame = CGRectMake(212.0, 10.0, 91.0, 50.0);
     _roundsPlayedLabel.frame = CGRectMake(212.0, 55.0, 91.0, 10.0);
     
     _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
@@ -201,7 +202,7 @@
 - (void)setTotalScores:(double)totalScores {
     _totalScores = totalScores;
     
-    _totalScoresLabel.text = [NSString stringWithFormat:@"%g", _totalScores];
+    [_totalScoresButton setTitle:[NSString stringWithFormat:@"%g", _totalScores] forState:UIControlStateNormal];
 }
 
 - (void)setNumberOfRounds:(int)numberOfRounds {
@@ -293,21 +294,7 @@
                 [_scoreTextField resignFirstResponder];
             }
         } else {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(playerCellShouldShowNewScoreView:)]) {
-                if ([self.delegate playerCellShouldShowNewScoreView:self]) {
-                    if ([self.delegate respondsToSelector:@selector(playerCellDidShowNewScoreView:)]) {
-                        [self.delegate playerCellDidShowNewScoreView:self];
-                        self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
-                        [_scoreTextField becomeFirstResponder];
-                    }
-                } else {
-                    if ([self.delegate respondsToSelector:@selector(playerCellDidHideNewScoreView:)]) {
-                        [self.delegate playerCellDidHideNewScoreView:self];
-                        [self moveToOriginalFrameAnimated];
-                        [_scoreTextField resignFirstResponder];
-                    }
-                }
-            }
+            [self showLeftView];
         }
     }
 }
@@ -318,6 +305,28 @@
     }
     
     return [super pointInside:point withEvent:event];
+}
+
+- (void)showLeftView {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerCellShouldShowNewScoreView:)]) {
+        if ([self.delegate playerCellShouldShowNewScoreView:self]) {
+            if ([self.delegate respondsToSelector:@selector(playerCellDidShowNewScoreView:)]) {
+                [self.delegate playerCellDidShowNewScoreView:self];
+                self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+                [_scoreTextField becomeFirstResponder];
+            }
+        } else {
+            if ([self.delegate respondsToSelector:@selector(playerCellDidHideNewScoreView:)]) {
+                [self.delegate playerCellDidHideNewScoreView:self];
+                [self moveToOriginalFrameAnimated];
+                [_scoreTextField resignFirstResponder];
+            }
+        }
+    }
+}
+
+- (IBAction)totalScoresButtonClicked:(id)sender {
+    [self showLeftView];
 }
 
 @end

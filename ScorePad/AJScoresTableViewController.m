@@ -138,7 +138,7 @@ static CGFloat kFooterViewHeight = 40.0;
             cell = [[[AJScoreTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ScoreCellIdentifier] autorelease];
             cell.panGestureDelegate = self;
             cell.delegate = self;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleGray;
         }
         AJScore *score = [self.scoresArray objectAtIndex:indexPath.row];
         cell.round = score.round.intValue;
@@ -163,7 +163,7 @@ static CGFloat kFooterViewHeight = 40.0;
     if (indexPath.section == 1) {
         [((AJNewItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).textField becomeFirstResponder];
     } else {
-       // ...
+        [((AJScoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]) showLeftView];
     }
 }
 

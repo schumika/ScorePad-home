@@ -151,7 +151,7 @@
     
     [self moveToOriginalFrameAnimated];
     
-    if (![NSString isNilOrEmpty:textField.text]) {
+    if (![NSString isNilOrEmpty:textField.text] && (textField.text.doubleValue != self.score)) {
         if ([self.delegate respondsToSelector:@selector(scoreCellDidEndEditingScore:)]) {
             [self.delegate scoreCellDidEndEditingScore:self];
         }
@@ -180,27 +180,23 @@
     }
     
     if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
-        if (self.displaysLeftSide == NO) {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(scoreCellDidHideLeftView:)]) {
+        [self showLeftView];
+    }
+}
+
+- (void)showLeftView {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(scoreCellShouldShowLeftView:)]) {
+        if ([self.delegate scoreCellShouldShowLeftView:self]) {
+            if ([self.delegate respondsToSelector:@selector(scoreCellDidShowLeftView:)]) {
+                [self.delegate scoreCellDidShowLeftView:self];
+                self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
+                [_scoreTextField becomeFirstResponder];
+            }
+        } else {
+            if ([self.delegate respondsToSelector:@selector(scoreCellDidHideLeftView:)]) {
                 [self.delegate scoreCellDidHideLeftView:self];
                 [self moveToOriginalFrameAnimated];
                 [_scoreTextField resignFirstResponder];
-            }
-       } else {
-           if (self.delegate && [self.delegate respondsToSelector:@selector(scoreCellShouldShowLeftView:)]) {
-                if ([self.delegate scoreCellShouldShowLeftView:self]) {
-                    if ([self.delegate respondsToSelector:@selector(scoreCellDidShowLeftView:)]) {
-                       [self.delegate scoreCellDidShowLeftView:self];
-                        self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
-                        [_scoreTextField becomeFirstResponder];
-                    }
-                } else {
-                    if ([self.delegate respondsToSelector:@selector(scoreCellDidHideLeftView:)]) {
-                        [self.delegate scoreCellDidHideLeftView:self];
-                        [self moveToOriginalFrameAnimated];
-                        [_scoreTextField resignFirstResponder];
-                    }
-                }
             }
         }
     }

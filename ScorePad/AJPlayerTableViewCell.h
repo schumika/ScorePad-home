@@ -35,6 +35,8 @@
 
 @property (nonatomic, readonly) UITextField *scoreTextField;
 
+- (void)showLeftView;
+
 @end
 
 
