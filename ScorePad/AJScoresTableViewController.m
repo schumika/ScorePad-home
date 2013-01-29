@@ -158,12 +158,14 @@ static CGFloat kFooterViewHeight = 40.0;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (self.leftScoreViewIsDisplayed) return;
-    
     if (indexPath.section == 1) {
         [((AJNewItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).textField becomeFirstResponder];
     } else {
-        [((AJScoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]) showLeftView];
+        if (self.indexPathOfCellShowingLeftSide == indexPath) {
+            [((AJScoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]) hideLeftView];
+        } else {
+            [((AJScoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]) showLeftView];
+        }
     }
 }
 

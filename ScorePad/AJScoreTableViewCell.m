@@ -180,7 +180,11 @@
     }
     
     if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
-        [self showLeftView];
+        if (self.displaysLeftSide == NO) {
+            [self hideLeftView];
+        } else {
+            [self showLeftView];
+        }
     }
 }
 
@@ -199,6 +203,14 @@
                 [_scoreTextField resignFirstResponder];
             }
         }
+    }
+}
+
+- (void)hideLeftView {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(scoreCellDidHideLeftView:)]) {
+        [self.delegate scoreCellDidHideLeftView:self];
+        [self moveToOriginalFrameAnimated];
+        [_scoreTextField resignFirstResponder];
     }
 }
 
