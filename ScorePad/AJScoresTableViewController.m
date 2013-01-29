@@ -366,7 +366,12 @@ static CGFloat kFooterViewHeight = 40.0;
 #pragma mark - AJScoreTableViewCellDelegate methods
 
 - (void)scoreCellDidEndEditingScore:(AJScoreTableViewCell *)cell {
-    NSLog(@"the new score is %@", cell.scoreTextField.text);
+    int scoreRound = [self.tableView indexPathForCell:cell].row;
+    AJScore *modifiedScore = [self.scoresArray objectAtIndex:scoreRound];
+    
+    modifiedScore.value = [NSNumber numberWithDouble:[cell.scoreTextField text].doubleValue];
+    [[AJScoresManager sharedInstance] saveContext];
+    [self loadDataAndUpdateUI:YES];
 }
 
 - (void)scoreCellShouldStartEditingScore:(AJScoreTableViewCell *)cell {
