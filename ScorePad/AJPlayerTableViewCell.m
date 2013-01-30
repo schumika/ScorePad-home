@@ -83,7 +83,6 @@
         _totalScoresButton.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [_totalScoresButton addTarget:self action:@selector(totalScoresButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_totalScoresButton];
-        [_totalScoresButton release];
         
         _roundsPlayedLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _roundsPlayedLabel.backgroundColor = [UIColor clearColor];

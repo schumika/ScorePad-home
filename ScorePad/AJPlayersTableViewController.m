@@ -53,7 +53,7 @@
             [self.tableView reloadData];
             //self.tableView.contentInset = UIEdgeInsetsMake(-100.0, 0.0, 0.0, 0.0);
             if (self.playersArray.count > 0) {
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewRowAnimationTop animated:NO];
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
             }
         } else {
             // remove old vertical columns
@@ -302,7 +302,7 @@
 
 - (IBAction)doneButtonClicked:(id)sender {
     //self.tableView.contentOffset = CGPointMake(0, 100.0);
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewRowAnimationTop animated:YES];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 #pragma mark - AJSettingsViewControllerDelegate methods
