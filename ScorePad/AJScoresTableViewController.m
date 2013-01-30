@@ -178,7 +178,7 @@ static CGFloat kFooterViewHeight = 40.0;
         
         UILabel *roundLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         roundLabel.text = @"Round";
-        roundLabel.textColor = [UIColor AJGreenColor];
+        roundLabel.textColor = [UIColor AJBrownColor];
         roundLabel.font = [UIFont LDBrushFontWithSize:35.0];
         roundLabel.backgroundColor = [UIColor clearColor];
         [headerView addSubview:roundLabel];

@@ -20,4 +20,12 @@
     return nilOrEmpty;
 }
 
++ (NSString *)upArrow {
+    return @"\u2191";
+}
+
++ (NSString *)downArrow {
+    return @"\u2193";
+}
+
 @end

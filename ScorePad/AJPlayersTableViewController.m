@@ -9,15 +9,18 @@
 #import "AJPlayersTableViewController.h"
 #import "AJScoresTableViewController.h"
 #import "AJSettingsViewController.h"
-#import "AJSettingsInfo.h"
-#import "AJScoresManager.h"
 #import "AJNewItemTableViewCell.h"
-#import "NSString+Additions.h"
-#import "UIColor+Additions.h"
-#import "UIImage+Additions.h"
+#import "AJBrownUnderlinedView.h"
+#import "AJScoresManager.h"
+#import "AJSettingsInfo.h"
 #import "AJAlertView.h"
 
 #import "UIFont+Additions.h"
+#import "NSString+Additions.h"
+#import "UIColor+Additions.h"
+#import "UIImage+Additions.h"
+
+static CGFloat kHeaderViewHeight = 30.0;
 
 @interface AJPlayersTableViewController () {
     UIImageView *_backView;
@@ -35,6 +38,8 @@
 
 - (BOOL)addScoreViewIsDisplayed;
 
+- (NSArray *)playersArrayOrderedByTotalScoreAscending:(BOOL)ascending;
+
 @end
 
 
@@ -46,7 +51,8 @@
 @synthesize indexPathOfCellShowingLeftSide = _indexPathOfCellShowingLeftSide;
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
-    self.playersArray = [[AJScoresManager sharedInstance] getAllPlayersForGame:self.game];
+    //self.playersArray = [[AJScoresManager sharedInstance] getAllPlayersForGame:self.game];
+    self.playersArray = [self playersArrayOrderedByTotalScoreAscending:NO];
     [self reloadTitleView];
     if (updateUI) {
         if (self.tableView.hidden == NO) {
@@ -252,6 +258,45 @@
     }
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
+        //CGFloat halfOfTableWidth = ceil(CGRectGetWidth(tableView.bounds) / 2.0);
+        headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
+        
+        UILabel *playerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        playerLabel.text = @"Player";
+        playerLabel.textColor = [UIColor AJBrownColor];
+        playerLabel.font = [UIFont LDBrushFontWithSize:35.0];
+        playerLabel.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:playerLabel];
+        [playerLabel release];
+        CGSize fitSize = [playerLabel sizeThatFits:CGSizeMake(0.0, kHeaderViewHeight)];
+        playerLabel.frame = CGRectMake(40.0, 0.0, fitSize.width, kHeaderViewHeight);
+        
+        UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        scoreLabel.text = @"Score";
+        scoreLabel.textColor = [UIColor AJBrownColor];
+        scoreLabel.font = [UIFont LDBrushFontWithSize:35.0];
+        scoreLabel.backgroundColor = [UIColor clearColor];
+        scoreLabel.textAlignment = UITextAlignmentRight;
+        scoreLabel.adjustsFontSizeToFitWidth = YES;
+        [headerView addSubview:scoreLabel];
+        [scoreLabel release];
+        CGSize scoreLabelSize = [scoreLabel sizeThatFits:CGSizeMake(0.0, kHeaderViewHeight)];
+        scoreLabel.frame = CGRectMake(CGRectGetWidth(tableView.bounds) - scoreLabelSize.width - 40.0, 0.0, scoreLabelSize.width, kHeaderViewHeight);
+        
+        return [headerView autorelease];
+    }
+    
+    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return (section == 0) ? kHeaderViewHeight : 0.0;
+}
+
 #pragma mark - UITextFieldDelegate methods
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -455,4 +500,17 @@
 }
 
  */
+
+- (NSArray *)playersArrayOrderedByTotalScoreAscending:(BOOL)ascending {
+    NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[[AJScoresManager sharedInstance] getAllPlayersForGame:self.game]];
+    [orderedArray sortUsingComparator:^NSComparisonResult(AJPlayer *player1, AJPlayer *player2) {
+        if (player1.totalScore < player2.totalScore) {
+            return ascending ? NSOrderedAscending : NSOrderedDescending;
+        } else {
+            return ascending ? NSOrderedDescending : NSOrderedAscending;
+        }
+    }];
+    
+    return orderedArray;
+}
 @end

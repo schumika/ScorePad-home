@@ -12,4 +12,7 @@
 
 + (BOOL)isNilOrEmpty:(NSString *)string;
 
++ (NSString *)upArrow;
++ (NSString *)downArrow;
+
 @end
