@@ -121,7 +121,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.playersSortingType = AJPlayersSortingByNameASC;
+    self.playersSortingType = AJPlayersSortingNone;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -545,6 +545,9 @@ static CGFloat kHeaderViewHeight = 35.0;
 
 - (NSArray *)getOrderedPlayersArray {
     NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[[AJScoresManager sharedInstance] getAllPlayersForGame:self.game]];
+    
+    if (self.playersSortingType == AJPlayersSortingNone) return orderedArray;
+        
     BOOL isSortingByTotal = (self.playersSortingType == AJPlayersSortingByTotalASC || self.playersSortingType == AJPlayersSortingByTotalDESC);
     BOOL isSortingASC = (self.playersSortingType == AJPlayersSortingByTotalASC || self.playersSortingType == AJPlayersSortingByNameASC);
     

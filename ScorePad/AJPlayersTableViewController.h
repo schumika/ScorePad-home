@@ -16,7 +16,8 @@
 #import "AJSettingsViewController.h"
 
 typedef enum {
-    AJPlayersSortingByTotalASC = 0,
+    AJPlayersSortingNone = 0,
+    AJPlayersSortingByTotalASC,
     AJPlayersSortingByTotalDESC,
     AJPlayersSortingByNameASC,
     AJPlayersSortingByNameDESC
