@@ -15,6 +15,13 @@
 
 #import "AJSettingsViewController.h"
 
+typedef enum {
+    AJPlayersSortingByTotalASC = 0,
+    AJPlayersSortingByTotalDESC,
+    AJPlayersSortingByNameASC,
+    AJPlayersSortingByNameDESC
+} AJPlayersSortingType;
+
 @interface AJPlayersTableViewController : AJTableViewController <UITextFieldDelegate, AJSettingsViewControllerDelegate, UIAlertViewDelegate,
                                             AJVerticalPlayerViewDelegate, AJPlayerTableViewCellDelegate, AJPanDeleteTableViewCellDelegate> {
     AJGame *_game;
@@ -25,5 +32,7 @@
 
 @property (nonatomic, retain) AJGame *game;
 @property (nonatomic, retain) NSArray *playersArray;
+
+@property (nonatomic, assign) AJPlayersSortingType playersSortingType;
 
 @end

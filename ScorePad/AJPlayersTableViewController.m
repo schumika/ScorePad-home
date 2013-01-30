@@ -20,7 +20,7 @@
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
 
-static CGFloat kHeaderViewHeight = 30.0;
+static CGFloat kHeaderViewHeight = 35.0;
 
 @interface AJPlayersTableViewController () {
     UIImageView *_backView;
@@ -38,7 +38,7 @@ static CGFloat kHeaderViewHeight = 30.0;
 
 - (BOOL)addScoreViewIsDisplayed;
 
-- (NSArray *)playersArrayOrderedByTotalScoreAscending:(BOOL)ascending;
+- (NSArray *)getOrderedPlayersArray;
 
 @end
 
@@ -50,9 +50,11 @@ static CGFloat kHeaderViewHeight = 30.0;
 @synthesize indexPathOfSelectedTextField = _indexPathOfSelectedTextField;
 @synthesize indexPathOfCellShowingLeftSide = _indexPathOfCellShowingLeftSide;
 
+@synthesize playersSortingType = _playersSortingType;
+
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     //self.playersArray = [[AJScoresManager sharedInstance] getAllPlayersForGame:self.game];
-    self.playersArray = [self playersArrayOrderedByTotalScoreAscending:NO];
+    self.playersArray = [self getOrderedPlayersArray];
     [self reloadTitleView];
     if (updateUI) {
         if (self.tableView.hidden == NO) {
@@ -119,6 +121,7 @@ static CGFloat kHeaderViewHeight = 30.0;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    self.playersSortingType = AJPlayersSortingByNameASC;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -262,30 +265,49 @@ static CGFloat kHeaderViewHeight = 30.0;
     if (section == 0) {
         AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
-        //CGFloat halfOfTableWidth = ceil(CGRectGetWidth(tableView.bounds) / 2.0);
         headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
         
-        UILabel *playerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        playerLabel.text = @"Player";
-        playerLabel.textColor = [UIColor AJBrownColor];
-        playerLabel.font = [UIFont LDBrushFontWithSize:35.0];
-        playerLabel.backgroundColor = [UIColor clearColor];
-        [headerView addSubview:playerLabel];
-        [playerLabel release];
-        CGSize fitSize = [playerLabel sizeThatFits:CGSizeMake(0.0, kHeaderViewHeight)];
-        playerLabel.frame = CGRectMake(40.0, 0.0, fitSize.width, kHeaderViewHeight);
+        UIButton *playerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [playerButton setTitle:@"Player" forState:UIControlStateNormal];
+        [playerButton setTitleColor:[UIColor AJBrownColor] forState:UIControlStateNormal];
+        playerButton.titleLabel.font = [UIFont LDBrushFontWithSize:35.0];
+        playerButton.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:playerButton];
+        CGSize fitSize = [playerButton.titleLabel sizeThatFits:CGSizeMake(0.0, kHeaderViewHeight)];
+        playerButton.frame = CGRectMake(40.0, 3.0, fitSize.width, kHeaderViewHeight);
+        [playerButton addTarget:self action:@selector(playerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
-        UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        scoreLabel.text = @"Score";
-        scoreLabel.textColor = [UIColor AJBrownColor];
-        scoreLabel.font = [UIFont LDBrushFontWithSize:35.0];
-        scoreLabel.backgroundColor = [UIColor clearColor];
-        scoreLabel.textAlignment = UITextAlignmentRight;
-        scoreLabel.adjustsFontSizeToFitWidth = YES;
-        [headerView addSubview:scoreLabel];
-        [scoreLabel release];
-        CGSize scoreLabelSize = [scoreLabel sizeThatFits:CGSizeMake(0.0, kHeaderViewHeight)];
-        scoreLabel.frame = CGRectMake(CGRectGetWidth(tableView.bounds) - scoreLabelSize.width - 40.0, 0.0, scoreLabelSize.width, kHeaderViewHeight);
+        if (self.playersSortingType == AJPlayersSortingByNameASC || self.playersSortingType == AJPlayersSortingByNameDESC) {
+            UILabel *playerArrow = [[UILabel alloc] initWithFrame:CGRectZero];
+            playerArrow.text = self.playersSortingType == AJPlayersSortingByNameASC ? [NSString upArrow] : [NSString downArrow];
+            playerArrow.textColor = [UIColor AJBrownColor];
+            playerArrow.font = [UIFont LDBrushFontWithSize:20.0];
+            playerArrow.backgroundColor = [UIColor clearColor];
+            [headerView addSubview:playerArrow];
+            [playerArrow release];
+            playerArrow.frame = CGRectMake(CGRectGetMaxX(playerButton.frame), 10.0, 20.0, 23.0);
+        }
+        
+        UIButton *scoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [scoreButton setTitle:@"Score" forState:UIControlStateNormal];
+        [scoreButton setTitleColor:[UIColor AJBrownColor] forState:UIControlStateNormal];
+        scoreButton.titleLabel.font = [UIFont LDBrushFontWithSize:35.0];
+        scoreButton.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:scoreButton];
+        CGSize scoreLabelSize = [scoreButton sizeThatFits:CGSizeMake(0.0, kHeaderViewHeight)];
+        scoreButton.frame = CGRectMake(CGRectGetWidth(tableView.bounds) - scoreLabelSize.width - 40.0, 3.0, scoreLabelSize.width, kHeaderViewHeight);
+        [scoreButton addTarget:self action:@selector(scoreButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (self.playersSortingType == AJPlayersSortingByTotalASC || self.playersSortingType == AJPlayersSortingByTotalDESC) {
+            UILabel *scoreArrow = [[UILabel alloc] initWithFrame:CGRectZero];
+            scoreArrow.text = (self.playersSortingType == AJPlayersSortingByTotalASC) ? [NSString upArrow] : [NSString downArrow];
+            scoreArrow.textColor = [UIColor AJBrownColor];
+            scoreArrow.font = [UIFont LDBrushFontWithSize:20.0];
+            scoreArrow.backgroundColor = [UIColor clearColor];
+            [headerView addSubview:scoreArrow];
+            [scoreArrow release];
+            scoreArrow.frame = CGRectMake(CGRectGetMaxX(scoreButton.frame), 10.0, 20.0, 23.0);
+        }
         
         return [headerView autorelease];
     }
@@ -348,6 +370,26 @@ static CGFloat kHeaderViewHeight = 30.0;
 - (IBAction)doneButtonClicked:(id)sender {
     //self.tableView.contentOffset = CGPointMake(0, 100.0);
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+- (IBAction)playerButtonClicked:(id)sender {
+    if (self.playersSortingType == AJPlayersSortingByNameASC) {
+        self.playersSortingType = AJPlayersSortingByNameDESC;
+    } else {
+        self.playersSortingType = AJPlayersSortingByNameASC;
+    }
+    
+    [self loadDataAndUpdateUI:YES];
+}
+
+- (IBAction)scoreButtonClicked:(id)sender {
+    if (self.playersSortingType == AJPlayersSortingByTotalASC) {
+        self.playersSortingType = AJPlayersSortingByTotalDESC;
+    } else {
+        self.playersSortingType = AJPlayersSortingByTotalASC;
+    }
+    
+    [self loadDataAndUpdateUI:YES];
 }
 
 #pragma mark - AJSettingsViewControllerDelegate methods
@@ -501,13 +543,24 @@ static CGFloat kHeaderViewHeight = 30.0;
 
  */
 
-- (NSArray *)playersArrayOrderedByTotalScoreAscending:(BOOL)ascending {
+- (NSArray *)getOrderedPlayersArray {
     NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[[AJScoresManager sharedInstance] getAllPlayersForGame:self.game]];
+    BOOL isSortingByTotal = (self.playersSortingType == AJPlayersSortingByTotalASC || self.playersSortingType == AJPlayersSortingByTotalDESC);
+    BOOL isSortingASC = (self.playersSortingType == AJPlayersSortingByTotalASC || self.playersSortingType == AJPlayersSortingByNameASC);
+    
     [orderedArray sortUsingComparator:^NSComparisonResult(AJPlayer *player1, AJPlayer *player2) {
-        if (player1.totalScore < player2.totalScore) {
-            return ascending ? NSOrderedAscending : NSOrderedDescending;
+        if (isSortingByTotal) {
+            if (player1.totalScore < player2.totalScore) {
+                return isSortingASC ? NSOrderedAscending : NSOrderedDescending;
+            } else {
+                return isSortingASC ? NSOrderedDescending : NSOrderedAscending;
+            }
         } else {
-            return ascending ? NSOrderedDescending : NSOrderedAscending;
+            if ([player1.name compare:player2.name] == NSOrderedAscending) {
+                return isSortingASC ? NSOrderedAscending : NSOrderedDescending;
+            } else {
+                return isSortingASC ? NSOrderedDescending : NSOrderedAscending;
+            }
         }
     }];
     
