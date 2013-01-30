@@ -42,6 +42,7 @@
 		52634D7B16281C8600B46693 /* mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52634D7916281C8600B46693 /* mask@2x.png */; };
 		52634D7E1628292200B46693 /* AJNewItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52634D7D1628292200B46693 /* AJNewItemTableViewCell.m */; };
 		52634D81162831D300B46693 /* AJPlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52634D80162831D300B46693 /* AJPlayerTableViewCell.m */; };
+		527363AA16B969BF00751883 /* AJGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 527363A916B969BF00751883 /* AJGame.m */; };
 		5275B83715FF7D66006E19FE /* AJPlayer+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83615FF7D66006E19FE /* AJPlayer+Additions.m */; };
 		5275B83A15FF83FD006E19FE /* AJPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83915FF83FD006E19FE /* AJPlayersTableViewController.m */; };
 		5284384C162441CE00B471B5 /* AJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5284384B162441CE00B471B5 /* AJViewController.m */; };
@@ -62,7 +63,6 @@
 		52A59A251614249500AB4341 /* AJSettingsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A59A241614249500AB4341 /* AJSettingsInfo.m */; };
 		52A663E11624489000554254 /* AJPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A663E01624489000554254 /* AJPlayer.m */; };
 		52A663E51624489000554254 /* AJScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A663E41624489000554254 /* AJScore.m */; };
-		52A663E81624489000554254 /* AJGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A663E71624489000554254 /* AJGame.m */; };
 		52A663EB1624533500554254 /* landscape_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A663E91624533500554254 /* landscape_background.png */; };
 		52A663EC1624533500554254 /* landscape_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A663EA1624533500554254 /* landscape_background@2x.png */; };
 		52A663F01624561300554254 /* AJVerticalPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A663EF1624561300554254 /* AJVerticalPlayerView.m */; };
@@ -164,6 +164,8 @@
 		52634D7D1628292200B46693 /* AJNewItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJNewItemTableViewCell.m; sourceTree = "<group>"; };
 		52634D7F162831D200B46693 /* AJPlayerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPlayerTableViewCell.h; sourceTree = "<group>"; };
 		52634D80162831D300B46693 /* AJPlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPlayerTableViewCell.m; sourceTree = "<group>"; };
+		527363A816B969BF00751883 /* AJGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJGame.h; sourceTree = "<group>"; };
+		527363A916B969BF00751883 /* AJGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJGame.m; sourceTree = "<group>"; };
 		5275B83515FF7D66006E19FE /* AJPlayer+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AJPlayer+Additions.h"; sourceTree = "<group>"; };
 		5275B83615FF7D66006E19FE /* AJPlayer+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AJPlayer+Additions.m"; sourceTree = "<group>"; };
 		5275B83815FF83FD006E19FE /* AJPlayersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPlayersTableViewController.h; sourceTree = "<group>"; };
@@ -193,8 +195,6 @@
 		52A663E01624489000554254 /* AJPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPlayer.m; sourceTree = "<group>"; };
 		52A663E31624489000554254 /* AJScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScore.h; sourceTree = "<group>"; };
 		52A663E41624489000554254 /* AJScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScore.m; sourceTree = "<group>"; };
-		52A663E61624489000554254 /* AJGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJGame.h; sourceTree = "<group>"; };
-		52A663E71624489000554254 /* AJGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJGame.m; sourceTree = "<group>"; };
 		52A663E91624533500554254 /* landscape_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landscape_background.png; sourceTree = "<group>"; };
 		52A663EA1624533500554254 /* landscape_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "landscape_background@2x.png"; sourceTree = "<group>"; };
 		52A663EE1624561300554254 /* AJVerticalPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJVerticalPlayerView.h; sourceTree = "<group>"; };
@@ -284,8 +284,8 @@
 			isa = PBXGroup;
 			children = (
 				5253287415FF115D00A28B84 /* ScorePad.xcdatamodeld */,
-				52A663E61624489000554254 /* AJGame.h */,
-				52A663E71624489000554254 /* AJGame.m */,
+				527363A816B969BF00751883 /* AJGame.h */,
+				527363A916B969BF00751883 /* AJGame.m */,
 				52A663E31624489000554254 /* AJScore.h */,
 				52A663E41624489000554254 /* AJScore.m */,
 				52A663DF1624489000554254 /* AJPlayer.h */,
@@ -674,7 +674,6 @@
 				5284384C162441CE00B471B5 /* AJViewController.m in Sources */,
 				52A663E11624489000554254 /* AJPlayer.m in Sources */,
 				52A663E51624489000554254 /* AJScore.m in Sources */,
-				52A663E81624489000554254 /* AJGame.m in Sources */,
 				52A663F01624561300554254 /* AJVerticalPlayerView.m in Sources */,
 				521BC2D316255A5A000C2EE0 /* AJScrollView.m in Sources */,
 				52E6695F1626F0880035CAAC /* AJGameTableViewCell.m in Sources */,
@@ -686,6 +685,7 @@
 				525E008F1678DD8D00D0D944 /* AJAlertView.m in Sources */,
 				52E2465816B125A1006E61AC /* UIFont+Additions.m in Sources */,
 				52D6C29C16B175B1005A7069 /* AJBrownUnderlinedView.m in Sources */,
+				527363AA16B969BF00751883 /* AJGame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

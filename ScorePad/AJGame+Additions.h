@@ -10,6 +10,14 @@
 
 @class AJSettingsInfo;
 
+typedef enum {
+    AJPlayersSortingNone = 0,
+    AJPlayersSortingByTotalASC,
+    AJPlayersSortingByTotalDESC,
+    AJPlayersSortingByNameASC,
+    AJPlayersSortingByNameDESC
+} AJPlayersSortingType;
+
 @interface AJGame (Additions)
 
 + (AJGame *)createGameWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context;

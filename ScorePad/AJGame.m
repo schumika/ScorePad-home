@@ -2,8 +2,8 @@
 //  AJGame.m
 //  ScorePad
 //
-//  Created by Anca Calugar on 10/9/12.
-//  Copyright (c) 2012 Anca Julean. All rights reserved.
+//  Created by Anca Calugar on 1/30/13.
+//  Copyright (c) 2013 Anca Julean. All rights reserved.
 //
 
 #import "AJGame.h"
@@ -16,6 +16,7 @@
 @dynamic imageData;
 @dynamic name;
 @dynamic rowId;
+@dynamic sortOrder;
 @dynamic players;
 
 @end

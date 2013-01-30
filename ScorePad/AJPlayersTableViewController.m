@@ -121,7 +121,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.playersSortingType = AJPlayersSortingNone;
+    self.playersSortingType = self.game.sortOrder.intValue;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -379,6 +379,9 @@ static CGFloat kHeaderViewHeight = 35.0;
         self.playersSortingType = AJPlayersSortingByNameASC;
     }
     
+    self.game.sortOrder = [NSNumber numberWithInt:self.playersSortingType];
+    [[AJScoresManager sharedInstance] saveContext];
+    
     [self loadDataAndUpdateUI:YES];
 }
 
@@ -388,6 +391,9 @@ static CGFloat kHeaderViewHeight = 35.0;
     } else {
         self.playersSortingType = AJPlayersSortingByTotalASC;
     }
+    
+    self.game.sortOrder = [NSNumber numberWithInt:self.playersSortingType];
+    [[AJScoresManager sharedInstance] saveContext];
     
     [self loadDataAndUpdateUI:YES];
 }

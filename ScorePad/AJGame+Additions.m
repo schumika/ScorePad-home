@@ -20,6 +20,7 @@
     game = [NSEntityDescription insertNewObjectForEntityForName:@"AJGame" inManagedObjectContext:context];
     game.name = name;
     game.rowId = 0;
+    game.sortOrder = AJPlayersSortingNone;
     
     return game;
 }

@@ -15,14 +15,6 @@
 
 #import "AJSettingsViewController.h"
 
-typedef enum {
-    AJPlayersSortingNone = 0,
-    AJPlayersSortingByTotalASC,
-    AJPlayersSortingByTotalDESC,
-    AJPlayersSortingByNameASC,
-    AJPlayersSortingByNameDESC
-} AJPlayersSortingType;
-
 @interface AJPlayersTableViewController : AJTableViewController <UITextFieldDelegate, AJSettingsViewControllerDelegate, UIAlertViewDelegate,
                                             AJVerticalPlayerViewDelegate, AJPlayerTableViewCellDelegate, AJPanDeleteTableViewCellDelegate> {
     AJGame *_game;
