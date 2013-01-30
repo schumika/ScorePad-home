@@ -68,6 +68,7 @@
         //_nameLabel.font = [UIFont handwritingBoldFontWithSize:45.0];
         _nameLabel.font = [UIFont LDBrushFontWithSize:55.0];
         _nameLabel.adjustsFontSizeToFitWidth = YES;
+        _nameLabel.minimumFontSize = 25.0;
         _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:_nameLabel];
         [_nameLabel release];

@@ -47,6 +47,7 @@
     //_nameLabel.font = [UIFont handwritingBoldFontWithSize:40.0];
     _nameLabel.font = [UIFont DKCrayonFontWithSize:40.0];
     _nameLabel.adjustsFontSizeToFitWidth = YES;
+    _nameLabel.minimumFontSize = 20.0;
     _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:_nameLabel];
     [_nameLabel release];
@@ -86,7 +87,7 @@
     _pictureView.frame = CGRectMake(5.0, ceil((cellHeight - 50.0) / 2.0), 50.0, 50.0);
     CGFloat pictureMaxX = CGRectGetMaxX(_pictureView.frame) + 10.0;
     //_nameLabel.frame = CGRectMake(pictureMaxX, 5.0, cellWidth - pictureMaxX, 58.0);
-    _nameLabel.frame = CGRectMake(pictureMaxX, 2.0, cellWidth - pictureMaxX, 55.0);
+    _nameLabel.frame = CGRectMake(pictureMaxX, 2.0, cellWidth - pictureMaxX - 30.0, 55.0);
     _playersLabel.frame = CGRectMake(pictureMaxX, cellHeight - 18.0, cellWidth - pictureMaxX, 15.0);
 
     _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
