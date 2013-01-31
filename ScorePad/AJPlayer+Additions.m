@@ -20,6 +20,7 @@
     player.name = name;
     player.game = game;
     player.time = [NSDate date];
+    player.sortOrder = AJScoresSortingNone;
     
     return player;
 }

@@ -2,8 +2,8 @@
 //  AJPlayer.h
 //  ScorePad
 //
-//  Created by Anca Calugar on 10/9/12.
-//  Copyright (c) 2012 Anca Julean. All rights reserved.
+//  Created by Anca Calugar on 1/31/13.
+//  Copyright (c) 2013 Anca Julean. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSData * imageData;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSDate * time;
+@property (nonatomic, retain) NSNumber * sortOrder;
 @property (nonatomic, retain) AJGame *game;
 @property (nonatomic, retain) NSSet *scores;
 @end

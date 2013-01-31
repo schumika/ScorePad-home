@@ -55,13 +55,11 @@ static CGFloat kHeaderViewHeight = 35.0;
 @synthesize playersSortingType = _playersSortingType;
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
-    //self.playersArray = [[AJScoresManager sharedInstance] getAllPlayersForGame:self.game];
     self.playersArray = [self getOrderedPlayersArray];
     [self reloadTitleView];
     if (updateUI) {
         if (self.tableView.hidden == NO) {
             [self.tableView reloadData];
-            //self.tableView.contentInset = UIEdgeInsetsMake(-100.0, 0.0, 0.0, 0.0);
             if (self.playersArray.count > 0) {
                 [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
             }
@@ -294,7 +292,7 @@ static CGFloat kHeaderViewHeight = 35.0;
         
         if (self.playersSortingType == AJPlayersSortingByNameASC || self.playersSortingType == AJPlayersSortingByNameDESC) {
             UILabel *playerArrow = [[UILabel alloc] initWithFrame:CGRectZero];
-            playerArrow.text = self.playersSortingType == AJPlayersSortingByNameASC ? [NSString upArrow] : [NSString downArrow];
+            playerArrow.text = self.playersSortingType == AJPlayersSortingByNameDESC ? [NSString upArrow] : [NSString downArrow];
             playerArrow.textColor = [UIColor AJBrownColor];
             playerArrow.font = [UIFont LDBrushFontWithSize:20.0];
             playerArrow.backgroundColor = [UIColor clearColor];
@@ -315,7 +313,7 @@ static CGFloat kHeaderViewHeight = 35.0;
         
         if (self.playersSortingType == AJPlayersSortingByTotalASC || self.playersSortingType == AJPlayersSortingByTotalDESC) {
             UILabel *scoreArrow = [[UILabel alloc] initWithFrame:CGRectZero];
-            scoreArrow.text = (self.playersSortingType == AJPlayersSortingByTotalASC) ? [NSString upArrow] : [NSString downArrow];
+            scoreArrow.text = (self.playersSortingType == AJPlayersSortingByTotalDESC) ? [NSString upArrow] : [NSString downArrow];
             scoreArrow.textColor = [UIColor AJBrownColor];
             scoreArrow.font = [UIFont LDBrushFontWithSize:20.0];
             scoreArrow.backgroundColor = [UIColor clearColor];

@@ -10,6 +10,12 @@
 #import "AJGame+Additions.h"
 #import "AJScore+Additions.h"
 
+typedef enum {
+    AJScoresSortingNone = 0,
+    AJScoresSortingByRoundASC,
+    AJScoresSortingByRoundDESC,
+} AJScoresSortingType;
+
 @interface AJPlayer (Additions)
 
 + (AJPlayer *)createPlayerWithName:(NSString *)name forGame:(AJGame *)game;

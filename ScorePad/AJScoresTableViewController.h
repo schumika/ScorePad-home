@@ -18,4 +18,6 @@
 @property (nonatomic, retain) AJPlayer *player;
 @property (nonatomic, retain) NSArray *scoresArray;
 
+@property (nonatomic, assign) AJScoresSortingType scoresSortingType;
+
 @end

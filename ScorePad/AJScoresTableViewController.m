@@ -30,8 +30,8 @@ static CGFloat kFooterViewHeight = 40.0;
 @property (nonatomic, retain) NSIndexPath *indexPathOfCellShowingLeftSide;
 
 - (void)updateRoundsForScores;
-- (double)intermediateTotalAtRound:(int)round;
-- (NSArray *)scoresArrayOrderedByRoundAscending:(BOOL)ascending;
+- (double)intermediateTotalAtRow:(int)round;
+- (NSArray *)getOrderedScoresArray;
 
 @end
 
@@ -44,6 +44,8 @@ static CGFloat kFooterViewHeight = 40.0;
 @synthesize indexPathOfSelectedTextField = _indexPathOfSelectedTextField;
 @synthesize indexPathOfCellShowingLeftSide = _indexPathOfCellShowingLeftSide;
 
+@synthesize scoresSortingType = _scoresSortingType;
+
 - (void)dealloc {
     [_player release];
     [_scoresArray release];
@@ -54,8 +56,8 @@ static CGFloat kFooterViewHeight = 40.0;
 }
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
-    //self.scoresArray = [[AJScoresManager sharedInstance] getAllScoresForPlayer:self.player];
-    self.scoresArray = [self scoresArrayOrderedByRoundAscending:YES];
+    self.scoresArray = [self getOrderedScoresArray];
+    
     [self reloadTitleView];
     if (updateUI) {
         [self.tableView reloadData];
@@ -72,6 +74,8 @@ static CGFloat kFooterViewHeight = 40.0;
     self.navigationItem.leftBarButtonItem = [self backButtonItem];
     
     self.indexPathOfSelectedTextField = nil;
+    
+    self.scoresSortingType = self.player.sortOrder.intValue;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -123,6 +127,7 @@ static CGFloat kFooterViewHeight = 40.0;
         if (!cell) {
             cell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NewScoreCellIdentifier] autorelease];
             cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             cell.textField.placeholder = @"Tap to add New Score ...";
             cell.textField.text = @"";
@@ -143,7 +148,7 @@ static CGFloat kFooterViewHeight = 40.0;
         AJScore *score = [self.scoresArray objectAtIndex:indexPath.row];
         cell.round = score.round.intValue;
         cell.score = score.value.doubleValue;
-        cell.intermediateTotal = [self intermediateTotalAtRound:indexPath.row];
+        cell.intermediateTotal = [self intermediateTotalAtRow:indexPath.row];
         
         aCell = cell;
     }
@@ -179,13 +184,26 @@ static CGFloat kFooterViewHeight = 40.0;
         CGFloat thirdOfTableWidth = ceil(CGRectGetWidth(tableView.bounds) / 3.0);
         headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
         
-        UILabel *roundLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
-        roundLabel.text = @"Round";
-        roundLabel.textColor = [UIColor AJBrownColor];
-        roundLabel.font = [UIFont LDBrushFontWithSize:35.0];
-        roundLabel.backgroundColor = [UIColor clearColor];
-        [headerView addSubview:roundLabel];
-        [roundLabel release];
+        UIButton *roundButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [roundButton setTitle:@"Round" forState:UIControlStateNormal];
+        [roundButton setTitleColor:[UIColor AJBrownColor] forState:UIControlStateNormal];
+        roundButton.titleLabel.font = [UIFont LDBrushFontWithSize:35.0];
+        roundButton.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:roundButton];
+        CGSize fitSize = [roundButton.titleLabel sizeThatFits:CGSizeMake(0.0, kHeaderViewHeight)];
+        roundButton.frame = CGRectMake(15.0, 3.0, fitSize.width, kHeaderViewHeight);
+        [roundButton addTarget:self action:@selector(roundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (self.scoresSortingType == AJScoresSortingByRoundASC || self.scoresSortingType == AJScoresSortingByRoundDESC) {
+            UILabel *roundArrow = [[UILabel alloc] initWithFrame:CGRectZero];
+            roundArrow.text = self.scoresSortingType == AJScoresSortingByRoundDESC ? [NSString upArrow] : [NSString downArrow];
+            roundArrow.textColor = [UIColor AJBrownColor];
+            roundArrow.font = [UIFont LDBrushFontWithSize:20.0];
+            roundArrow.backgroundColor = [UIColor clearColor];
+            [headerView addSubview:roundArrow];
+            [roundArrow release];
+            roundArrow.frame = CGRectMake(CGRectGetMaxX(roundButton.frame), 13.0, 20.0, 23.0);
+        }
         
         UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(thirdOfTableWidth, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         scoreLabel.text = @"Score";
@@ -289,8 +307,13 @@ static CGFloat kFooterViewHeight = 40.0;
 
 - (void)updateRoundsForScores {
     NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
+    int rounds = self.scoresArray.count;
     for (AJScore *score in self.scoresArray) {
-        score.round = [NSNumber numberWithInt:([self.scoresArray indexOfObject:score]+1)];
+        if (self.scoresSortingType == AJScoresSortingByRoundDESC) {
+            score.round = [NSNumber numberWithInt:(rounds - [self.scoresArray indexOfObject:score])];
+        } else {
+            score.round = [NSNumber numberWithInt:([self.scoresArray indexOfObject:score]+1)];
+        }
         [mutableArray addObject:score];
     }
     [self setScoresArray:mutableArray];
@@ -299,23 +322,34 @@ static CGFloat kFooterViewHeight = 40.0;
     [[AJScoresManager sharedInstance] saveContext];
 }
 
-- (double)intermediateTotalAtRound:(int)round {
+- (double)intermediateTotalAtRow:(int)row {
     double total = 0.0;
-    for (int roundIndex = 0; roundIndex <= round; roundIndex++) {
-        AJScore *score = [self.scoresArray objectAtIndex:roundIndex];
-        total += [[score value] doubleValue];
+    int rounds = self.scoresArray.count;
+    if (self.scoresSortingType == AJScoresSortingByRoundDESC) {
+        for (int rowIndex = rounds; rowIndex > row; rowIndex--) {
+            AJScore *score = [self.scoresArray objectAtIndex:(rowIndex - 1)];
+            total += [[score value] doubleValue];
+        }
+    } else {
+        for (int rowIndex = 0; rowIndex <= row; rowIndex++) {
+            AJScore *score = [self.scoresArray objectAtIndex:rowIndex];
+            total += [[score value] doubleValue];
+        }
     }
     
     return total;
 }
 
-- (NSArray *)scoresArrayOrderedByRoundAscending:(BOOL)ascending {
+- (NSArray *)getOrderedScoresArray {
     NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[[AJScoresManager sharedInstance] getAllScoresForPlayer:self.player]];
+    
+    if (self.scoresSortingType == AJScoresSortingNone) return orderedArray;
+    
     [orderedArray sortUsingComparator:^NSComparisonResult(AJScore *score1, AJScore *score2) {
         if (score1.round.intValue < score2.round.intValue) {
-            return ascending ? NSOrderedAscending : NSOrderedDescending;
+            return (self.scoresSortingType == AJScoresSortingByRoundASC) ? NSOrderedAscending : NSOrderedDescending;
         } else {
-            return ascending ? NSOrderedDescending : NSOrderedAscending;
+            return (self.scoresSortingType == AJScoresSortingByRoundDESC) ? NSOrderedDescending : NSOrderedAscending;
         }
     }];
     
@@ -328,6 +362,19 @@ static CGFloat kFooterViewHeight = 40.0;
     settingsViewController.delegate = self;
     [self.navigationController pushViewController:settingsViewController animated:YES];
     [settingsViewController release];
+}
+
+- (IBAction)roundButtonClicked:(id)sender {
+    if (self.scoresSortingType == AJScoresSortingByRoundASC) {
+        self.scoresSortingType = AJScoresSortingByRoundDESC;
+    } else {
+        self.scoresSortingType = AJScoresSortingByRoundASC;
+    }
+    
+   self.player.sortOrder = [NSNumber numberWithInt:self.scoresSortingType];
+   [[AJScoresManager sharedInstance] saveContext];
+    
+    [self loadDataAndUpdateUI:YES];
 }
 
 #pragma mark - AJSettingsViewControllerDelegate methods
