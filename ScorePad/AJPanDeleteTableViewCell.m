@@ -10,6 +10,8 @@
 #import "AJUnderlinedView.h"
 #import "AJBrownUnderlinedView.h"
 
+#import "UIFont+Additions.h"
+
 @interface AJPanDeleteTableViewCell() {
     CGPoint _originalCenter;
     BOOL _shouldDelete;
@@ -48,7 +50,8 @@ const float DRAG_LABEL_WIDTH = 150.0;
         
         _dragToDeleteLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _dragToDeleteLabel.textColor = [UIColor lightGrayColor];
-        _dragToDeleteLabel.font = [UIFont systemFontOfSize:15.0];
+        //_dragToDeleteLabel.font = [UIFont systemFontOfSize:15.0];
+        [_dragToDeleteLabel setFont:[UIFont LDBrushFontWithSize:40.0]];
         _dragToDeleteLabel.backgroundColor = [UIColor clearColor];
         [_underlinedView addSubview:_dragToDeleteLabel];
         [_dragToDeleteLabel release];
