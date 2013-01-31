@@ -32,6 +32,7 @@
 - (NSArray *)getAllScoresForPlayer:(AJPlayer *)player;
 - (AJScore *)createScoreWithValue:(double)value inRound:(int)round forPlayer:(AJPlayer *)player;
 - (void)deleteScore:(AJScore *)score;
+- (void)deleteAllScoresForPlayer:(AJPlayer *)player;
 
 // Other public methods
 - (BOOL)saveContext;

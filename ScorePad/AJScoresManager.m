@@ -185,6 +185,16 @@ static AJScoresManager *sharedAJScoresManager = nil;
     [self saveContext];
 }
 
+- (void)deleteAllScoresForPlayer:(AJPlayer *)player {
+    NSArray *scoresForPlayer = [self getAllScoresForPlayer:player];
+    
+    for (AJScore *score in scoresForPlayer) {
+        [[self managedObjectContext] deleteObject:score];
+    }
+    
+    [self saveContext];
+}
+
 - (int)maxNumberOfScoresInGame:(AJGame *)game {
    /* NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"AJPlayer"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"game.name = %@ AND game.rowId = %@", game.name, game.rowId];

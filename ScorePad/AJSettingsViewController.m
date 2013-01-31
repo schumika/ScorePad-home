@@ -195,11 +195,11 @@ static CGFloat kHeaderViewHeight = 35.0;
 #pragma mark - UITableViewDataSource and Delegate methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return (self.itemType == AJGameItem) ? 2 : 1;
+    return (self.itemType == AJGameItem) ? 2 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (section == 0) ? 2 : 3;
+    return (section == 0) ? 2 : ((self.itemType == AJGameItem) ? 3 : 1);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -275,7 +275,7 @@ static CGFloat kHeaderViewHeight = 35.0;
         NSString *cellString = nil;
         switch (indexPath.row) {
             case 0:
-                cellString = @"Delete all players for this game";
+                cellString = (self.itemType == AJGameItem) ? @"Delete all players for this game" : @"Clear all scores for this player";
                 break;
             case 1:
                 cellString = @"Clear all scores for this game";
@@ -340,6 +340,19 @@ static CGFloat kHeaderViewHeight = 35.0;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section != 1) return;
+    
+    if (indexPath.row == 0) {
+        if (self.itemType == AJPlayerItem) {
+            // TODO: ask: are you sure?
+            if (self.delegate && [self.delegate respondsToSelector:@selector(settingsViewControllerDidSelectClearAllScoresForCurrentPlayer:)]) {
+                [self.delegate settingsViewControllerDidSelectClearAllScoresForCurrentPlayer:self];
+            }
+        } else {
+            
+        }
+    }
 }
 
 #pragma mark - Buttons Actions

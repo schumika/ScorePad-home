@@ -346,6 +346,13 @@ static CGFloat kFooterViewHeight = 40.0;
     [self loadDataAndUpdateUI:YES];
 }
 
+- (void)settingsViewControllerDidSelectClearAllScoresForCurrentPlayer:(AJSettingsViewController *)settingsViewController {
+    [self.navigationController popToViewController:self animated:YES];
+    
+    [[AJScoresManager sharedInstance] deleteAllScoresForPlayer:self.player];
+    [self loadDataAndUpdateUI:YES];
+}
+
 #pragma mark - AJPanDeleteTableViewCellDelegate methods
 
 - (void)panDeleteCellDraggedToDelete:(AJPanDeleteTableViewCell *)cell {
