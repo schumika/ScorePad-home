@@ -161,6 +161,16 @@ static AJScoresManager *sharedAJScoresManager = nil;
     [self saveContext];
 }
 
+- (void)deleteAllPlayersForGame:(AJGame *)game {
+    NSArray *playersForGame = [self getAllPlayersForGame:game];
+    
+    for (AJPlayer *player in playersForGame) {
+        [[self managedObjectContext] deleteObject:player];
+    }
+    
+    [self saveContext];
+}
+
 - (void)deleteScoresForAllPlayersInGame:(AJGame *)game {
     NSArray *playersArray = [self getAllPlayersForGame:game];
     for (AJPlayer *player in playersArray) {

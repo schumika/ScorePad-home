@@ -439,6 +439,13 @@ static CGFloat kHeaderViewHeight = 35.0;
     [self loadDataAndUpdateUI:YES];
 }
 
+- (void)settingsViewControllerDidSelectDeleteAllPlayersForCurrentGame:(AJSettingsViewController *)settingsViewController {
+    [self.navigationController popToViewController:self animated:YES];
+    
+    [[AJScoresManager sharedInstance] deleteAllPlayersForGame:self.game];
+    [self loadDataAndUpdateUI:YES];
+}
+
 #pragma mark - AJVerticalPlayerViewDelegate methods
 
 - (void)verticalPlayerViewDidClickName:(AJVerticalPlayerView *)verticalPlayerView {

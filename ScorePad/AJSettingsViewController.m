@@ -21,8 +21,9 @@ static CGFloat kHeaderViewHeight = 35.0;
 #define COLORS_TABLE_VIEW_TAG (1)
 #define NAME_TABLE_VIEW_TAG (2)
 
-#define CLEAR_ONE_PLAYER_SCORES_ALERT_TAG (10)
-#define CLEAR_ALL_PLAYER_SCORES_ALERT_TAG (11)
+#define CLEAR_ONE_PLAYER_SCORES_ALERT_TAG   (10)
+#define CLEAR_ALL_PLAYER_SCORES_ALERT_TAG   (11)
+#define DELETE_ALL_PLAYERS_ALERT_TAG        (12)
 
 #define SELECT_PICTURE_WITH_CAMERA_ACTION_SHEET_TAG (3)
 #define SELECT_PICTURE_WITHOUT_CAMERA_ACTION_SHEET_TAG (4)
@@ -346,27 +347,41 @@ static CGFloat kHeaderViewHeight = 35.0;
     
     if (indexPath.section != 1) return;
     
+    NSString *alertTitle = nil;
+    NSString *alertMessage = nil;
+    NSString *alertOKButtonText = nil;
+    int alertTag = -1;
+    
+    
     if (indexPath.row == 0) {
         if (self.itemType == AJPlayerItem) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Are you sure?"
-                                                                 message:@"All scores for this player will be deleted."
-                                                                delegate:self
-                                                       cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
-            
-            alertView.tag = CLEAR_ONE_PLAYER_SCORES_ALERT_TAG;
-            [alertView show];
-            [alertView release];
+            alertTitle = @"Are you sure?";
+            alertMessage = @"All scores for this player will be deleted.";
+            alertOKButtonText = @"Delete";
+            alertTag = CLEAR_ONE_PLAYER_SCORES_ALERT_TAG;
         } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Are you sure?"
-                                                                message:@"The scores for all players in this game will be deleted."
-                                                               delegate:self
-                                                      cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
-            
-            alertView.tag = CLEAR_ALL_PLAYER_SCORES_ALERT_TAG;
-            [alertView show];
-            [alertView release];
+            alertTitle = @"Are you sure?";
+            alertMessage = @"The scores for all players in this game will be deleted.";
+            alertOKButtonText = @"Delete";
+            alertTag = CLEAR_ALL_PLAYER_SCORES_ALERT_TAG;
         }
+    } else if (indexPath.row == 1) {
+        alertTitle = @"Are you sure?";
+        alertMessage = @"All players in this game will be deleted.";
+        alertOKButtonText = @"Delete";
+        alertTag = DELETE_ALL_PLAYERS_ALERT_TAG;
+    } else {
+        alertMessage = @"TBD";
     }
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel" otherButtonTitles:alertOKButtonText, nil];
+    alertView.tag = alertTag;
+    
+    [alertView show];
+    [alertView release];
 }
 
 #pragma mark - Buttons Actions
@@ -432,6 +447,12 @@ static CGFloat kHeaderViewHeight = 35.0;
         if (buttonIndex != alertView.cancelButtonIndex) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(settingsViewControllerDidSelectClearAllScoresForAllPlayers:)]) {
                 [self.delegate settingsViewControllerDidSelectClearAllScoresForAllPlayers:self];
+            }
+        }
+    } else if (alertView.tag == DELETE_ALL_PLAYERS_ALERT_TAG) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(settingsViewControllerDidSelectDeleteAllPlayersForCurrentGame:)]) {
+                [self.delegate settingsViewControllerDidSelectDeleteAllPlayersForCurrentGame:self];
             }
         }
     }
