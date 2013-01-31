@@ -166,6 +166,18 @@ static CGFloat kHeaderViewHeight = 35.0;
     [self loadDataAndUpdateUI:YES];
 }
 
+- (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+        self.tableView.hidden = YES;
+        _scrollView.hidden = NO;
+        _backView.hidden = NO;
+    } else {
+        self.tableView.hidden = NO;
+        _scrollView.hidden = YES;
+        _backView.hidden = YES;
+    }
+}
+
 #pragma mark - Keyboard notifications
 
 - (void)keyboardWillShow:(NSNotification *)aNotif {
@@ -420,16 +432,11 @@ static CGFloat kHeaderViewHeight = 35.0;
     [settingsInfo release];
 }
 
-- (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
-        self.tableView.hidden = YES;
-        _scrollView.hidden = NO;
-        _backView.hidden = NO;
-    } else {
-        self.tableView.hidden = NO;
-        _scrollView.hidden = YES;
-        _backView.hidden = YES;
-    }
+- (void)settingsViewControllerDidSelectClearAllScoresForAllPlayers:(AJSettingsViewController *)settingsViewController {
+    [self.navigationController popToViewController:self animated:YES];
+    
+    [[AJScoresManager sharedInstance] deleteScoresForAllPlayersInGame:self.game];
+    [self loadDataAndUpdateUI:YES];
 }
 
 #pragma mark - AJVerticalPlayerViewDelegate methods

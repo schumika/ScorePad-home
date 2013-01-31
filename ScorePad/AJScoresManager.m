@@ -161,6 +161,19 @@ static AJScoresManager *sharedAJScoresManager = nil;
     [self saveContext];
 }
 
+- (void)deleteScoresForAllPlayersInGame:(AJGame *)game {
+    NSArray *playersArray = [self getAllPlayersForGame:game];
+    for (AJPlayer *player in playersArray) {
+        NSArray *scoresForPlayer = [self getAllScoresForPlayer:player];
+        
+        for (AJScore *score in scoresForPlayer) {
+            [[self managedObjectContext] deleteObject:score];
+        }
+    }
+    
+    [self saveContext];
+}
+
 - (NSArray *)getAllScoresForPlayer:(AJPlayer *)player {
     NSError *error = nil;
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"AJScore"];

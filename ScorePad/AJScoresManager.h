@@ -29,6 +29,7 @@
 - (NSArray *)getAllPlayersForGame:(AJGame *)game;
 - (AJPlayer *)createPlayerWithName:(NSString *)playerName forGame:(AJGame *)game;
 - (void)deletePlayer:(AJPlayer *)player;
+- (void)deleteScoresForAllPlayersInGame:(AJGame *)game;
 - (NSArray *)getAllScoresForPlayer:(AJPlayer *)player;
 - (AJScore *)createScoreWithValue:(double)value inRound:(int)round forPlayer:(AJPlayer *)player;
 - (void)deleteScore:(AJScore *)score;

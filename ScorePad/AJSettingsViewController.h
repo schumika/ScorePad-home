@@ -18,7 +18,7 @@ typedef enum {
     AJPlayerItem
 } AJItemType;
 
-@interface AJSettingsViewController : AJTableViewController <UITextFieldDelegate, UIActionSheetDelegate,
+@interface AJSettingsViewController : AJTableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate,
                                                         UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     AJItemType _itemType;
     AJSettingsInfo *_settingsInfo;
@@ -41,5 +41,6 @@ typedef enum {
 
 @optional
 - (void)settingsViewControllerDidSelectClearAllScoresForCurrentPlayer:(AJSettingsViewController *)settingsViewController;
+- (void)settingsViewControllerDidSelectClearAllScoresForAllPlayers:(AJSettingsViewController *)settingsViewController;
 
 @end
