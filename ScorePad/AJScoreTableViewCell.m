@@ -84,6 +84,14 @@
     [_leftBackgroundView addSubview:_scoreTextField];
     [_scoreTextField release];
     
+    _plusMinusButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_plusMinusButton setBackgroundImage:[UIImage roundTextFieldImage] forState:UIControlStateNormal];
+    _plusMinusButton.titleLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:17.0];
+    [_plusMinusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
+    [_plusMinusButton setTitle:@"+/-" forState:UIControlStateNormal];
+    [_plusMinusButton addTarget:self action:@selector(plusMinusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_leftBackgroundView addSubview:_plusMinusButton];
+    
     return self;
 }
 
@@ -99,7 +107,9 @@
     _intermediateTotalLabel.frame = CGRectMake(260.0, 0.0, 40.0, cellHeight);
     
     _leftBackgroundView.frame = CGRectMake(-cellWidth, 0.0, cellWidth, cellHeight);
-    _scoreTextField.frame = CGRectMake(cellWidth - 100.0, 1.0, 85.0, 31.0);
+    _scoreTextField.frame = CGRectMake(cellWidth - 65.0, 1.0, 65.0, 31.0);
+    _plusMinusButton.frame = CGRectMake(cellWidth - 105.0, 1.0, 38.0, 31.0);
+    
 }
 
 - (void)setScore:(double)score {
@@ -221,6 +231,12 @@
         [self moveToOriginalFrameAnimated];
         [_scoreTextField resignFirstResponder];
     }
+}
+
+#pragma mark - Buttons actions
+
+- (IBAction)plusMinusButtonClicked:(id)sender {
+    [self setScore:-self.score];
 }
 
 @end

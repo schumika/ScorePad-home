@@ -231,6 +231,11 @@
     }
 }
 
+- (IBAction)totalScoresButtonClicked:(id)sender {
+    self.displaysLeftSide = YES;
+    [self showLeftView];
+}
+
 #pragma mark - UITextFieldDelegate methods
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -323,10 +328,6 @@
             }
         }
     }
-}
-
-- (IBAction)totalScoresButtonClicked:(id)sender {
-    [self showLeftView];
 }
 
 @end

@@ -13,6 +13,8 @@
 
 @interface AJScoreTableViewCell : AJPanDeleteTableViewCell <UITextFieldDelegate> {
     UITextField *_scoreTextField;
+    UIButton *_plusMinusButton;
+    
     BOOL _displaysLeftSide;
     
     id<AJScoreTableViewCellDelegate> _delegate;

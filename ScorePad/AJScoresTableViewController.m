@@ -161,10 +161,13 @@ static CGFloat kFooterViewHeight = 40.0;
     if (indexPath.section == 1) {
         [((AJNewItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).textField becomeFirstResponder];
     } else {
+        AJScoreTableViewCell *scoreCell = ((AJScoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]);
         if (self.indexPathOfCellShowingLeftSide == indexPath) {
-            [((AJScoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]) hideLeftView];
+            [scoreCell setDisplaysLeftSide:NO];
+            [scoreCell hideLeftView];
         } else {
-            [((AJScoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]) showLeftView];
+            [scoreCell setDisplaysLeftSide:YES];
+            [scoreCell showLeftView];
         }
     }
 }
