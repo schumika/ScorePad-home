@@ -47,8 +47,8 @@
     
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
     _underlinedView.frame = CGRectMake(0.0, 0.0, cellWidth, cellHeight);
-    CGFloat tfY = ceil((cellHeight - 40.0) / 2.0);
-    _textField.frame = CGRectMake(10.0, tfY, cellWidth - 10.0, 40.0);
+    CGFloat tfY = ceil((cellHeight - 31.0) / 2.0);
+    _textField.frame = CGRectMake(10.0, tfY, cellWidth - 10.0, 31.0);
 }
 
 @end

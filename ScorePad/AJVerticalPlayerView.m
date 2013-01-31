@@ -7,7 +7,9 @@
 //
 
 #import "AJVerticalPlayerView.h"
+
 #import "UIColor+Additions.h"
+#import "UIFont+Additions.h"
 
 @interface AJVerticalPlayerHeaderView : UIView {
     
@@ -61,6 +63,7 @@
             double value = [[scores objectAtIndex:scoreIndex] doubleValue];
             sum += value;
             [scoreLabel setText:[NSString stringWithFormat:@"%g", value]];
+            [scoreLabel setFont:[UIFont LDBrushFontWithSize:30.0]];
             scoreLabel.textColor = (value >= 0.0) ? [UIColor blackColor] : [UIColor brownColor];
             [self addSubview:scoreLabel];
             [scoreLabel release];
@@ -136,18 +139,20 @@
     [self setBackgroundColor:[UIColor clearColor]];
     
     _nameButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nameButton.frame = CGRectMake(0.0, 0.0, frame.size.width, 25.0);
+    _nameButton.frame = CGRectMake(0.0, 4.0, frame.size.width, 25.0);
     _nameButton.backgroundColor = [UIColor clearColor];
-    [_nameButton.titleLabel setFont:[UIFont fontWithName:@"Thonburi" size:20.0]];
+    //[_nameButton.titleLabel setFont:[UIFont fontWithName:@"Thonburi" size:20.0]];
+    [_nameButton.titleLabel setFont:[UIFont LDBrushFontWithSize:35.0]];
     [_nameButton.titleLabel setAdjustsFontSizeToFitWidth:YES];
     [self addSubview:_nameButton];
     
     
-    _totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 25.0, frame.size.width, 35.0)];
+    _totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 33.0, frame.size.width, 37.0)];
     [_totalLabel setBackgroundColor:[UIColor clearColor]];
     [_totalLabel setTextColor:[UIColor brownColor]];
     [_totalLabel setTextAlignment:UITextAlignmentCenter];
-    [_totalLabel setFont:[UIFont fontWithName:@"Thonburi-Bold" size:25.0]];
+    //[_totalLabel setFont:[UIFont fontWithName:@"Thonburi-Bold" size:25.0]];
+    [_totalLabel setFont:[UIFont LDBrushFontWithSize:45.0]];
     [self addSubview:_totalLabel];
     [_totalLabel release];
     

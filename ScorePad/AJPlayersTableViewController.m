@@ -20,6 +20,8 @@
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
 
+#define IS_WIDESCREEN (fabs((double)[[UIScreen mainScreen]bounds].size.height - (double)568) < DBL_EPSILON)
+
 static CGFloat kHeaderViewHeight = 35.0;
 
 @interface AJPlayersTableViewController () {
@@ -69,7 +71,7 @@ static CGFloat kHeaderViewHeight = 35.0;
                 [subView removeFromSuperview];
             }
             
-            CGFloat playerViewWidth = (self.playersArray.count == 0) ? 0.0 : MAX(100.0, 480.0 / (self.playersArray.count));
+            CGFloat playerViewWidth = (self.playersArray.count == 0) ? 0.0 : MAX(100.0, (CGRectGetHeight(self.view.bounds) + 00.0) / (self.playersArray.count));
             CGFloat maxScrollViewContentHeight = 60.0 + 30.0 * [self.game maxNumberOfScores];
             for (int playerIndex = 0; playerIndex < self.playersArray.count; playerIndex++) {
                 AJPlayer *player = (AJPlayer *)[self.playersArray objectAtIndex:playerIndex];
@@ -91,13 +93,14 @@ static CGFloat kHeaderViewHeight = 35.0;
     [super viewDidLoad];
     
     // Landscape
-    _backView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"landscape_background.png"]];
+    UIImage *backImage = IS_WIDESCREEN ? [UIImage imageNamed:@"landscape_background-568h@2x.png"] : [UIImage imageNamed:@"landscape_background.png"];
+    _backView = [[UIImageView alloc] initWithImage:backImage];
     [self.view addSubview:_backView];
     [_backView release];
     [_backView setHidden:YES];
     
     CGRect bounds = self.view.bounds;
-    _scrollView = [[AJScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.height + 20.0, bounds.size.width)];
+    _scrollView = [[AJScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.height, bounds.size.width)];
     _scrollView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_scrollView];
     [_scrollView setHidden:YES];

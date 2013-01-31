@@ -43,6 +43,8 @@
 		52634D7E1628292200B46693 /* AJNewItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52634D7D1628292200B46693 /* AJNewItemTableViewCell.m */; };
 		52634D81162831D300B46693 /* AJPlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52634D80162831D300B46693 /* AJPlayerTableViewCell.m */; };
 		527363AA16B969BF00751883 /* AJGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 527363A916B969BF00751883 /* AJGame.m */; };
+		527363AC16B970DD00751883 /* table_background-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527363AB16B970DD00751883 /* table_background-568h@2x.png */; };
+		527363AE16B9719100751883 /* landscape_background-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527363AD16B9719000751883 /* landscape_background-568h@2x.png */; };
 		5275B83715FF7D66006E19FE /* AJPlayer+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83615FF7D66006E19FE /* AJPlayer+Additions.m */; };
 		5275B83A15FF83FD006E19FE /* AJPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83915FF83FD006E19FE /* AJPlayersTableViewController.m */; };
 		5284384C162441CE00B471B5 /* AJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5284384B162441CE00B471B5 /* AJViewController.m */; };
@@ -166,6 +168,8 @@
 		52634D80162831D300B46693 /* AJPlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPlayerTableViewCell.m; sourceTree = "<group>"; };
 		527363A816B969BF00751883 /* AJGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJGame.h; sourceTree = "<group>"; };
 		527363A916B969BF00751883 /* AJGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJGame.m; sourceTree = "<group>"; };
+		527363AB16B970DD00751883 /* table_background-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table_background-568h@2x.png"; sourceTree = "<group>"; };
+		527363AD16B9719000751883 /* landscape_background-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "landscape_background-568h@2x.png"; sourceTree = "<group>"; };
 		5275B83515FF7D66006E19FE /* AJPlayer+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AJPlayer+Additions.h"; sourceTree = "<group>"; };
 		5275B83615FF7D66006E19FE /* AJPlayer+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AJPlayer+Additions.m"; sourceTree = "<group>"; };
 		5275B83815FF83FD006E19FE /* AJPlayersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPlayersTableViewController.h; sourceTree = "<group>"; };
@@ -458,6 +462,7 @@
 				52E669651626FC7F0035CAAC /* separator@2x.png */,
 				52A663E91624533500554254 /* landscape_background.png */,
 				52A663EA1624533500554254 /* landscape_background@2x.png */,
+				527363AD16B9719000751883 /* landscape_background-568h@2x.png */,
 				52AF6B671622FAE40034F06A /* background.png */,
 				52AF6B681622FAE40034F06A /* background@2x.png */,
 				52A10851161F0C86006FCACD /* back-button.png */,
@@ -469,6 +474,7 @@
 				52A10857161F0C86006FCACD /* nav-bar.png */,
 				52A10858161F0C86006FCACD /* nav-bar@2x.png */,
 				52A10864161F2975006FCACD /* table_background.png */,
+				527363AB16B970DD00751883 /* table_background-568h@2x.png */,
 				52A10865161F2975006FCACD /* table_background@2x.png */,
 			);
 			path = Images;
@@ -628,6 +634,8 @@
 				52E2468E16B158C6006E61AC /* rip@2x.png in Resources */,
 				52E2469616B166A3006E61AC /* DK Crayon Crumble.ttf in Resources */,
 				52E2469716B166A3006E61AC /* ld-brush-stroke.ttf in Resources */,
+				527363AC16B970DD00751883 /* table_background-568h@2x.png in Resources */,
+				527363AE16B9719100751883 /* landscape_background-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
