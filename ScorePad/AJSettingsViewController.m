@@ -7,13 +7,16 @@
 //
 
 #import "AJSettingsViewController.h"
-#import "AJGame+Additions.h"
+#import "AJBrownUnderlinedView.h"
 #import "AJPlayer+Additions.h"
+#import "AJGame+Additions.h"
 #import "AJSettingsInfo.h"
 
+#import "UIFont+Additions.h"
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
 
+static CGFloat kHeaderViewHeight = 35.0;
 
 #define COLORS_TABLE_VIEW_TAG (1)
 #define NAME_TABLE_VIEW_TAG (2)
@@ -62,6 +65,7 @@
     
     _pencilsArray = @[@"pencil_black.png", @"pencil_blue.png", @"pencil_brown.png", @"pencil_green.png", @"pencil_orange.png",
                         @"pencil_pink.png", @"pencil_purple.png", @"pencil_red.png", @"pencil_yellow.png", @"pencil_white.png"];
+
     
     return self;
 }
@@ -70,7 +74,11 @@
     [_settingsInfo release];
     [_colorsArray release];
     
+    [_pictureButton release];
     [_nameTextField setDelegate:nil];
+    [_nameTextField release];
+    
+    [_colorsContainerView release];
     
     [super dealloc];
 }
@@ -84,39 +92,44 @@
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Cancel" target:self action:@selector(cancelButtonClicked:)];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
     
-    _pictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _pictureButton.frame = CGRectMake(20.0, 20.0, 70.0, 70.0);
-    [_pictureButton setImage:[UIImage imageWithData:self.settingsInfo.imageData] forState:UIControlStateNormal];
-    [self.view addSubview:_pictureButton];
+    
+    _pictureButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+    _pictureButton.frame = CGRectMake(20.0, 5.0, 70.0, 70.0);
+    UIImage *itemImage = [UIImage imageWithData:self.settingsInfo.imageData];
+    [_pictureButton setImage:itemImage forState:UIControlStateNormal];
     [_pictureButton addTarget:self action:@selector(pictureButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 70.0, 20.0)];
+    UILabel *label = [[UILabel alloc] initWithFrame:_pictureButton.bounds];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = UITextAlignmentCenter;
-    label.font = [UIFont boldSystemFontOfSize:16.0];
-    label.text = @"edit";
+    label.font = [UIFont LDBrushFontWithSize:40.0];
+    label.textColor = [UIColor AJBrownColor];
+    label.text = @"edit\npicture";
+    label.numberOfLines = 2;
     [_pictureButton addSubview:label];
     [label release];
     
-    _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(120.0, 40.0, 190.0, 31.0)];
-    _nameTextField.borderStyle = UITextBorderStyleRoundedRect;
+    _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(120.0, 30.0, 190.0, 40.0)];
+    _nameTextField.borderStyle = UITextBorderStyleNone;
+    _nameTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    _nameTextField.background = [UIImage roundTextFieldImage];
     _nameTextField.backgroundColor = [UIColor clearColor];
     _nameTextField.delegate = self;
     _nameTextField.placeholder = @"Enter the Name";
+    _nameTextField.font = [UIFont LDBrushFontWithSize:44.0];
+    _nameTextField.textAlignment = UITextAlignmentCenter;
+    _nameTextField.adjustsFontSizeToFitWidth = YES;
+    _nameTextField.textColor = [UIColor AJBrownColor];
     _nameTextField.returnKeyType = UIReturnKeyDone;
     _nameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _nameTextField.text = self.settingsInfo.name;
-    [self.view addSubview:_nameTextField];
-    [_nameTextField release];
-
-    _colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 95.0, 300.0, 100.0)];
+    
+    _colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 40.0, 300.0, 100.0)];
     _colorsContainerView.backgroundColor = [UIColor clearColor];
     UIImageView *containerFrameImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]];
     containerFrameImageView.frame = _colorsContainerView.bounds;
     [_colorsContainerView addSubview:containerFrameImageView];
     [containerFrameImageView release];
-    [self.view addSubview:_colorsContainerView];
-    [_colorsContainerView release];
     
     CGSize pencilSize = CGSizeMake(40.0, 40.0);
     CGFloat pencilOffset = (_colorsContainerView.frame.size.width) / (_pencilsArray.count);
@@ -143,7 +156,9 @@
         [pencilButton addTarget:self action:@selector(pencilButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_colorsContainerView addSubview:pencilButton];
     }
-
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -175,6 +190,156 @@
 
 - (NSString *)titleViewText {
     return self.settingsInfo.name;
+}
+
+#pragma mark - UITableViewDataSource and Delegate methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return (self.itemType == AJGameItem) ? 2 : 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return (section == 0) ? 2 : 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *photoAndNameCellIdentifier = @"PhotoAndNameCellIdentifier";
+    static NSString *colorCellIdentifier = @"ColorCellIdentifier";
+    static NSString *otherCellIdentifier = @"OtherCellIdentifier";
+    
+    UITableViewCell *cell = nil;
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:photoAndNameCellIdentifier];
+            
+            if (aCell == nil) {
+                aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoAndNameCellIdentifier] autorelease];
+                aCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                [aCell.contentView addSubview:_pictureButton];
+                
+                CGRect tfFrame = _nameTextField.frame;
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(tfFrame.origin.x, tfFrame.origin.y - 20.0, tfFrame.size.width, 20.0)];
+                label.backgroundColor = [UIColor clearColor];
+                label.font = [UIFont LDBrushFontWithSize:30.0];
+                label.textColor = [UIColor AJBrownColor];
+                label.text = @"Name :";
+                [aCell.contentView addSubview:label];
+                [label release];
+                
+                [aCell.contentView addSubview:_nameTextField];
+            }
+            
+            cell = aCell;
+        } else {
+            UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:colorCellIdentifier];
+            
+            if (aCell == nil) {
+                aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:colorCellIdentifier] autorelease];
+                aCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                CGRect containerFrame = _colorsContainerView.frame;
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(containerFrame.origin.x, containerFrame.origin.y - 25.0, containerFrame.size.width, 25.0)];
+                label.backgroundColor = [UIColor clearColor];
+                label.font = [UIFont LDBrushFontWithSize:30.0];
+                label.textColor = [UIColor AJBrownColor];
+                label.text = [NSString stringWithFormat:@"%@ color :", (self.itemType == AJGameItem) ? @"Game" : @"Player"];
+                [aCell.contentView addSubview:label];
+                [label release];
+                
+                [aCell.contentView addSubview:_colorsContainerView];
+            }
+            
+            cell = aCell;
+        }
+    } else {
+        UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:otherCellIdentifier];
+        
+        if (aCell == nil) {
+            aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:otherCellIdentifier] autorelease];
+            aCell.selectionStyle = UITableViewCellSelectionStyleGray;
+            
+            AJBrownUnderlinedView *backView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+            backView.frame = aCell.contentView.bounds;
+            backView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            [aCell.contentView addSubview:backView];
+            [backView release];
+            [aCell.contentView sendSubviewToBack:backView];
+            
+            aCell.textLabel.backgroundColor = [UIColor clearColor];
+            aCell.textLabel.font = [UIFont LDBrushFontWithSize:40.0];
+            aCell.textLabel.textColor = [UIColor AJBrownColor];
+        }
+        
+        NSString *cellString = nil;
+        switch (indexPath.row) {
+            case 0:
+                cellString = @"Delete all players for this game";
+                break;
+            case 1:
+                cellString = @"Clear all scores for this game";
+                break;
+            case 2:
+                cellString = @"Share scores for this game";
+                break;
+            default:
+                cellString = @"";
+                break;
+        }
+        
+        aCell.textLabel.text = cellString;
+        
+        cell = aCell;
+    }
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return (indexPath.section == 0) ? ((indexPath.row == 0) ? 80.0 : 160.0) : 45.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
+        headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
+        
+        UILabel *appearanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0, 2.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight - 2.0)];
+        appearanceLabel.text = [NSString stringWithFormat:@"%@ appearance", (self.itemType == AJGameItem) ? @"Game" : @"Player"];
+        appearanceLabel.textColor = [UIColor AJGreenColor];
+        appearanceLabel.font = [UIFont LDBrushFontWithSize:37.0];
+        appearanceLabel.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:appearanceLabel];
+        [appearanceLabel release];
+        
+        return [headerView autorelease];
+    } else if (section == 1) {
+        AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
+        headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
+        
+        UILabel *appearanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight)];
+        appearanceLabel.text = @"Other game options";
+        appearanceLabel.textColor = [UIColor AJGreenColor];
+        appearanceLabel.font = [UIFont LDBrushFontWithSize:37.0];
+        appearanceLabel.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:appearanceLabel];
+        [appearanceLabel release];
+        
+        return [headerView autorelease];
+    }
+    
+    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return (section <= 1) ? kHeaderViewHeight : 0.0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Buttons Actions
@@ -257,7 +422,7 @@
 		UIImageWriteToSavedPhotosAlbum(originalImage, nil, NULL, NULL);
 	}
     
-    [_pictureButton setImage:editedImage forState:UIControlStateNormal];
+    [_pictureButton setImage:[editedImage applyMask:[UIImage imageNamed:@"mask.png"]] forState:UIControlStateNormal];
     [self.settingsInfo setImageData:UIImagePNGRepresentation(editedImage)];
 }
 
@@ -286,7 +451,7 @@
 - (IBAction)setDefaultButtonClicked {
     UIImage *defaultImage = (_itemType == AJGameItem) ? [UIImage defaultGamePicture] : [UIImage defaultPlayerPicture];
     
-    [_pictureButton setImage:defaultImage forState:UIControlStateNormal];
+    [_pictureButton setImage:[defaultImage applyMask:[UIImage imageNamed:@"mask.png"]] forState:UIControlStateNormal];
     [self.settingsInfo setImageData:UIImagePNGRepresentation(defaultImage)];
 }
 
