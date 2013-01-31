@@ -68,7 +68,7 @@
     [_intermediateTotalLabel release];
     
     _leftBackgroundView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
-    [self.contentView addSubview:_leftBackgroundView];
+    [self addSubview:_leftBackgroundView];
     [_leftBackgroundView release];
     
     _scoreTextField = [[UITextField alloc] initWithFrame:CGRectZero];
@@ -125,6 +125,7 @@
 }
 
 #pragma mark - horizontal pan gesture methods
+
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]]) return NO;
     
@@ -134,6 +135,30 @@
         return YES;
     }
     return NO;
+}
+
+- (void)panGestureHandler:(UIPanGestureRecognizer *)panGesture {
+    [super panGestureHandler:panGesture];
+    
+    if (panGesture.state == UIGestureRecognizerStateChanged) {
+        self.displaysLeftSide = self.frame.origin.x > self.frame.size.width / 3.0;
+    }
+    
+    if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
+        if (self.displaysLeftSide == NO) {
+            [self hideLeftView];
+        } else {
+            [self showLeftView];
+        }
+    }
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    if (self.displaysLeftSide && point.x < 0) {
+        return YES;
+    }
+    
+    return [super pointInside:point withEvent:event];
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -162,7 +187,7 @@
     return YES;
 }
 
-#pragma mark - pan gesture handler overriden from base class
+#pragma mark - helpers
 
 - (void)moveToOriginalFrameAnimated {
     CGRect originalFrame = CGRectMake(0.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
@@ -170,22 +195,6 @@
                      animations:^{
                          self.frame = originalFrame;
                      }];
-}
-
-- (void)panGestureHandler:(UIPanGestureRecognizer *)panGesture {
-    [super panGestureHandler:panGesture];
-    
-    if (panGesture.state == UIGestureRecognizerStateChanged) {
-        self.displaysLeftSide = self.frame.origin.x > self.frame.size.width / 3.0;
-    }
-    
-    if (panGesture.state == UIGestureRecognizerStateEnded || panGesture.state == UIGestureRecognizerStateCancelled) {
-        if (self.displaysLeftSide == NO) {
-            [self hideLeftView];
-        } else {
-            [self showLeftView];
-        }
-    }
 }
 
 - (void)showLeftView {
@@ -213,14 +222,5 @@
         [_scoreTextField resignFirstResponder];
     }
 }
-
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    if (self.displaysLeftSide && point.x < 0) {
-        return YES;
-    }
-    
-    return [super pointInside:point withEvent:event];
-}
-
 
 @end
