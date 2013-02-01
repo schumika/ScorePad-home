@@ -97,7 +97,7 @@
         [playerScore drawInRect:scoreStringRect withFont:[UIFont LDBrushFontWithSize:scoreFontSize]];
         
         // draw separator line
-        [[playerImage applyMask:[UIImage imageNamed:@"mask.png"]] drawInRect:CGRectMake(0.0, 65.0 + (playerIndex * 50.0) + 48, imageBounds.size.width, 2.0)];
+        [[UIImage imageNamed:@"separator_new2.png"] drawInRect:CGRectMake(0.0, 65.0 + (playerIndex * 50.0) + 48, imageBounds.size.width, 2.0)];
     }
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
