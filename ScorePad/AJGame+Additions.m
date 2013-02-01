@@ -19,7 +19,7 @@
     
     game = [NSEntityDescription insertNewObjectForEntityForName:@"AJGame" inManagedObjectContext:context];
     game.name = name;
-    game.rowId = 0;
+    game.rowId = [NSNumber numberWithInt:0];
     game.sortOrder = AJPlayersSortingNone;
     
     return game;
@@ -28,7 +28,8 @@
 - (AJSettingsInfo *)settingsInfo {
     return [AJSettingsInfo createSettingsInfoWithImageData:self.imageData ? self.imageData : UIImagePNGRepresentation([UIImage defaultGamePicture])
                                                    andName:self.name
-                                            andColorString:self.color];
+                                            andColorString:self.color
+                                                  andRowId:self.rowId.intValue];
 }
 
 - (int)maxNumberOfScores; {

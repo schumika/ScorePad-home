@@ -122,6 +122,15 @@ static AJScoresManager *sharedAJScoresManager = nil;
     return [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
 }
 
+- (AJGame *)getGameWithRowId:(int)rowId {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"AJGame"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rowId = %@", [NSNumber numberWithInt:rowId]];
+    fetchRequest.predicate = predicate;
+    fetchRequest.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"rowId" ascending:NO]];
+    
+    return [[self.managedObjectContext executeFetchRequest:fetchRequest error:nil] lastObject];
+}
+
 - (void)addGameWithName:(NSString *)name andRowId:(int)rowId {
     AJGame *game = [AJGame createGameWithName:name inManagedObjectContext:self.managedObjectContext];
     game.color = [[UIColor AJPurpleColor] toHexString:YES];

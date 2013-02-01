@@ -24,6 +24,7 @@
 
 // Public methods
 - (NSArray *)getGamesArray;
+- (AJGame *)getGameWithRowId:(int)rowId;
 - (void)addGameWithName:(NSString *)name andRowId:(int)rowId;
 - (void)deleteGame:(AJGame *)game;
 - (NSArray *)getAllPlayersForGame:(AJGame *)game;

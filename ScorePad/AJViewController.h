@@ -10,4 +10,13 @@
 
 @interface AJViewController : UIViewController
 
+@property (nonatomic, retain) NSString *titleViewText;
+
+- (IBAction)backButtonClicked:(id)sender;
+
+- (void)addKeyboardNotifications;
+- (void)removeKeyboardNotifications;
+- (void)keyboardWillShow:(NSNotification *)aNotif;
+- (void)keyboardWillHide:(NSNotification *)aNotif;
+
 @end

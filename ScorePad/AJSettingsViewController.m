@@ -7,10 +7,12 @@
 //
 
 #import "AJSettingsViewController.h"
+
+#import "AJExportScoresViewController.h"
 #import "AJBrownUnderlinedView.h"
 #import "AJPlayer+Additions.h"
 #import "AJGame+Additions.h"
-#import "AJSettingsInfo.h"
+#import "AJScoresManager.h"
 
 #import "UIFont+Additions.h"
 #import "UIColor+Additions.h"
@@ -24,6 +26,7 @@ static CGFloat kHeaderViewHeight = 35.0;
 #define CLEAR_ONE_PLAYER_SCORES_ALERT_TAG   (10)
 #define CLEAR_ALL_PLAYER_SCORES_ALERT_TAG   (11)
 #define DELETE_ALL_PLAYERS_ALERT_TAG        (12)
+#define EXPORT_PLAYERS_SCORES_ALERT_TAG     (13)
 
 #define SELECT_PICTURE_WITH_CAMERA_ACTION_SHEET_TAG (3)
 #define SELECT_PICTURE_WITHOUT_CAMERA_ACTION_SHEET_TAG (4)
@@ -371,7 +374,9 @@ static CGFloat kHeaderViewHeight = 35.0;
         alertOKButtonText = @"Delete";
         alertTag = DELETE_ALL_PLAYERS_ALERT_TAG;
     } else {
-        alertMessage = @"TBD";
+        alertMessage = @"This option allows you to share the scores of this game.";
+        alertOKButtonText = @"Continue";
+        alertTag = EXPORT_PLAYERS_SCORES_ALERT_TAG;
     }
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle
@@ -437,22 +442,28 @@ static CGFloat kHeaderViewHeight = 35.0;
 #pragma mark - UIAlertViewDelegate methods
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == CLEAR_ONE_PLAYER_SCORES_ALERT_TAG) {
-        if (buttonIndex != alertView.cancelButtonIndex) {
+    if (buttonIndex != alertView.cancelButtonIndex) {
+        if (alertView.tag == CLEAR_ONE_PLAYER_SCORES_ALERT_TAG) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(settingsViewControllerDidSelectClearAllScoresForCurrentPlayer:)]) {
                 [self.delegate settingsViewControllerDidSelectClearAllScoresForCurrentPlayer:self];
             }
-        }
-    } else if (alertView.tag == CLEAR_ALL_PLAYER_SCORES_ALERT_TAG) {
-        if (buttonIndex != alertView.cancelButtonIndex) {
+            
+        } else if (alertView.tag == CLEAR_ALL_PLAYER_SCORES_ALERT_TAG) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(settingsViewControllerDidSelectClearAllScoresForAllPlayers:)]) {
                 [self.delegate settingsViewControllerDidSelectClearAllScoresForAllPlayers:self];
             }
-        }
-    } else if (alertView.tag == DELETE_ALL_PLAYERS_ALERT_TAG) {
-        if (buttonIndex != alertView.cancelButtonIndex) {
+            
+        } else if (alertView.tag == DELETE_ALL_PLAYERS_ALERT_TAG) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(settingsViewControllerDidSelectDeleteAllPlayersForCurrentGame:)]) {
                 [self.delegate settingsViewControllerDidSelectDeleteAllPlayersForCurrentGame:self];
+            }
+            
+        } else if (alertView.tag == EXPORT_PLAYERS_SCORES_ALERT_TAG) {
+            AJGame *game = [[AJScoresManager sharedInstance] getGameWithRowId:self.settingsInfo.rowId];
+            if (game != nil) {
+                AJExportScoresViewController *exportViewController = [[AJExportScoresViewController alloc] initWithNibName:nil bundle:nil];
+                [self.navigationController pushViewController:exportViewController animated:YES];
+                [exportViewController release];
             }
         }
     }

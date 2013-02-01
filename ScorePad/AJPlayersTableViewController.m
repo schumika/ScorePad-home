@@ -20,8 +20,6 @@
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
 
-#define IS_WIDESCREEN (fabs((double)[[UIScreen mainScreen]bounds].size.height - (double)568) < DBL_EPSILON)
-
 static CGFloat kHeaderViewHeight = 35.0;
 
 @interface AJPlayersTableViewController () {
@@ -56,7 +54,7 @@ static CGFloat kHeaderViewHeight = 35.0;
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.playersArray = [self getOrderedPlayersArray];
-    [self reloadTitleView];
+    self.titleViewText = self.game.name;
     if (updateUI) {
         if (self.tableView.hidden == NO) {
             [self.tableView reloadData];
@@ -91,7 +89,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     [super viewDidLoad];
     
     // Landscape
-    UIImage *backImage = IS_WIDESCREEN ? [UIImage imageNamed:@"landscape_background-568h@2x.png"] : [UIImage imageNamed:@"landscape_background.png"];
+    UIImage *backImage = IS_TALLSCREEN ? [UIImage imageNamed:@"landscape_background-568h@2x.png"] : [UIImage imageNamed:@"landscape_background.png"];
     _backView = [[UIImageView alloc] initWithImage:backImage];
     [self.view addSubview:_backView];
     [_backView release];
@@ -105,7 +103,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     [_scrollView release];
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
-    self.navigationItem.leftBarButtonItem = [self backButtonItem];
+    //self.navigationItem.leftBarButtonItem = [self backButtonItem];
     
 //    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.width, 100.0)];
 //    tableHeaderView.backgroundColor = [UIColor clearColor];
@@ -151,10 +149,6 @@ static CGFloat kHeaderViewHeight = 35.0;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
-}
-
-- (NSString*)titleViewText {
-	return self.game.name;
 }
 
 #pragma mark - Rotation methods

@@ -38,7 +38,8 @@
 - (AJSettingsInfo *)settingsInfo {
     return [AJSettingsInfo createSettingsInfoWithImageData:self.imageData ? self.imageData : UIImagePNGRepresentation([UIImage defaultPlayerPicture])
                                                    andName:self.name
-                                            andColorString:self.color];
+                                            andColorString:self.color
+                                                  andRowId:-1];
 }
 
 - (NSArray *)scoreValues {

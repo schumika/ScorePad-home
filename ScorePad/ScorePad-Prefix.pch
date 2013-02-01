@@ -13,4 +13,6 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import "AJTableViewController.h"
+
+    #import "AJDefines.h"
 #endif

@@ -11,5 +11,6 @@
 @interface UIBarButtonItem (Additions)
 
 + (UIBarButtonItem *)clearBarButtonItemWithTitle:(NSString *)title target:(id)target action:(SEL)action;
++ (UIBarButtonItem *)backButtonItemWithTarget:(id)target action:(SEL)action;
 
 @end

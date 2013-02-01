@@ -58,7 +58,9 @@ static CGFloat kFooterViewHeight = 40.0;
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.scoresArray = [self getOrderedScoresArray];
     
-    [self reloadTitleView];
+    //[self reloadTitleView];
+    self.titleViewText = self.player.name;
+    
     if (updateUI) {
         [self.tableView reloadData];
     }
@@ -71,7 +73,6 @@ static CGFloat kFooterViewHeight = 40.0;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
-    self.navigationItem.leftBarButtonItem = [self backButtonItem];
     
     self.indexPathOfSelectedTextField = nil;
     
@@ -97,10 +98,6 @@ static CGFloat kFooterViewHeight = 40.0;
     if (self.indexPathOfSelectedTextField != nil) {
         [self.tableView scrollToRowAtIndexPath:self.indexPathOfSelectedTextField atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
-}
-
-- (NSString*)titleViewText {
-    return self.player.name;
 }
 
 #pragma mark - Table view data source

@@ -8,15 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "AJSettingsInfo.h"
+
 @protocol AJSettingsViewControllerDelegate;
 
 @class AJImageAndNameView;
 @class AJSettingsInfo;
-
-typedef enum {
-    AJGameItem,
-    AJPlayerItem
-} AJItemType;
 
 @interface AJSettingsViewController : AJTableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate,
                                                         UIImagePickerControllerDelegate, UINavigationControllerDelegate> {

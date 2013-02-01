@@ -13,8 +13,9 @@
 @synthesize imageData = _imageData;
 @synthesize name = _name;
 @synthesize colorString = _colorString;
+@synthesize rowId = _rowId;
 
-- (id)initWithImageData:(NSData *)imageData andName:(NSString *)name andColorString:(NSString *)colorString {
+- (id)initWithImageData:(NSData *)imageData andName:(NSString *)name andColorString:(NSString *)colorString andRowId:(int)rowId {
     self = [super init];
     
     if (!self) return nil;
@@ -22,12 +23,13 @@
     self.imageData = imageData;
     self.name = name;
     self.colorString = colorString;
+    self.rowId = rowId;
     
     return self;
 }
 
-+ (id)createSettingsInfoWithImageData:(NSData *)imageData andName:(NSString *)name andColorString:(NSString *)colorString {
-    return [[[self alloc] initWithImageData:imageData andName:name andColorString:colorString] autorelease];
++ (id)createSettingsInfoWithImageData:(NSData *)imageData andName:(NSString *)name andColorString:(NSString *)colorString andRowId:(int)rowId {
+    return [[[self alloc] initWithImageData:imageData andName:name andColorString:colorString andRowId:rowId] autorelease];
 }
 
 - (void)dealloc {
