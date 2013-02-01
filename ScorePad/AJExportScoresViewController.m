@@ -54,7 +54,6 @@
     
     _imageView = [[UIImageView alloc] initWithFrame:screenBounds];
     _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _imageView.contentMode = UIViewContentModeCenter;
     _imageView.backgroundColor = [UIColor blackColor];
     _imageView.userInteractionEnabled = YES;
     [self.view addSubview:_imageView];
@@ -131,6 +130,11 @@
         _exportedImage = [exportedImage retain];
         
         _imageView.image = _exportedImage;
+        if ((_exportedImage.size.width > _imageView.frame.size.width) || (_exportedImage.size.height > _imageView.frame.size.height)) {
+            _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        } else {
+            _imageView.contentMode = UIViewContentModeCenter;
+        }
     }
 }
 

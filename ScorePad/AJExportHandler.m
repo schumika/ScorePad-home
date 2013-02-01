@@ -47,11 +47,6 @@
     CGContextDrawImage(contextRef, imageBounds, [UIImage imageNamed:@"background.png"].CGImage);
     
     // preparing for writing text
-    
-    //    CGContextTranslateCTM(contextRef, 0, imageBounds.size.height);
-    //    CGContextScaleCTM(contextRef, 1, -1);
-//    CGAffineTransform transform = CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);
-//    CGContextSetTextMatrix(contextRef, transform);
     CGContextSetTextDrawingMode(contextRef, kCGTextFill);
     
     // write Game name
@@ -65,15 +60,11 @@
     [gameName drawInRect:nameStringRect withFont:[UIFont LDBrushFontWithSize:fontSize]];
     
     // draw separator line
-    CGContextDrawImage(contextRef, CGRectMake(0.0, 63.0, imageBounds.size.width, 2.0), [UIImage imageNamed:@"separator_new2.png"].CGImage);
+    [[UIImage imageNamed:@"separator_new2.png"] drawInRect:CGRectMake(0.0, 63.0, imageBounds.size.width, 2.0)];
     
     NSArray *players = [[AJScoresManager sharedInstance] getAllPlayersForGame:self.game];
     for (AJPlayer *player in players) {
         int playerIndex = [players indexOfObject:player];
-        
-        // reset
-//        CGAffineTransform transform = CGAffineTransformMake(-1.0, 0.0, 0.0, 1.0, 0.0, 0.0);
-//        CGContextSetTextMatrix(contextRef, transform);
         
         // draw player image
         UIImage *playerImage = nil;
@@ -82,11 +73,7 @@
         } else {
             playerImage = [[UIImage imageWithData:player.imageData] resizeToNewSize:CGSizeMake(50.0, 50.0)];
         }
-        CGContextDrawImage(contextRef, CGRectMake(10.0, 65.0 + (playerIndex * 50.0) + 7.0, 35.0, 35.0), [playerImage applyMask:[UIImage imageNamed:@"mask.png"]].CGImage);
-        
-        // draw separator line
-        CGContextDrawImage(contextRef, CGRectMake(0.0, 65.0 + (playerIndex * 50.0) + 48, imageBounds.size.width, 2.0), [UIImage imageNamed:@"separator_new2.png"].CGImage);
-        
+        [[playerImage applyMask:[UIImage imageNamed:@"mask.png"]] drawInRect:CGRectMake(10.0, 65.0 + (playerIndex * 50.0) + 7.0, 35.0, 35.0)];
         
         
         NSString *playerName = player.name;
@@ -108,6 +95,9 @@
         CGSize scoreStringSize = [playerScore sizeWithFont:[UIFont LDBrushFontWithSize:scoreFontSize]];
         CGRect scoreStringRect = CGRectMake(imageBounds.size.width - scoreStringSize.width - 10.0, 65.0 + playerIndex * 50.0, scoreStringSize.width, 50.0);
         [playerScore drawInRect:scoreStringRect withFont:[UIFont LDBrushFontWithSize:scoreFontSize]];
+        
+        // draw separator line
+        [[playerImage applyMask:[UIImage imageNamed:@"mask.png"]] drawInRect:CGRectMake(0.0, 65.0 + (playerIndex * 50.0) + 48, imageBounds.size.width, 2.0)];
     }
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
