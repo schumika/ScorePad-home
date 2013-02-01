@@ -462,6 +462,8 @@ static CGFloat kHeaderViewHeight = 35.0;
             AJGame *game = [[AJScoresManager sharedInstance] getGameWithRowId:self.settingsInfo.rowId];
             if (game != nil) {
                 AJExportScoresViewController *exportViewController = [[AJExportScoresViewController alloc] initWithNibName:nil bundle:nil];
+                exportViewController.itemType = self.itemType;
+                exportViewController.itemRowId = self.settingsInfo.rowId;
                 [self.navigationController pushViewController:exportViewController animated:YES];
                 [exportViewController release];
             }

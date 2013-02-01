@@ -6,9 +6,7 @@
 //  Copyright (c) 2013 Anca Julean. All rights reserved.
 //
 
-#import "AJViewController.h"
-
-@interface AJExportScoresViewController : AJViewController {
+@interface AJExportScoresViewController : UIViewController <UIActionSheetDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate> {
     int _itemRowId;
     int _itemType;
 }

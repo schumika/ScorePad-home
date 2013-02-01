@@ -31,16 +31,14 @@
 
 - (UIImage *)createPlayersImage {
     CGRect imageBounds = [[UIScreen mainScreen] bounds];
-    imageBounds.size.height -= [UIImage imageNamed:@"nav-bar.png"].size.height;
+     
+    CGFloat calculatedHeight = self.game.players.count * 50.0 + 60.0;
+    imageBounds.size.height = MIN(calculatedHeight, imageBounds.size.height - [UIImage imageNamed:@"nav-bar.png"].size.height - 20.0);
     
     UIGraphicsBeginImageContextWithOptions(imageBounds.size, NO, 0.0);
     
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(contextRef, [UIColor whiteColor].CGColor);
-    CGContextFillRect(contextRef, CGRectMake(0.0, 0.0, 200.0, 200.0));
-    
-    //CGContextDrawImage(contextRef, imageBounds, [UIImage imageNamed:@"background.png"].CGImage);
+    CGContextDrawImage(contextRef, imageBounds, [UIImage imageNamed:@"background.png"].CGImage);
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 	
