@@ -233,7 +233,9 @@
 
 - (IBAction)totalScoresButtonClicked:(id)sender {
     self.displaysLeftSide = YES;
-    [self showLeftView];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self showLeftView];
+    }];
 }
 
 #pragma mark - UITextFieldDelegate methods
