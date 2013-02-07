@@ -22,6 +22,8 @@
     game.rowId = [NSNumber numberWithInt:0];
     game.sortOrder = AJPlayersSortingNone;
     
+    CLSNSLog(@"a game was created with name %@", name);
+    
     return game;
 }
 

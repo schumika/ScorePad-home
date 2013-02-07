@@ -30,6 +30,8 @@
     UINavigationController *navCtrl = [[[UINavigationController alloc] initWithRootViewController:gamesViewController] autorelease];
     self.window.rootViewController = navCtrl;
     
+    AJLog(@"here we go");
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

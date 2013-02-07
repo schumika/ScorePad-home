@@ -12,7 +12,9 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
-    #import "AJTableViewController.h"
+    #import <Crashlytics/Crashlytics.h>
 
+    #import "AJViewController.h"
+    #import "AJTableViewController.h"
     #import "AJDefines.h"
 #endif

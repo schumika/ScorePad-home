@@ -58,6 +58,10 @@
     [super dealloc];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
@@ -81,58 +85,108 @@
 #pragma mark -
 #pragma mark Keyboard State Management
 
+//- (void)keyboardWillShow:(NSNotification *)aNotif {
+//    NSDictionary *userInfo = [aNotif userInfo];
+//	NSTimeInterval keyboardAnimDuration = [[userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+//	UIViewAnimationCurve keyboardAnimCurve = [[userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] unsignedIntValue];
+//	CGRect keyboardFrameBegin = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue] fromView:nil];
+//	CGRect keyboardFrameEnd = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
+//    
+//	// If the keyboard will slide horizontally then we don't want any animation to be done.
+//	// We only want animation when the keyboard will slide to/from bottom
+//	BOOL keyboardSlidesVeritcally = (keyboardFrameBegin.origin.y != keyboardFrameEnd.origin.y);
+//	
+//	if (keyboardSlidesVeritcally) {
+//        
+//		[UIView beginAnimations:nil context:NULL];
+//		[UIView setAnimationCurve:keyboardAnimCurve];
+//		[UIView setAnimationDuration:keyboardAnimDuration];
+//		[UIView setAnimationBeginsFromCurrentState:YES];
+//        
+//	}
+//    
+//    CGRect tableViewBounds = self.tableView.frame;
+//    NSLog(@"table view bounds %@", NSStringFromCGRect(tableViewBounds));
+//    NSLog(@"view controller bounds %@", NSStringFromCGRect(self.view.bounds));
+//    NSLog(@"keyboard frameEnd: %@", NSStringFromCGRect(keyboardFrameEnd));
+//    CGFloat keyboardSizeHeight = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ? keyboardFrameEnd.size.height : keyboardFrameEnd.size.width;
+//	tableViewBounds.size.height = self.view.bounds.size.height - keyboardSizeHeight;
+//    NSLog(@"new table bounds %@", NSStringFromCGRect(tableViewBounds));
+//    self.tableView.frame = tableViewBounds;
+//    
+//    if (keyboardSlidesVeritcally) {
+//		[UIView commitAnimations];
+//	}
+//}
+//
+//- (void)keyboardWillHide:(NSNotification *)aNotif {
+//    NSDictionary *userInfo = [aNotif userInfo];
+//	NSTimeInterval keyboardAnimDuration = [[userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+//	UIViewAnimationCurve keyboardAnimCurve = [[userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] unsignedIntValue];
+//	CGRect keyboardFrameBegin = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue] fromView:nil];
+//	CGRect keyboardFrameEnd = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
+//	
+//	// If the keyboard will slide horizontally then we don't want any animation to be done.
+//	// We only want animation when the keyboard will slide to/from bottom
+//	BOOL keyboardSlidesVeritcally = (keyboardFrameBegin.origin.y != keyboardFrameEnd.origin.y);
+//	
+//	if (keyboardSlidesVeritcally) {
+//        
+//		[UIView beginAnimations:nil context:NULL];
+//		[UIView setAnimationCurve:keyboardAnimCurve];
+//		[UIView setAnimationDuration:keyboardAnimDuration];
+//    }
+//    
+//    CGRect tableViewBounds = self.tableView.frame;
+//    NSLog(@"table view bounds %@", NSStringFromCGRect(tableViewBounds));
+//    NSLog(@"view controller bounds %@", NSStringFromCGRect(self.view.bounds));
+//	tableViewBounds.size.height = self.view.bounds.size.height;
+//    self.tableView.frame = tableViewBounds;
+//    
+//    [UIView commitAnimations];
+//}
+
+- (void)keyboardStateChanged:(NSNotification*)notification;
+{
+    CGRect keyboardRect = CGRectZero;
+    [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardRect];
+    
+    UIEdgeInsets newInsets = UIEdgeInsetsZero;
+    if(notification.name == UIKeyboardDidShowNotification) {
+        // thats only correct, if your view ends at the bottom of the screen
+        // otherwise subtract the difference from the inset
+        newInsets.bottom = keyboardRect.size.height;
+    }
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.tableView.contentInset = newInsets;
+        self.tableView.scrollIndicatorInsets = newInsets;
+    }];
+}
+
 - (void)keyboardWillShow:(NSNotification *)aNotif {
-    NSDictionary *userInfo = [aNotif userInfo];
-	NSTimeInterval keyboardAnimDuration = [[userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-	UIViewAnimationCurve keyboardAnimCurve = [[userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] unsignedIntValue];
-	CGRect keyboardFrameBegin = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue] fromView:nil];
-	CGRect keyboardFrameEnd = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
+    CGRect keyboardRect = CGRectZero;
+    [[aNotif.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardRect];
     
-	// If the keyboard will slide horizontally then we don't want any animation to be done.
-	// We only want animation when the keyboard will slide to/from bottom
-	BOOL keyboardSlidesVeritcally = (keyboardFrameBegin.origin.y != keyboardFrameEnd.origin.y);
-	
-	if (keyboardSlidesVeritcally) {
-        
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationCurve:keyboardAnimCurve];
-		[UIView setAnimationDuration:keyboardAnimDuration];
-		[UIView setAnimationBeginsFromCurrentState:YES];
-        
-	}
+    UIEdgeInsets newInsets = UIEdgeInsetsZero;
+    newInsets.bottom = (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) ? keyboardRect.size.height : keyboardRect.size.width;
     
-    CGRect tableViewBounds = self.tableView.frame;
-	tableViewBounds.size.height = self.view.bounds.size.height - keyboardFrameEnd.size.height;
-    self.tableView.frame = tableViewBounds;
-    
-    if (keyboardSlidesVeritcally) {
-		[UIView commitAnimations];
-	}
+    [UIView animateWithDuration:0.5 animations:^{
+        self.tableView.contentInset = newInsets;
+        self.tableView.scrollIndicatorInsets = newInsets;
+    }];
 }
 
 - (void)keyboardWillHide:(NSNotification *)aNotif {
-    NSDictionary *userInfo = [aNotif userInfo];
-	NSTimeInterval keyboardAnimDuration = [[userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-	UIViewAnimationCurve keyboardAnimCurve = [[userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] unsignedIntValue];
-	CGRect keyboardFrameBegin = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue] fromView:nil];
-	CGRect keyboardFrameEnd = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
-	
-	// If the keyboard will slide horizontally then we don't want any animation to be done.
-	// We only want animation when the keyboard will slide to/from bottom
-	BOOL keyboardSlidesVeritcally = (keyboardFrameBegin.origin.y != keyboardFrameEnd.origin.y);
-	
-	if (keyboardSlidesVeritcally) {
-        
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationCurve:keyboardAnimCurve];
-		[UIView setAnimationDuration:keyboardAnimDuration];
-    }
+    CGRect keyboardRect = CGRectZero;
+    [[aNotif.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardRect];
     
-    CGRect tableViewBounds = self.tableView.frame;
-	tableViewBounds.size.height = self.view.bounds.size.height;
-    self.tableView.frame = tableViewBounds;
+    UIEdgeInsets newInsets = UIEdgeInsetsZero;
     
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.tableView.contentInset = newInsets;
+        self.tableView.scrollIndicatorInsets = newInsets;
+    }];
 }
 
 @end
