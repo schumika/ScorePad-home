@@ -11,6 +11,7 @@
 		521BC2D316255A5A000C2EE0 /* AJScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 521BC2D216255A5A000C2EE0 /* AJScrollView.m */; };
 		521E13391600B76300022B1E /* AJScore+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 521E13381600B76300022B1E /* AJScore+Additions.m */; };
 		521E133C1600C2AF00022B1E /* AJScoresTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 521E133B1600C2AF00022B1E /* AJScoresTableViewController.m */; };
+		523876AA16C52F2F008C9F8D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523876A916C52F2F008C9F8D /* MessageUI.framework */; };
 		52473BB6162BEDA1008455F3 /* round.png in Resources */ = {isa = PBXBuildFile; fileRef = 52473BB4162BEDA1008455F3 /* round.png */; };
 		52473BB7162BEDA1008455F3 /* round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52473BB5162BEDA1008455F3 /* round@2x.png */; };
 		5247B3AF1680B82100CF05F5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5247B3AE1680B82100CF05F5 /* Default.png */; };
@@ -127,6 +128,7 @@
 		521E13381600B76300022B1E /* AJScore+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AJScore+Additions.m"; sourceTree = "<group>"; };
 		521E133A1600C2AF00022B1E /* AJScoresTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScoresTableViewController.h; sourceTree = "<group>"; };
 		521E133B1600C2AF00022B1E /* AJScoresTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScoresTableViewController.m; sourceTree = "<group>"; };
+		523876A916C52F2F008C9F8D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		52473BB4162BEDA1008455F3 /* round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = round.png; sourceTree = "<group>"; };
 		52473BB5162BEDA1008455F3 /* round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "round@2x.png"; sourceTree = "<group>"; };
 		5247B3AE1680B82100CF05F5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523876AA16C52F2F008C9F8D /* MessageUI.framework in Frameworks */,
 				52D6F40816BBA7BD007B8A6D /* QuartzCore.framework in Frameworks */,
 				5253287F15FF15D000A28B84 /* CoreData.framework in Frameworks */,
 				525CC22D15FE2A1F00E8F903 /* UIKit.framework in Frameworks */,
@@ -370,6 +373,7 @@
 		525CC22B15FE2A1F00E8F903 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				523876A916C52F2F008C9F8D /* MessageUI.framework */,
 				52D6F40716BBA7BC007B8A6D /* QuartzCore.framework */,
 				528980E6168068DD00FC2F09 /* Crashlytics.framework */,
 				5253287E15FF15D000A28B84 /* CoreData.framework */,

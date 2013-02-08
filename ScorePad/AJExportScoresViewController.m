@@ -88,6 +88,22 @@
     [_toolbar release];
 }
 
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [self dismissModalViewControllerAnimated:YES];
+    
+    NSString *alertMessage = nil;
+    if (result == MFMailComposeResultSent) {
+        alertMessage = @"Message sent";
+    } else {
+        alertMessage = @"Message was not sent. Try again.";
+    }
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:alertMessage delegate:nil
+                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+    [alertView release];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
@@ -168,6 +184,24 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         UIImageWriteToSavedPhotosAlbum(self.exportedImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    } else if (buttonIndex == 0) {
+        if ([MFMailComposeViewController canSendMail]) {
+            MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+            picker.mailComposeDelegate = self;
+            
+            [picker setSubject:@"Scores"];
+            [picker setMessageBody:@"Scores in the game" isHTML:NO];
+            
+            [picker addAttachmentData:UIImagePNGRepresentation(self.exportedImage)  mimeType:@"image/png" fileName:@"Scores"];
+            
+            // Show email view
+            [self presentModalViewController:picker animated:YES];
+            [picker release];
+        } else {
+            NSMutableString *s = [NSMutableString stringWithString:@"mailto:"];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[s stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        }
+        
     }
 }
 

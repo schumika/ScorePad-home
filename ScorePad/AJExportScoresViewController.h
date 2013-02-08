@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Anca Julean. All rights reserved.
 //
 
-@interface AJExportScoresViewController : UIViewController <UIActionSheetDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate> {
+#import <MessageUI/MessageUI.h>
+
+@interface AJExportScoresViewController : UIViewController <UIActionSheetDelegate, UIScrollViewDelegate,
+                                        UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate> {
     int _itemRowId;
     int _itemType;
 }
