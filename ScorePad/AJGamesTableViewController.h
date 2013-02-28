@@ -18,6 +18,6 @@
     UIBarButtonItem *_doneBarButton;
 }
 
-@property (nonatomic, retain) NSArray *gamesArray;
+@property (nonatomic, strong) NSArray *gamesArray;
 
 @end

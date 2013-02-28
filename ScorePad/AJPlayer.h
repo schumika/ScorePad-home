@@ -13,13 +13,13 @@
 
 @interface AJPlayer : NSManagedObject
 
-@property (nonatomic, retain) NSString * color;
-@property (nonatomic, retain) NSData * imageData;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSDate * time;
-@property (nonatomic, retain) NSNumber * sortOrder;
-@property (nonatomic, retain) AJGame *game;
-@property (nonatomic, retain) NSSet *scores;
+@property (nonatomic, strong) NSString * color;
+@property (nonatomic, strong) NSData * imageData;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSDate * time;
+@property (nonatomic, strong) NSNumber * sortOrder;
+@property (nonatomic, strong) AJGame *game;
+@property (nonatomic, strong) NSSet *scores;
 @end
 
 @interface AJPlayer (CoreDataGeneratedAccessors)

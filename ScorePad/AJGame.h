@@ -13,12 +13,12 @@
 
 @interface AJGame : NSManagedObject
 
-@property (nonatomic, retain) NSString * color;
-@property (nonatomic, retain) NSData * imageData;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * rowId;
-@property (nonatomic, retain) NSNumber * sortOrder;
-@property (nonatomic, retain) NSSet *players;
+@property (nonatomic, strong) NSString * color;
+@property (nonatomic, strong) NSData * imageData;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSNumber * rowId;
+@property (nonatomic, strong) NSNumber * sortOrder;
+@property (nonatomic, strong) NSSet *players;
 @end
 
 @interface AJGame (CoreDataGeneratedAccessors)

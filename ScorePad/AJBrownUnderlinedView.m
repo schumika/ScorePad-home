@@ -28,20 +28,13 @@
     if (self) {
         _underlinedImageView = [[UIImageView alloc] initWithImage:[self underlinedImage]];
         [self addSubview:_underlinedImageView];
-        [_underlinedImageView release];
         
         _backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         [self addSubview:_backgroundImageView];
-        [_backgroundImageView release];
     }
     return self;
 }
 
-- (void)dealloc {
-    [_backgroundImage release];
-    
-    [super dealloc];
-}
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -60,8 +53,7 @@
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage {
     if (backgroundImage != _backgroundImage) {
-        [_backgroundImage release];
-        _backgroundImage = [backgroundImage retain];
+        _backgroundImage = backgroundImage;
         
         _backgroundImageView.image = _backgroundImage;
         

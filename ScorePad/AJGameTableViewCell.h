@@ -16,9 +16,9 @@
     int _numberOfPlayers;
 }
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *color;
-@property (nonatomic, retain) UIImage *picture;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *color;
+@property (nonatomic, strong) UIImage *picture;
 @property (nonatomic, assign) int numberOfPlayers;
 
 @end

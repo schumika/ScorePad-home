@@ -30,10 +30,5 @@
 }
 */
 
-- (void)dealloc {
-    [_userInfo release];
-    
-    [super dealloc];
-}
 
 @end

@@ -14,7 +14,7 @@
     AJGame *_game;
 }
 
-@property (nonatomic, retain) AJGame *game;
+@property (nonatomic, strong) AJGame *game;
 
 - (id)initWithGame:(AJGame *)game;
 

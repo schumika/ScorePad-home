@@ -10,7 +10,7 @@
 
 @interface AJViewController : UIViewController
 
-@property (nonatomic, retain) NSString *titleViewText;
+@property (nonatomic, strong) NSString *titleViewText;
 
 - (IBAction)backButtonClicked:(id)sender;
 

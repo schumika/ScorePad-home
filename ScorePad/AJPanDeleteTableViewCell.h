@@ -13,7 +13,7 @@
 
 @interface AJPanDeleteTableViewCell : UITableViewCell
 
-@property (nonatomic, assign) id<AJPanDeleteTableViewCellDelegate> panGestureDelegate;
+@property (nonatomic, weak) id<AJPanDeleteTableViewCellDelegate> panGestureDelegate;
 
 - (void)panGestureHandler:(UIPanGestureRecognizer *)panGesture;
 

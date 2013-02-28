@@ -13,7 +13,7 @@
 + (UIImage *)staticImageNamed:(NSString *)imageName {
     static UIImage *i = nil;
 	if (i == nil) {
-		i = [[UIImage imageNamed:imageName] retain];
+		i = [UIImage imageNamed:imageName];
 	}
 	return i;
 }
@@ -36,7 +36,7 @@
 
 - (UIImage*)resizeToNewSize:(CGSize)newSize {
 	if (self.size.height == 0 || self.size.width == 0) {
-		return [[self retain] autorelease];
+		return self;
 	}
 	
 	CGSize constrainedSize = newSize;

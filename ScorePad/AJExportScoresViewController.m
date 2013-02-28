@@ -19,7 +19,7 @@
     UIToolbar	*_toolbar;
 }
 
-@property (nonatomic, retain) UIImage *exportedImage;
+@property (nonatomic, strong) UIImage *exportedImage;
 
 @end
 
@@ -40,11 +40,6 @@
 	return self;
 }
 
-- (void)dealloc {
-    [_exportedImage release];
-    
-    [super dealloc];
-}
 
 - (void)viewDidLoad
 {
@@ -57,27 +52,24 @@
     _imageView.backgroundColor = [UIColor blackColor];
     _imageView.userInteractionEnabled = YES;
     [self.view addSubview:_imageView];
-    [_imageView release];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHandler:)];
     tapGestureRecognizer.delegate = self;
     [_imageView addGestureRecognizer:tapGestureRecognizer];
-    [tapGestureRecognizer release];
     
     if (self.itemType == AJGameItem) {
         AJGame *game = [[AJScoresManager sharedInstance] getGameWithRowId:self.itemRowId];
         
         if (game != nil) {
             AJExportHandler *exportHandler = [[AJExportHandler alloc] initWithGame:game];
-            self.exportedImage = [[exportHandler createPlayersImage] retain];
-            [exportHandler release];
+            self.exportedImage = [exportHandler createPlayersImage];
         }
     } else {
         NSLog(@"TBD..");
     }
     
-    UIBarButtonItem* optionsButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
-                                                                                    action:@selector(optionsAction)] autorelease];
+    UIBarButtonItem* optionsButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+                                                                                    action:@selector(optionsAction)];
     
     _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, screenBounds.size.height - PORTRAIT_TOOLBAR_HEIGHT,
 														   screenBounds.size.width, PORTRAIT_TOOLBAR_HEIGHT)];
@@ -85,7 +77,6 @@
 	_toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	_toolbar.items = [NSArray arrayWithObjects:optionsButton, nil];
 	[self.view addSubview:_toolbar];
-    [_toolbar release];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
@@ -101,7 +92,6 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:alertMessage delegate:nil
                                               cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alertView show];
-    [alertView release];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -142,8 +132,7 @@
 
 - (void)setExportedImage:(UIImage *)exportedImage {
     if (exportedImage != _exportedImage) {
-        [_exportedImage release];
-        _exportedImage = [exportedImage retain];
+        _exportedImage = exportedImage;
         
         _imageView.image = _exportedImage;
         if ((_exportedImage.size.width > _imageView.frame.size.width) || (_exportedImage.size.height > _imageView.frame.size.height)) {
@@ -161,7 +150,6 @@
 											  destructiveButtonTitle:nil otherButtonTitles:/*@"share on Facebook",*/ @"send email", @"save image", nil];
 	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
 	[actionSheet showInView:self.view];
-	[actionSheet release];
 }
 
 #pragma mark - UITapGestureRecognizer methods
@@ -196,7 +184,6 @@
             
             // Show email view
             [self presentModalViewController:picker animated:YES];
-            [picker release];
         } else {
             NSMutableString *s = [NSMutableString stringWithString:@"mailto:"];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[s stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
@@ -209,7 +196,6 @@
     NSString *messageString = (error == nil) ? @"image saved" : @"image not saved";
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:messageString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alertView show];
-    [alertView release];
 }
 
 @end

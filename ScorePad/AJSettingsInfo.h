@@ -10,9 +10,9 @@
 
 @interface AJSettingsInfo : NSObject
 
-@property (nonatomic, retain) NSData *imageData;
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *colorString;
+@property (nonatomic, strong) NSData *imageData;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *colorString;
 @property (nonatomic, assign) int rowId;
 
 + (id)createSettingsInfoWithImageData:(NSData *)imageData andName:(NSString *)name andColorString:(NSString *)colorString andRowId:(int)rowId;

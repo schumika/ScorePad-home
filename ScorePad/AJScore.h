@@ -13,8 +13,8 @@
 
 @interface AJScore : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * round;
-@property (nonatomic, retain) NSNumber * value;
-@property (nonatomic, retain) AJPlayer *player;
+@property (nonatomic, strong) NSNumber * round;
+@property (nonatomic, strong) NSNumber * value;
+@property (nonatomic, strong) AJPlayer *player;
 
 @end

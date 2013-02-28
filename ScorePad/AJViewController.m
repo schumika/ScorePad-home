@@ -33,11 +33,6 @@
 @synthesize titleView = _titleView;
 @synthesize titleViewText = _titleViewText;
 
-- (void)dealloc {
-    [_titleViewText release];
-    
-    [super dealloc];
-}
 
 - (void)viewDidLoad
 {
@@ -56,8 +51,7 @@
 
 - (void)setTitleViewText:(NSString *)titleViewText {
     if (titleViewText != _titleViewText) {
-        [_titleViewText release];
-        _titleViewText = [titleViewText retain];
+        _titleViewText = titleViewText;
         
         self.titleView.text = _titleViewText;
     }

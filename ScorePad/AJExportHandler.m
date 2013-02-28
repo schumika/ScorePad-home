@@ -29,11 +29,6 @@
     return self;
 }
 
-- (void)dealloc {
-    [_game release];
-    
-    [super dealloc];
-}
 
 - (UIImage *)createPlayersImage {
     CGRect imageBounds = [[UIScreen mainScreen] bounds];
@@ -54,7 +49,7 @@
 	CGContextSetFillColorWithColor(contextRef, [UIColor colorWithHexString:self.game.color].CGColor);
     CGFloat fontSize = 65.0;
 	CGContextSelectFont(contextRef, "LDBrushStroke", fontSize, kCGEncodingMacRoman);
-    CGContextSetFont(contextRef, CGFontCreateWithFontName((CFStringRef)[UIFont LDBrushFontWithSize:fontSize].fontName));
+    CGContextSetFont(contextRef, CGFontCreateWithFontName((__bridge CFStringRef)[UIFont LDBrushFontWithSize:fontSize].fontName));
     CGSize nameStringSize = [gameName sizeWithFont:[UIFont LDBrushFontWithSize:fontSize]];
     CGRect nameStringRect = CGRectMake((imageBounds.size.width - nameStringSize.width)/2, 5.0, nameStringSize.width, 80.0);
     [gameName drawInRect:nameStringRect withFont:[UIFont LDBrushFontWithSize:fontSize]];
@@ -81,7 +76,7 @@
         CGContextSetFillColorWithColor(contextRef, [UIColor colorWithHexString:player.color].CGColor);
         CGFloat playerFontSize = 50.0;
         CGContextSelectFont(contextRef, "LDBrushStroke", playerFontSize, kCGEncodingMacRoman);
-        CGContextSetFont(contextRef, CGFontCreateWithFontName((CFStringRef)[UIFont LDBrushFontWithSize:playerFontSize].fontName));
+        CGContextSetFont(contextRef, CGFontCreateWithFontName((__bridge CFStringRef)[UIFont LDBrushFontWithSize:playerFontSize].fontName));
         CGSize nameStringSize = [playerName sizeWithFont:[UIFont LDBrushFontWithSize:playerFontSize]];
         CGRect nameStringRect = CGRectMake(60.0, 85.0 + playerIndex * 50.0, nameStringSize.width, 50.0);
         [playerName drawInRect:nameStringRect withFont:[UIFont LDBrushFontWithSize:playerFontSize]];
@@ -91,7 +86,7 @@
         CGContextSetFillColorWithColor(contextRef, [UIColor AJBrownColor].CGColor);
         CGFloat scoreFontSize = 65.0;
         CGContextSelectFont(contextRef, "LDBrushStroke", scoreFontSize, kCGEncodingMacRoman);
-        CGContextSetFont(contextRef, CGFontCreateWithFontName((CFStringRef)[UIFont LDBrushFontWithSize:scoreFontSize].fontName));
+        CGContextSetFont(contextRef, CGFontCreateWithFontName((__bridge CFStringRef)[UIFont LDBrushFontWithSize:scoreFontSize].fontName));
         CGSize scoreStringSize = [playerScore sizeWithFont:[UIFont LDBrushFontWithSize:scoreFontSize]];
         CGRect scoreStringRect = CGRectMake(imageBounds.size.width - scoreStringSize.width - 10.0, 85.0 + playerIndex * 50.0, scoreStringSize.width, 50.0);
         [playerScore drawInRect:scoreStringRect withFont:[UIFont LDBrushFontWithSize:scoreFontSize]];

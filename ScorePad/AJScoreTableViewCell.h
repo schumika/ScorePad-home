@@ -16,8 +16,6 @@
     UIButton *_plusMinusButton;
     
     BOOL _displaysLeftSide;
-    
-    id<AJScoreTableViewCellDelegate> _delegate;
 }
 
 @property (nonatomic, readonly) UITextField *scoreTextField;
@@ -28,7 +26,7 @@
 
 @property (nonatomic, assign) BOOL displaysLeftSide;
 
-@property (nonatomic, assign) id<AJScoreTableViewCellDelegate> delegate;
+@property (nonatomic, weak) id<AJScoreTableViewCellDelegate> delegate;
 
 - (void)showLeftView;
 - (void)hideLeftView;

@@ -40,7 +40,6 @@
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _tableView.separatorColor = [UIColor colorWithRed:112.0/255.0 green:112.0/255.0 blue:112.0/255.0 alpha:0.3];
     [self.view addSubview:_tableView];
-    [_tableView release];
     
     [self addKeyboardNotifications];
     
@@ -55,7 +54,6 @@
     
     [self removeKeyboardNotifications];
     
-    [super dealloc];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

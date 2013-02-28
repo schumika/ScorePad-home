@@ -18,17 +18,17 @@
     double _maxViewHeight;
     BOOL _isFirstColumn;
     
-    id<AJVerticalPlayerViewDelegate> _delegate;
+    id<AJVerticalPlayerViewDelegate> __weak _delegate;
 }
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *color;
-@property (nonatomic, retain) NSArray *scores;
+@property (nonatomic, strong) NSArray *scores;
 
 @property (nonatomic, assign) double maxViewHeight;
 @property (nonatomic, assign) BOOL isFirstColumn;
 
-@property (nonatomic, assign) id<AJVerticalPlayerViewDelegate> delegate;
+@property (nonatomic, weak) id<AJVerticalPlayerViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame andName:(NSString *)name andScores:(NSArray *)scores andColor:(NSString *)color;
 

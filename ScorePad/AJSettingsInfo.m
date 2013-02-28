@@ -29,15 +29,8 @@
 }
 
 + (id)createSettingsInfoWithImageData:(NSData *)imageData andName:(NSString *)name andColorString:(NSString *)colorString andRowId:(int)rowId {
-    return [[[self alloc] initWithImageData:imageData andName:name andColorString:colorString andRowId:rowId] autorelease];
+    return [[self alloc] initWithImageData:imageData andName:name andColorString:colorString andRowId:rowId];
 }
 
-- (void)dealloc {
-    [_imageData release];
-    [_name release];
-    [_colorString release];
-    
-    [super dealloc];
-}
 
 @end

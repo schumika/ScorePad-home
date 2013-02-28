@@ -30,9 +30,10 @@ static AJScoresManager *sharedAJScoresManager = nil;
 #pragma mark - Singleton methods
 
 + (AJScoresManager *)sharedAJScoresManager {
-    if (sharedAJScoresManager == nil) {
-        sharedAJScoresManager = [self alloc];
-        [sharedAJScoresManager init];
+    @synchronized(self) {
+        if (sharedAJScoresManager == nil) {
+            sharedAJScoresManager = [[self alloc] init];
+        }
     }
     
     return sharedAJScoresManager;
@@ -43,22 +44,6 @@ static AJScoresManager *sharedAJScoresManager = nil;
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    return self;
-}
-
-- (id)retain {
-    return self;
-}
-
-- (NSUInteger)retainCount {
-    return NSUIntegerMax;
-}
-
-- (oneway void)release {
-    
-}
-
-- (id)autorelease {
     return self;
 }
 
@@ -270,7 +255,7 @@ static AJScoresManager *sharedAJScoresManager = nil;
 }
 
 + (AJSettingsInfo *)createSettingsInfo {
-    return [[[AJSettingsInfo alloc] init] autorelease];
+    return [[AJSettingsInfo alloc] init];
 }
 
 #pragma mark - Private methods

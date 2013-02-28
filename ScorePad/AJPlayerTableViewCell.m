@@ -54,12 +54,10 @@
         _grabImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rip.png"]];
         _grabImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [self.contentView addSubview:_grabImageView];
-        [_grabImageView release];
         
         _pictureView = [[UIImageView alloc] initWithFrame:CGRectZero];
         _pictureView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [self.contentView addSubview:_pictureView];
-        [_pictureView release];
         
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _nameLabel.backgroundColor = [UIColor clearColor];
@@ -71,7 +69,6 @@
         _nameLabel.minimumFontSize = 25.0;
         _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:_nameLabel];
-        [_nameLabel release];
         
         _totalScoresButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _totalScoresButton.backgroundColor = [UIColor clearColor];
@@ -93,19 +90,15 @@
         _roundsPlayedLabel.adjustsFontSizeToFitWidth = YES;
         _roundsPlayedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:_roundsPlayedLabel];
-        [_roundsPlayedLabel release];
         
         _separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator_new2.png"]];
         [self.contentView addSubview:_separatorView];
-        [_separatorView release];
         
         _disclosureView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure.png"]];
         [self.contentView addSubview:_disclosureView];
-        [_disclosureView release];
         
         _underlinedView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         [self addSubview:_underlinedView];
-        [_underlinedView release];
         
         _scoreTextField = [[UITextField alloc] initWithFrame:CGRectZero];
         _scoreTextField.borderStyle = UITextBorderStyleNone;
@@ -118,7 +111,6 @@
         _scoreTextField.delegate = self;
         _scoreTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         [_underlinedView addSubview:_scoreTextField];
-        [_scoreTextField release];
         
         _plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_plusButton setBackgroundImage:[UIImage roundTextFieldImage] forState:UIControlStateNormal];
@@ -164,18 +156,10 @@
     _minusButton.frame = CGRectMake(cellWidth - 55.0, 35.0, 40.0, 31.0);
 }
 
-- (void)dealloc {
-    [_name release];
-    [_color release];
-    [_picture release];
-    
-    [super dealloc];
-}
 
 - (void)setName:(NSString *)name {
     if (name != _name) {
-        [_name release];
-        _name = [name retain];
+        _name = name;
         
         _nameLabel.text = _name;
     }
@@ -183,8 +167,7 @@
 
 - (void)setColor:(NSString *)color {
     if (color != _color) {
-        [_color release];
-        _color = [color retain];
+        _color = color;
         
         _nameLabel.textColor = [UIColor colorWithHexString:_color];
     }
@@ -192,8 +175,7 @@
 
 - (void)setPicture:(UIImage *)picture {
     if (picture != _picture) {
-        [_picture release];
-        _picture = [picture retain];
+        _picture = picture;
         
         [_pictureView setImage:[_picture applyMask:[UIImage imageNamed:@"mask.png"]]];
     }

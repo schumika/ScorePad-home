@@ -10,6 +10,6 @@
 
 @interface AJUnderlinedView : UIView
 
-@property (nonatomic, retain) UIColor *underlineColor;
+@property (nonatomic, strong) UIColor *underlineColor;
 
 @end

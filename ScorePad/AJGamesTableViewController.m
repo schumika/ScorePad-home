@@ -35,15 +35,6 @@
 
 @synthesize gamesArray = _gamesArray;
 
-- (void)dealloc {
-    [_gamesArray release];
-    [_draggToAddLabel release];
-    
-    [_editBarButton release];
-    [_doneBarButton release];
-    
-    [super dealloc];
-}
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.gamesArray = [[AJScoresManager sharedInstance] getGamesArray];
@@ -56,8 +47,8 @@
 {
     [super viewDidLoad];
     
-    _editBarButton = [[UIBarButtonItem clearBarButtonItemWithTitle:@"Edit" target:self action:@selector(editButtonClicked:)] retain];
-    _doneBarButton = [[UIBarButtonItem clearBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)] retain];
+    _editBarButton = [UIBarButtonItem clearBarButtonItemWithTitle:@"Edit" target:self action:@selector(editButtonClicked:)];
+    _doneBarButton = [UIBarButtonItem clearBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
     
     _draggToAddLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, -50.0)];
     _draggToAddLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -140,7 +131,7 @@
         AJNewItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:addNewGameCellIdentifier];
         
         if (cell == nil) {
-            cell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:addNewGameCellIdentifier] autorelease];
+            cell = [[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:addNewGameCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textField.placeholder = @"Tap to Add new game ...";
             cell.textField.text = @"";
@@ -152,7 +143,7 @@
         AJGameTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:gameCellIdentifier];
         
         if (cell == nil) {
-            cell = [[[AJGameTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:gameCellIdentifier] autorelease];
+            cell = [[AJGameTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:gameCellIdentifier];
             //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.panGestureDelegate = self;
         }
@@ -174,7 +165,7 @@
         AJNewItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:newGameCellIdentifier];
         
         if (cell == nil) {
-            cell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:newGameCellIdentifier] autorelease];
+            cell = [[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:newGameCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textField.placeholder = @"Tap to Add new game ...";
             cell.textField.text = @"";
@@ -197,10 +188,9 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
     NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithArray:self.gamesArray];
-    AJGame *gameToMove = [[mutableArray objectAtIndex:fromIndexPath.row] retain];
+    AJGame *gameToMove = [mutableArray objectAtIndex:fromIndexPath.row];
     [mutableArray removeObjectAtIndex:fromIndexPath.row];
     [mutableArray insertObject:gameToMove atIndex:toIndexPath.row];
-    [gameToMove release];
     [self setGamesArray:mutableArray];
     
     [self updateRowIdsForGames];
@@ -226,7 +216,6 @@
         AJPlayersTableViewController *playersViewController = [[AJPlayersTableViewController alloc] initWithStyle:UITableViewStylePlain];
         playersViewController.game = (AJGame *)[self.gamesArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:playersViewController animated:YES];
-        [playersViewController release];
     }
 }
 
@@ -292,7 +281,6 @@
                                               otherButtonTitles:@"Delete", nil];
     alertView.userInfo = @{@"cell" : cell};
     [alertView show];
-    [alertView release];
 }
 
 #pragma mark - UIAlertViewDelegate methods

@@ -18,20 +18,18 @@
     double _totalScores;
     int _numberOfRounds;
     
-    BOOL _displaysLeftSide;;
-    
-    id<AJPlayerTableViewCellDelegate> _delegate;
+    BOOL _displaysLeftSide;
 }
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *color;
-@property (nonatomic, retain) UIImage *picture;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *color;
+@property (nonatomic, strong) UIImage *picture;
 @property (nonatomic, assign) double totalScores;
 @property (nonatomic, assign) int numberOfRounds;
 
 @property (nonatomic, assign) BOOL displaysLeftSide;
 
-@property (nonatomic, assign) id<AJPlayerTableViewCellDelegate> delegate;
+@property (nonatomic, weak) id<AJPlayerTableViewCellDelegate> delegate;
 
 @property (nonatomic, readonly) UITextField *scoreTextField;
 

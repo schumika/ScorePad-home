@@ -38,7 +38,6 @@ const float DRAG_LABEL_WIDTH = 150.0;
     if (self) {
         _underlinedView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         [self addSubview:_underlinedView];
-        [_underlinedView release];
         
         _crossLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _crossLabel.textColor = [UIColor clearColor];
@@ -46,7 +45,6 @@ const float DRAG_LABEL_WIDTH = 150.0;
         _crossLabel.font = [UIFont boldSystemFontOfSize:32.0];
         _crossLabel.backgroundColor = [UIColor clearColor];
         [_underlinedView addSubview:_crossLabel];
-        [_crossLabel release];
         
         _dragToDeleteLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _dragToDeleteLabel.textColor = [UIColor lightGrayColor];
@@ -54,12 +52,10 @@ const float DRAG_LABEL_WIDTH = 150.0;
         [_dragToDeleteLabel setFont:[UIFont LDBrushFontWithSize:40.0]];
         _dragToDeleteLabel.backgroundColor = [UIColor clearColor];
         [_underlinedView addSubview:_dragToDeleteLabel];
-        [_dragToDeleteLabel release];
         
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureHandler:)];
         panGestureRecognizer.delegate = self;
         [self addGestureRecognizer:panGestureRecognizer];
-        [panGestureRecognizer release];
     }
     return self;
 }

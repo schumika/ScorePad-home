@@ -23,8 +23,8 @@
     AJScrollView *_scrollView;
 }
 
-@property (nonatomic, retain) AJGame *game;
-@property (nonatomic, retain) NSArray *playersArray;
+@property (nonatomic, strong) AJGame *game;
+@property (nonatomic, strong) NSArray *playersArray;
 
 @property (nonatomic, assign) AJPlayersSortingType playersSortingType;
 

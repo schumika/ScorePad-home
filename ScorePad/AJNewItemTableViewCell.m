@@ -25,7 +25,6 @@
     if (self) {
         _underlinedView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         [self.contentView addSubview:_underlinedView];
-        [_underlinedView release];
         
         _textField = [[UITextField alloc] initWithFrame:CGRectZero];
         _textField.borderStyle = UITextBorderStyleNone;
@@ -37,7 +36,6 @@
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.autocorrectionType = UITextAutocorrectionTypeNo;
         [_underlinedView addSubview:_textField];
-        [_textField release];
     }
     return self;
 }

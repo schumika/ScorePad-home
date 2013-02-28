@@ -38,7 +38,6 @@
     _pictureView = [[UIImageView alloc] initWithFrame:CGRectMake(5.0, 5.0, 50.0, 50.0)];
     _pictureView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
     [self.contentView addSubview:_pictureView];
-    [_pictureView release];
     
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70.0, 3.0, 240.0, 40.0)];
     _nameLabel.backgroundColor = [UIColor clearColor];
@@ -50,7 +49,6 @@
     _nameLabel.minimumFontSize = 20.0;
     _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:_nameLabel];
-    [_nameLabel release];
     
     _playersLabel = [[UILabel alloc] initWithFrame:CGRectMake(70.0, 40.0, 240.0, 20.0)];
     _playersLabel.backgroundColor = [UIColor clearColor];
@@ -59,26 +57,16 @@
     _playersLabel.adjustsFontSizeToFitWidth = YES;
     _playersLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:_playersLabel];
-    [_playersLabel release];
     
     _separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator_new2.png"]];
     [self.contentView addSubview:_separatorView];
-    [_separatorView release];
     
     _disclosureView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure.png"]];
     [self.contentView addSubview:_disclosureView];
-    [_disclosureView release];
     
     return self;
 }
 
-- (void)dealloc {
-    [_name release];
-    [_color release];
-    [_picture release];
-    
-    [super dealloc];
-}
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -96,8 +84,7 @@
 
 - (void)setName:(NSString *)name {
     if (name != _name) {
-        [_name release];
-        _name = [name retain];
+        _name = name;
         
         _nameLabel.text = _name;
     }
@@ -105,8 +92,7 @@
 
 - (void)setColor:(NSString *)color {
     if (color != _color) {
-        [_color release];
-        _color = [color retain];
+        _color = color;
         
         _nameLabel.textColor = [UIColor colorWithHexString:_color];
     }
@@ -114,8 +100,7 @@
 
 - (void)setPicture:(UIImage *)picture {
     if (picture != _picture) {
-        [_picture release];
-        _picture = [picture retain];
+        _picture = picture;
         
         [_pictureView setImage:[_picture applyMask:[UIImage imageNamed:@"mask.png"]]];
     }

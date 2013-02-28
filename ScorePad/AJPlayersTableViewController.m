@@ -31,8 +31,8 @@ static CGFloat kHeaderViewHeight = 35.0;
 }
 
 @property (nonatomic, assign) BOOL addScoreViewIsDisplayed;
-@property (nonatomic, retain) NSIndexPath *indexPathOfSelectedTextField;
-@property (nonatomic, retain) NSIndexPath *indexPathOfCellShowingLeftSide;
+@property (nonatomic, strong) NSIndexPath *indexPathOfSelectedTextField;
+@property (nonatomic, strong) NSIndexPath *indexPathOfCellShowingLeftSide;
 
 - (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
@@ -76,7 +76,6 @@ static CGFloat kHeaderViewHeight = 35.0;
                 verticalPlayerView.isFirstColumn = (playerIndex == 0);
                 [verticalPlayerView setDelegate:self];
                 [_scrollView addSubview:verticalPlayerView];
-                [verticalPlayerView release];
             }
             _scrollView.contentSize = CGSizeMake(self.playersArray.count * 100.0, maxScrollViewContentHeight + 40.0);
         }
@@ -92,7 +91,6 @@ static CGFloat kHeaderViewHeight = 35.0;
     UIImage *backImage = IS_TALLSCREEN ? [UIImage imageNamed:@"landscape_background-568h@2x.png"] : [UIImage imageNamed:@"landscape_background.png"];
     _backView = [[UIImageView alloc] initWithImage:backImage];
     [self.view addSubview:_backView];
-    [_backView release];
     [_backView setHidden:YES];
     
     CGRect bounds = self.view.bounds;
@@ -100,7 +98,6 @@ static CGFloat kHeaderViewHeight = 35.0;
     _scrollView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_scrollView];
     [_scrollView setHidden:YES];
-    [_scrollView release];
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
     //self.navigationItem.leftBarButtonItem = [self backButtonItem];
@@ -137,14 +134,6 @@ static CGFloat kHeaderViewHeight = 35.0;
     }
 }
 
-- (void)dealloc {
-    [_game release];
-    [_playersArray release];
-    [_indexPathOfSelectedTextField release];
-    [_indexPathOfCellShowingLeftSide release];
-    
-    [super dealloc];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -203,7 +192,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     if (indexPath.section == 0) {
         AJPlayerTableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:playerCellIdentifier];
         if (!aCell) {
-            aCell = [[[AJPlayerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:playerCellIdentifier] autorelease];
+            aCell = [[AJPlayerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:playerCellIdentifier];
             aCell.delegate = self;
             aCell.panGestureDelegate = self;
             aCell.accessoryType = UITableViewCellAccessoryNone;
@@ -232,7 +221,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     } else {
         AJNewItemTableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:newPlayerCellIdentifier];
         if (!aCell) {
-            aCell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:newPlayerCellIdentifier] autorelease];
+            aCell = [[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:newPlayerCellIdentifier];
             aCell.accessoryType = UITableViewCellAccessoryNone;
             aCell.textField.placeholder = @"Tap to add New Player ...";
             aCell.textField.text = @"";
@@ -264,7 +253,6 @@ static CGFloat kHeaderViewHeight = 35.0;
         AJScoresTableViewController *scoresViewController = [[AJScoresTableViewController alloc] initWithStyle:UITableViewStylePlain];
         scoresViewController.player = [self.playersArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:scoresViewController animated:YES];
-        [scoresViewController release];
     }
 }
 
@@ -291,7 +279,6 @@ static CGFloat kHeaderViewHeight = 35.0;
             playerArrow.font = [UIFont LDBrushFontWithSize:20.0];
             playerArrow.backgroundColor = [UIColor clearColor];
             [headerView addSubview:playerArrow];
-            [playerArrow release];
             playerArrow.frame = CGRectMake(CGRectGetMaxX(playerButton.frame), 10.0, 20.0, 23.0);
         }
         
@@ -312,14 +299,13 @@ static CGFloat kHeaderViewHeight = 35.0;
             scoreArrow.font = [UIFont LDBrushFontWithSize:20.0];
             scoreArrow.backgroundColor = [UIColor clearColor];
             [headerView addSubview:scoreArrow];
-            [scoreArrow release];
             scoreArrow.frame = CGRectMake(CGRectGetMaxX(scoreButton.frame), 10.0, 20.0, 23.0);
         }
         
-        return [headerView autorelease];
+        return headerView;
     }
     
-    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+    return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -371,7 +357,6 @@ static CGFloat kHeaderViewHeight = 35.0;
     AJSettingsViewController *settingsViewController = [[AJSettingsViewController alloc] initWithSettingsInfo:[self.game settingsInfo] andItemType:AJGameItem];
     settingsViewController.delegate = self;
     [self.navigationController pushViewController:settingsViewController animated:YES];
-    [settingsViewController release];
 }
 
 - (IBAction)doneButtonClicked:(id)sender {
@@ -408,7 +393,6 @@ static CGFloat kHeaderViewHeight = 35.0;
 #pragma mark - AJSettingsViewControllerDelegate methods
 
 - (void)settingsViewControllerDidFinishEditing:(AJSettingsViewController *)settingsViewController withSettingsInfo:(AJSettingsInfo *)settingsInfo {
-    [settingsInfo retain];
     
     [self.navigationController popToViewController:self animated:YES];
     
@@ -421,7 +405,6 @@ static CGFloat kHeaderViewHeight = 35.0;
         [self loadDataAndUpdateUI:YES];
     }
     
-    [settingsInfo release];
 }
 
 - (void)settingsViewControllerDidSelectClearAllScoresForAllPlayers:(AJSettingsViewController *)settingsViewController {
@@ -444,7 +427,6 @@ static CGFloat kHeaderViewHeight = 35.0;
     AJScoresTableViewController *scoresViewController = [[AJScoresTableViewController alloc] initWithStyle:UITableViewStylePlain];
     scoresViewController.player = [self.playersArray objectAtIndex:[[_scrollView subviews] indexOfObject:verticalPlayerView]];
     [self.navigationController pushViewController:scoresViewController animated:YES];
-    [scoresViewController release];
 }
 
 #pragma mark - AJPlayerTableViewCellDelegate methods
@@ -519,7 +501,6 @@ static CGFloat kHeaderViewHeight = 35.0;
                                               otherButtonTitles:@"Delete", nil];
     alertView.userInfo = @{@"cell" : cell};
     [alertView show];
-    [alertView release];
 }
 
 #pragma mark - UIAlertViewDelegate methods

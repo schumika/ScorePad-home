@@ -28,7 +28,7 @@ static NSString *DKCrayonFontFamilyName = @"DK Crayon Crumble";
 //    }
     
     if (fontNames == nil) {
-        fontNames = [[UIFont fontNamesForFamilyName:handwritingFontFamilyName] retain];
+        fontNames = [UIFont fontNamesForFamilyName:handwritingFontFamilyName];
     }
     
     return fontNames;
@@ -38,7 +38,7 @@ static NSString *DKCrayonFontFamilyName = @"DK Crayon Crumble";
     static NSArray *fontNames;
     
     if (fontNames == nil) {
-        fontNames = [[UIFont fontNamesForFamilyName:LDBrushFontFamilyName] retain];
+        fontNames = [UIFont fontNamesForFamilyName:LDBrushFontFamilyName];
     }
     
     return fontNames;
@@ -64,7 +64,7 @@ static NSString *DKCrayonFontFamilyName = @"DK Crayon Crumble";
     static NSArray *fontNames;
     
     if (fontNames == nil) {
-        fontNames = [[UIFont fontNamesForFamilyName:DKCrayonFontFamilyName] retain];
+        fontNames = [UIFont fontNamesForFamilyName:DKCrayonFontFamilyName];
     }
     
     return fontNames;

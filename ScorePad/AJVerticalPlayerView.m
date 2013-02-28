@@ -13,11 +13,11 @@
 
 @interface AJVerticalPlayerHeaderView : UIView {
     
-    UIButton *_nameButton;
+    UIButton *__weak _nameButton;
     UILabel *_totalLabel;
 }
 
-@property (nonatomic, readonly) UIButton *nameButton;
+@property (weak, nonatomic, readonly) UIButton *nameButton;
 @property (nonatomic, readonly) UILabel *totalLabel;
 
 @end
@@ -53,7 +53,6 @@
         [headerView.nameButton setTitleColor:[UIColor colorWithHexString:self.color] forState:UIControlStateNormal];
         [headerView.nameButton addTarget:self action:@selector(nameButtonCliked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:headerView];
-        [headerView release];
         
         double sum = 0.0;
         for (int scoreIndex = 0; scoreIndex < [self.scores count]; scoreIndex++) {
@@ -66,20 +65,12 @@
             [scoreLabel setFont:[UIFont LDBrushFontWithSize:30.0]];
             scoreLabel.textColor = (value >= 0.0) ? [UIColor blackColor] : [UIColor brownColor];
             [self addSubview:scoreLabel];
-            [scoreLabel release];
         }
         [headerView.totalLabel setText:[NSString stringWithFormat:@"%g", sum]];
     }
     return self;
 }
 
-- (void)dealloc {
-    [_name release];
-    [_scores release];
-    [_color release];
-    
-    [super dealloc];
-}
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -154,7 +145,6 @@
     //[_totalLabel setFont:[UIFont fontWithName:@"Thonburi-Bold" size:25.0]];
     [_totalLabel setFont:[UIFont LDBrushFontWithSize:45.0]];
     [self addSubview:_totalLabel];
-    [_totalLabel release];
     
     return self;
 }

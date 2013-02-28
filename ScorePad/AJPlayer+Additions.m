@@ -49,7 +49,7 @@
         [values addObject:score.value];
     }
     
-    return [values autorelease];
+    return values;
 }
 
 @end

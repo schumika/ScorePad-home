@@ -16,7 +16,7 @@
     
     UIImage *buttonImage = [[UIImage imageNamed:@"bar-button.png"] stretchableImageWithLeftCapWidth:7.0 topCapHeight:15.0];
     
-    UIButton *button = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -28,7 +28,7 @@
     CGFloat marginSpace = 20.0f;
     button.frame = CGRectMake(0, 0, buttonSize.width + marginSpace, 30);
     
-    barButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+    barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     return barButtonItem;
 }
@@ -39,7 +39,7 @@
     
     UIImage *backImage = [[UIImage imageNamed:@"back-button"] stretchableImageWithLeftCapWidth:15.0 topCapHeight:15.0];
     
-    UIButton *button = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:backImage forState:UIControlStateNormal];
     [button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -52,7 +52,7 @@
     CGFloat marginSpace = 20.0f;
     button.frame = CGRectMake(0, 0, buttonSize.width + marginSpace, 30);
     
-    barButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+    barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     return barButtonItem;
 }

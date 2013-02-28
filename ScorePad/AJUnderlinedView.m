@@ -27,8 +27,7 @@
 
 - (void)setUnderlineColor:(UIColor *)underlineColor {
     if (underlineColor != _underlineColor) {
-        [_underlineColor release];
-        _underlineColor = [underlineColor retain];
+        _underlineColor = underlineColor;
         
         [self setNeedsDisplay];
     }

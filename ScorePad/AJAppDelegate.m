@@ -13,21 +13,16 @@
 
 @implementation AJAppDelegate
 
-- (void)dealloc
-{
-    [_window release];
-    [super dealloc];
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Crashlytics startWithAPIKey:@"04be4a58b6b1895ef790a290305cc60b987111a3"];
     
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    AJGamesTableViewController *gamesViewController = [[[AJGamesTableViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
-    UINavigationController *navCtrl = [[[UINavigationController alloc] initWithRootViewController:gamesViewController] autorelease];
+    AJGamesTableViewController *gamesViewController = [[AJGamesTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:gamesViewController];
     self.window.rootViewController = navCtrl;
     
     AJLog(@"here we go");

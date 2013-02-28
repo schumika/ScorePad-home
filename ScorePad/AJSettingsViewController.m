@@ -41,7 +41,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     UITextField *_nameTextField;
 }
 
-@property (nonatomic, retain) NSArray *pencilsArray;
+@property (nonatomic, strong) NSArray *pencilsArray;
 
 - (IBAction)selectPictureButtonClicked;
 - (IBAction)takePictureButtonClicked;
@@ -78,16 +78,10 @@ static CGFloat kHeaderViewHeight = 35.0;
 }
 
 - (void)dealloc {
-    [_settingsInfo release];
-    [_colorsArray release];
     
-    [_pictureButton release];
     [_nameTextField setDelegate:nil];
-    [_nameTextField release];
     
-    [_colorsContainerView release];
     
-    [super dealloc];
 }
 
 - (void)viewDidLoad
@@ -100,7 +94,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
     
     
-    _pictureButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+    _pictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _pictureButton.frame = CGRectMake(20.0, 5.0, 70.0, 70.0);
     UIImage *itemImage = [UIImage imageWithData:self.settingsInfo.imageData];
     [_pictureButton setImage:itemImage forState:UIControlStateNormal];
@@ -114,7 +108,6 @@ static CGFloat kHeaderViewHeight = 35.0;
     label.text = @"edit\npicture";
     label.numberOfLines = 2;
     [_pictureButton addSubview:label];
-    [label release];
     
     _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(120.0, 30.0, 190.0, 40.0)];
     _nameTextField.borderStyle = UITextBorderStyleNone;
@@ -136,7 +129,6 @@ static CGFloat kHeaderViewHeight = 35.0;
     UIImageView *containerFrameImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]];
     containerFrameImageView.frame = _colorsContainerView.bounds;
     [_colorsContainerView addSubview:containerFrameImageView];
-    [containerFrameImageView release];
     
     CGSize pencilSize = CGSizeMake(40.0, 40.0);
     CGFloat pencilOffset = (_colorsContainerView.frame.size.width) / (_pencilsArray.count);
@@ -221,7 +213,7 @@ static CGFloat kHeaderViewHeight = 35.0;
             UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:photoAndNameCellIdentifier];
             
             if (aCell == nil) {
-                aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoAndNameCellIdentifier] autorelease];
+                aCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoAndNameCellIdentifier];
                 aCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 [aCell.contentView addSubview:_pictureButton];
@@ -233,7 +225,6 @@ static CGFloat kHeaderViewHeight = 35.0;
                 label.textColor = [UIColor AJBrownColor];
                 label.text = @"Name :";
                 [aCell.contentView addSubview:label];
-                [label release];
                 
                 [aCell.contentView addSubview:_nameTextField];
             }
@@ -243,7 +234,7 @@ static CGFloat kHeaderViewHeight = 35.0;
             UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:colorCellIdentifier];
             
             if (aCell == nil) {
-                aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:colorCellIdentifier] autorelease];
+                aCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:colorCellIdentifier];
                 aCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 CGRect containerFrame = _colorsContainerView.frame;
@@ -253,7 +244,6 @@ static CGFloat kHeaderViewHeight = 35.0;
                 label.textColor = [UIColor AJBrownColor];
                 label.text = [NSString stringWithFormat:@"%@ color :", (self.itemType == AJGameItem) ? @"Game" : @"Player"];
                 [aCell.contentView addSubview:label];
-                [label release];
                 
                 [aCell.contentView addSubview:_colorsContainerView];
             }
@@ -264,14 +254,13 @@ static CGFloat kHeaderViewHeight = 35.0;
         UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:otherCellIdentifier];
         
         if (aCell == nil) {
-            aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:otherCellIdentifier] autorelease];
+            aCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:otherCellIdentifier];
             aCell.selectionStyle = UITableViewCellSelectionStyleGray;
             
             AJBrownUnderlinedView *backView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
             backView.frame = aCell.contentView.bounds;
             backView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             [aCell.contentView addSubview:backView];
-            [backView release];
             [aCell.contentView sendSubviewToBack:backView];
             
             aCell.textLabel.backgroundColor = [UIColor clearColor];
@@ -319,9 +308,8 @@ static CGFloat kHeaderViewHeight = 35.0;
         appearanceLabel.font = [UIFont LDBrushFontWithSize:37.0];
         appearanceLabel.backgroundColor = [UIColor clearColor];
         [headerView addSubview:appearanceLabel];
-        [appearanceLabel release];
         
-        return [headerView autorelease];
+        return headerView;
     } else if (section == 1) {
         AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
@@ -333,12 +321,11 @@ static CGFloat kHeaderViewHeight = 35.0;
         appearanceLabel.font = [UIFont LDBrushFontWithSize:37.0];
         appearanceLabel.backgroundColor = [UIColor clearColor];
         [headerView addSubview:appearanceLabel];
-        [appearanceLabel release];
         
-        return [headerView autorelease];
+        return headerView;
     }
     
-    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+    return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -386,7 +373,6 @@ static CGFloat kHeaderViewHeight = 35.0;
     alertView.tag = alertTag;
     
     [alertView show];
-    [alertView release];
 }
 
 #pragma mark - Buttons Actions
@@ -436,7 +422,6 @@ static CGFloat kHeaderViewHeight = 35.0;
 		actionSheet.tag = SELECT_PICTURE_WITHOUT_CAMERA_ACTION_SHEET_TAG;
 	}
 	[actionSheet showInView:self.view];
-	[actionSheet release];
 }
 
 #pragma mark - UIAlertViewDelegate methods
@@ -465,7 +450,6 @@ static CGFloat kHeaderViewHeight = 35.0;
                 exportViewController.itemType = self.itemType;
                 exportViewController.itemRowId = self.settingsInfo.rowId;
                 [self.navigationController pushViewController:exportViewController animated:YES];
-                [exportViewController release];
             }
         }
     }
@@ -513,7 +497,6 @@ static CGFloat kHeaderViewHeight = 35.0;
 	controller.allowsEditing = YES;
 	controller.delegate = self;
 	[self.navigationController presentModalViewController:controller animated:YES];
-	[controller release];
 }
 
 - (IBAction)takePictureButtonClicked {
@@ -523,7 +506,6 @@ static CGFloat kHeaderViewHeight = 35.0;
 		controller.allowsEditing = YES;
 		controller.delegate = self;
 		[self.navigationController presentModalViewController:controller animated:YES];
-		[controller release];
 	}
 }
 

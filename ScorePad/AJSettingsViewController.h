@@ -20,12 +20,12 @@
     AJItemType _itemType;
     AJSettingsInfo *_settingsInfo;
     
-    id<AJSettingsViewControllerDelegate> _delegate;
+    id<AJSettingsViewControllerDelegate> __weak _delegate;
 }
 
 @property (nonatomic, assign) AJItemType itemType;
-@property (nonatomic, retain) AJSettingsInfo *settingsInfo;
-@property (nonatomic, assign) id<AJSettingsViewControllerDelegate> delegate;
+@property (nonatomic, strong) AJSettingsInfo *settingsInfo;
+@property (nonatomic, weak) id<AJSettingsViewControllerDelegate> delegate;
 
 - (id)initWithSettingsInfo:(AJSettingsInfo *)settingsInfo andItemType:(AJItemType)itemType;
 

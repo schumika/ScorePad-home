@@ -44,32 +44,27 @@
     
     _backgroundView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
     [self.contentView addSubview:_backgroundView];
-    [_backgroundView release];
     
     _roundLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _roundLabel.font = [UIFont LDBrushFontWithSize:30.0];
     _roundLabel.backgroundColor = [UIColor clearColor];
     _roundLabel.textAlignment = UITextAlignmentCenter;
     [_backgroundView addSubview:_roundLabel];
-    [_roundLabel release];
     
     _scoreLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _scoreLabel.font = [UIFont LDBrushFontWithSize:40.0];
     _scoreLabel.backgroundColor = [UIColor clearColor];
     _scoreLabel.textAlignment = UITextAlignmentCenter;
     [_backgroundView addSubview:_scoreLabel];
-    [_scoreLabel release];
     
     _intermediateTotalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _intermediateTotalLabel.font = [UIFont LDBrushFontWithSize:30.0];
     _intermediateTotalLabel.backgroundColor = [UIColor clearColor];
     _intermediateTotalLabel.textAlignment = UITextAlignmentCenter;
     [_backgroundView addSubview:_intermediateTotalLabel];
-    [_intermediateTotalLabel release];
     
     _leftBackgroundView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
     [self addSubview:_leftBackgroundView];
-    [_leftBackgroundView release];
     
     _scoreTextField = [[UITextField alloc] initWithFrame:CGRectZero];
     _scoreTextField.borderStyle = UITextBorderStyleNone;
@@ -82,7 +77,6 @@
     _scoreTextField.delegate = self;
     _scoreTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [_leftBackgroundView addSubview:_scoreTextField];
-    [_scoreTextField release];
     
     _plusMinusButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_plusMinusButton setBackgroundImage:[UIImage roundTextFieldImage] forState:UIControlStateNormal];
@@ -236,7 +230,7 @@
 #pragma mark - Buttons actions
 
 - (IBAction)plusMinusButtonClicked:(id)sender {
-    [self setScore:-self.score];
+    [self setScore:-self.scoreTextField.text.doubleValue];
 }
 
 @end

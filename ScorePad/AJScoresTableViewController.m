@@ -26,8 +26,8 @@ static CGFloat kFooterViewHeight = 40.0;
 }
 
 @property (nonatomic, assign) BOOL leftScoreViewIsDisplayed;
-@property (nonatomic, retain) NSIndexPath *indexPathOfSelectedTextField;
-@property (nonatomic, retain) NSIndexPath *indexPathOfCellShowingLeftSide;
+@property (nonatomic, strong) NSIndexPath *indexPathOfSelectedTextField;
+@property (nonatomic, strong) NSIndexPath *indexPathOfCellShowingLeftSide;
 
 - (void)updateRoundsForScores;
 - (double)intermediateTotalAtRow:(int)round;
@@ -46,14 +46,6 @@ static CGFloat kFooterViewHeight = 40.0;
 
 @synthesize scoresSortingType = _scoresSortingType;
 
-- (void)dealloc {
-    [_player release];
-    [_scoresArray release];
-    [_indexPathOfSelectedTextField release];
-    [_indexPathOfCellShowingLeftSide release];
-    
-    [super dealloc];
-}
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.scoresArray = [self getOrderedScoresArray];
@@ -122,7 +114,7 @@ static CGFloat kFooterViewHeight = 40.0;
     if (indexPath.section == 1) {
         AJNewItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NewScoreCellIdentifier];
         if (!cell) {
-            cell = [[[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NewScoreCellIdentifier] autorelease];
+            cell = [[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NewScoreCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -137,7 +129,7 @@ static CGFloat kFooterViewHeight = 40.0;
         AJScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ScoreCellIdentifier];
         
         if (!cell) {
-            cell = [[[AJScoreTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ScoreCellIdentifier] autorelease];
+            cell = [[AJScoreTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ScoreCellIdentifier];
             cell.panGestureDelegate = self;
             cell.delegate = self;
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -169,7 +161,9 @@ static CGFloat kFooterViewHeight = 40.0;
             [scoreCell hideLeftView];
         } else {
             [scoreCell setDisplaysLeftSide:YES];
-            [scoreCell showLeftView];
+            [UIView animateWithDuration:0.5 animations:^{
+                [scoreCell showLeftView];
+            }];
         }
     }
 }
@@ -198,7 +192,6 @@ static CGFloat kFooterViewHeight = 40.0;
             roundArrow.font = [UIFont LDBrushFontWithSize:20.0];
             roundArrow.backgroundColor = [UIColor clearColor];
             [headerView addSubview:roundArrow];
-            [roundArrow release];
             roundArrow.frame = CGRectMake(CGRectGetMaxX(roundButton.frame), 13.0, 20.0, 23.0);
         }
         
@@ -209,7 +202,6 @@ static CGFloat kFooterViewHeight = 40.0;
         scoreLabel.backgroundColor = [UIColor clearColor];
         scoreLabel.textAlignment = UITextAlignmentCenter;
         [headerView addSubview:scoreLabel];
-        [scoreLabel release];
         
         UILabel *intemediateLabel = [[UILabel alloc] initWithFrame:CGRectMake(2 * thirdOfTableWidth, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         intemediateLabel.text = @"Intermediate";
@@ -219,12 +211,11 @@ static CGFloat kFooterViewHeight = 40.0;
         intemediateLabel.textAlignment = UITextAlignmentCenter;
         intemediateLabel.adjustsFontSizeToFitWidth = YES;
         [headerView addSubview:intemediateLabel];
-        [intemediateLabel release];
         
-        return [headerView autorelease];
+        return headerView;
     }
     
-    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+    return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -248,12 +239,11 @@ static CGFloat kFooterViewHeight = 40.0;
         totalLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         totalLabel.backgroundColor = [UIColor clearColor];
         [footerView addSubview:totalLabel];
-        [totalLabel release];
         
-        return [footerView autorelease];
+        return footerView;
     }
     
-    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+    return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -314,7 +304,6 @@ static CGFloat kFooterViewHeight = 40.0;
         [mutableArray addObject:score];
     }
     [self setScoresArray:mutableArray];
-    [mutableArray release];
     
     [[AJScoresManager sharedInstance] saveContext];
 }
@@ -358,7 +347,6 @@ static CGFloat kFooterViewHeight = 40.0;
     AJSettingsViewController *settingsViewController = [[AJSettingsViewController alloc] initWithSettingsInfo:[self.player settingsInfo] andItemType:AJPlayerItem];
     settingsViewController.delegate = self;
     [self.navigationController pushViewController:settingsViewController animated:YES];
-    [settingsViewController release];
 }
 
 - (IBAction)roundButtonClicked:(id)sender {
@@ -377,7 +365,6 @@ static CGFloat kFooterViewHeight = 40.0;
 #pragma mark - AJSettingsViewControllerDelegate methods
 
 - (void)settingsViewControllerDidFinishEditing:(AJSettingsViewController *)settingsViewController withSettingsInfo:(AJSettingsInfo *)settingsInfo {
-    [settingsInfo retain];
     
     [self.navigationController popToViewController:self animated:YES];
     
@@ -387,7 +374,6 @@ static CGFloat kFooterViewHeight = 40.0;
         [self.player setImageData:settingsInfo.imageData];
     }
     
-    [settingsInfo release];
     
     [[AJScoresManager sharedInstance] saveContext];
     [self loadDataAndUpdateUI:YES];
