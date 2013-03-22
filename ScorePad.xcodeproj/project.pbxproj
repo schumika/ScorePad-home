@@ -50,6 +50,11 @@
 		5275B83A15FF83FD006E19FE /* AJPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83915FF83FD006E19FE /* AJPlayersTableViewController.m */; };
 		5284384C162441CE00B471B5 /* AJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5284384B162441CE00B471B5 /* AJViewController.m */; };
 		528980E7168068DD00FC2F09 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528980E6168068DD00FC2F09 /* Crashlytics.framework */; };
+		5292641016FC7D4E006F5534 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292640F16FC7D4E006F5534 /* FacebookSDK.framework */; };
+		5292641216FC7D92006F5534 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5292641116FC7D92006F5534 /* FacebookSDKResources.bundle */; };
+		5292641616FC7DC9006F5534 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292641316FC7DC9006F5534 /* Accounts.framework */; };
+		5292641716FC7DC9006F5534 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292641416FC7DC9006F5534 /* AdSupport.framework */; };
+		5292641816FC7DC9006F5534 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292641516FC7DC9006F5534 /* Social.framework */; };
 		529E0E601601D0E300711F5B /* UIImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E0E5F1601D0E300711F5B /* UIImage+Additions.m */; };
 		529E0E691601F6DB00711F5B /* AJSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E0E681601F6DB00711F5B /* AJSettingsViewController.m */; };
 		52A10859161F0C86006FCACD /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10851161F0C86006FCACD /* back-button.png */; };
@@ -183,6 +188,11 @@
 		5284384A162441CE00B471B5 /* AJViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJViewController.h; sourceTree = "<group>"; };
 		5284384B162441CE00B471B5 /* AJViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJViewController.m; sourceTree = "<group>"; };
 		528980E6168068DD00FC2F09 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		5292640F16FC7D4E006F5534 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		5292641116FC7D92006F5534 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		5292641316FC7DC9006F5534 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		5292641416FC7DC9006F5534 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		5292641516FC7DC9006F5534 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		529E0E5E1601D0E300711F5B /* UIImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additions.h"; sourceTree = "<group>"; };
 		529E0E5F1601D0E300711F5B /* UIImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additions.m"; sourceTree = "<group>"; };
 		529E0E671601F6DB00711F5B /* AJSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJSettingsViewController.h; sourceTree = "<group>"; };
@@ -275,6 +285,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5292641616FC7DC9006F5534 /* Accounts.framework in Frameworks */,
+				5292641716FC7DC9006F5534 /* AdSupport.framework in Frameworks */,
+				5292641816FC7DC9006F5534 /* Social.framework in Frameworks */,
 				523876AA16C52F2F008C9F8D /* MessageUI.framework in Frameworks */,
 				52D6F40816BBA7BD007B8A6D /* QuartzCore.framework in Frameworks */,
 				5253287F15FF15D000A28B84 /* CoreData.framework in Frameworks */,
@@ -282,6 +295,7 @@
 				525CC22F15FE2A1F00E8F903 /* Foundation.framework in Frameworks */,
 				525CC23115FE2A1F00E8F903 /* CoreGraphics.framework in Frameworks */,
 				528980E7168068DD00FC2F09 /* Crashlytics.framework in Frameworks */,
+				5292641016FC7D4E006F5534 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +387,11 @@
 		525CC22B15FE2A1F00E8F903 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5292641316FC7DC9006F5534 /* Accounts.framework */,
+				5292641416FC7DC9006F5534 /* AdSupport.framework */,
+				5292641516FC7DC9006F5534 /* Social.framework */,
+				5292641116FC7D92006F5534 /* FacebookSDKResources.bundle */,
+				5292640F16FC7D4E006F5534 /* FacebookSDK.framework */,
 				523876A916C52F2F008C9F8D /* MessageUI.framework */,
 				52D6F40716BBA7BC007B8A6D /* QuartzCore.framework */,
 				528980E6168068DD00FC2F09 /* Crashlytics.framework */,
@@ -659,6 +678,7 @@
 				52E2469716B166A3006E61AC /* ld-brush-stroke.ttf in Resources */,
 				527363AC16B970DD00751883 /* table_background-568h@2x.png in Resources */,
 				527363AE16B9719100751883 /* landscape_background-568h@2x.png in Resources */,
+				5292641216FC7D92006F5534 /* FacebookSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -804,6 +824,10 @@
 				GCC_PREFIX_HEADER = "ScorePad/ScorePad-Prefix.pch";
 				INFOPLIST_FILE = "ScorePad/ScorePad-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lsqlite3.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -821,6 +845,10 @@
 				GCC_PREFIX_HEADER = "ScorePad/ScorePad-Prefix.pch";
 				INFOPLIST_FILE = "ScorePad/ScorePad-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lsqlite3.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
