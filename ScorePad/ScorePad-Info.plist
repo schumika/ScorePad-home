@@ -2,12 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
+	<key>CFBundleURLTypes</key>
 	<array>
-		<string>handwriting53-bold.ttf</string>
-		<string>handwriting53-regular.ttf</string>
-		<string>ld-brush-stroke.ttf</string>
-		<string>DK Crayon Crumble.ttf</string>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb445278418835986</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -51,6 +53,13 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>handwriting53-bold.ttf</string>
+		<string>handwriting53-regular.ttf</string>
+		<string>ld-brush-stroke.ttf</string>
+		<string>DK Crayon Crumble.ttf</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -70,6 +79,7 @@
 	</array>
 	<key>FacebookAppID</key>
 	<string>445278418835986</string>
+<<<<<<< HEAD
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -79,5 +89,7 @@
 			</array>
 		</dict>
 	</array>
+=======
+>>>>>>> unknown stuff
 </dict>
 </plist>

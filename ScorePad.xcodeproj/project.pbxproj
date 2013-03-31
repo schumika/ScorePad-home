@@ -117,6 +117,10 @@
 		52F34EEB16831A8D00722DB7 /* square@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52F34ED516831A8D00722DB7 /* square@2x.png */; };
 		52FCAFF116BAB377008B3CA3 /* AJPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FCAFF016BAB377008B3CA3 /* AJPlayer.m */; };
 		52FD7A6F165BDA0500BCD571 /* AJUnderlinedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD7A6E165BDA0500BCD571 /* AJUnderlinedView.m */; };
+		A90BDCAE16E2138A0040B1DA /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90BDCAD16E2138A0040B1DA /* FacebookSDK.framework */; };
+		A90BDCB016E214020040B1DA /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A90BDCAF16E214020040B1DA /* FacebookSDKResources.bundle */; };
+		A90BDCB316E2144E0040B1DA /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90BDCB116E2144E0040B1DA /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		A90BDCB416E2144E0040B1DA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90BDCB216E2144E0040B1DA /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A92B67FA165C21C100F85CC8 /* AJScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A92B67F9165C21C100F85CC8 /* AJScoreTableViewCell.m */; };
 		A97B35A71657902D0003A8BC /* AJPanDeleteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A97B35A61657902D0003A8BC /* AJPanDeleteTableViewCell.m */; };
 		A9E14A5E16AC0E7800A2C1C7 /* separator_new2.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E14A5C16AC0E7800A2C1C7 /* separator_new2.png */; };
@@ -270,6 +274,10 @@
 		52FCAFF016BAB377008B3CA3 /* AJPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJPlayer.m; sourceTree = "<group>"; };
 		52FD7A6D165BDA0500BCD571 /* AJUnderlinedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJUnderlinedView.h; sourceTree = "<group>"; };
 		52FD7A6E165BDA0500BCD571 /* AJUnderlinedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJUnderlinedView.m; sourceTree = "<group>"; };
+		A90BDCAD16E2138A0040B1DA /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		A90BDCAF16E214020040B1DA /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		A90BDCB116E2144E0040B1DA /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		A90BDCB216E2144E0040B1DA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		A92B67F8165C21C100F85CC8 /* AJScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScoreTableViewCell.h; sourceTree = "<group>"; };
 		A92B67F9165C21C100F85CC8 /* AJScoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScoreTableViewCell.m; sourceTree = "<group>"; };
 		A97B35A51657902D0003A8BC /* AJPanDeleteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJPanDeleteTableViewCell.h; sourceTree = "<group>"; };
@@ -285,9 +293,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				5292641616FC7DC9006F5534 /* Accounts.framework in Frameworks */,
 				5292641716FC7DC9006F5534 /* AdSupport.framework in Frameworks */,
 				5292641816FC7DC9006F5534 /* Social.framework in Frameworks */,
+=======
+				A90BDCB316E2144E0040B1DA /* Accounts.framework in Frameworks */,
+				A90BDCB416E2144E0040B1DA /* AdSupport.framework in Frameworks */,
+>>>>>>> unknown stuff
 				523876AA16C52F2F008C9F8D /* MessageUI.framework in Frameworks */,
 				52D6F40816BBA7BD007B8A6D /* QuartzCore.framework in Frameworks */,
 				5253287F15FF15D000A28B84 /* CoreData.framework in Frameworks */,
@@ -295,7 +308,11 @@
 				525CC22F15FE2A1F00E8F903 /* Foundation.framework in Frameworks */,
 				525CC23115FE2A1F00E8F903 /* CoreGraphics.framework in Frameworks */,
 				528980E7168068DD00FC2F09 /* Crashlytics.framework in Frameworks */,
+<<<<<<< HEAD
 				5292641016FC7D4E006F5534 /* FacebookSDK.framework in Frameworks */,
+=======
+				A90BDCAE16E2138A0040B1DA /* FacebookSDK.framework in Frameworks */,
+>>>>>>> unknown stuff
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +387,8 @@
 		525CC21D15FE2A1F00E8F903 = {
 			isa = PBXGroup;
 			children = (
+				A90BDCB116E2144E0040B1DA /* Accounts.framework */,
+				A90BDCB216E2144E0040B1DA /* AdSupport.framework */,
 				525CC23215FE2A1F00E8F903 /* ScorePad */,
 				525CC22B15FE2A1F00E8F903 /* Frameworks */,
 				525CC22915FE2A1F00E8F903 /* Products */,
@@ -387,11 +406,16 @@
 		525CC22B15FE2A1F00E8F903 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				5292641316FC7DC9006F5534 /* Accounts.framework */,
 				5292641416FC7DC9006F5534 /* AdSupport.framework */,
 				5292641516FC7DC9006F5534 /* Social.framework */,
 				5292641116FC7D92006F5534 /* FacebookSDKResources.bundle */,
 				5292640F16FC7D4E006F5534 /* FacebookSDK.framework */,
+=======
+				A90BDCAF16E214020040B1DA /* FacebookSDKResources.bundle */,
+				A90BDCAD16E2138A0040B1DA /* FacebookSDK.framework */,
+>>>>>>> unknown stuff
 				523876A916C52F2F008C9F8D /* MessageUI.framework */,
 				52D6F40716BBA7BC007B8A6D /* QuartzCore.framework */,
 				528980E6168068DD00FC2F09 /* Crashlytics.framework */,
@@ -678,7 +702,11 @@
 				52E2469716B166A3006E61AC /* ld-brush-stroke.ttf in Resources */,
 				527363AC16B970DD00751883 /* table_background-568h@2x.png in Resources */,
 				527363AE16B9719100751883 /* landscape_background-568h@2x.png in Resources */,
+<<<<<<< HEAD
 				5292641216FC7D92006F5534 /* FacebookSDKResources.bundle in Resources */,
+=======
+				A90BDCB016E214020040B1DA /* FacebookSDKResources.bundle in Resources */,
+>>>>>>> unknown stuff
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,6 +847,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ScorePad/ScorePad-Prefix.pch";
@@ -840,6 +869,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ScorePad/ScorePad-Prefix.pch";

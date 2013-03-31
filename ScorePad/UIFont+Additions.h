@@ -14,5 +14,6 @@
 + (UIFont *)handwritingFontWithSize:(CGFloat)size;
 + (UIFont *)LDBrushFontWithSize:(CGFloat)size;
 + (UIFont *)DKCrayonFontWithSize:(CGFloat)size;
++ (UIFont *)chalkdusterFontWithSize:(CGFloat)size;
 
 @end
