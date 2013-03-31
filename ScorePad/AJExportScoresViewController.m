@@ -147,7 +147,7 @@
 
 - (void)optionsAction {
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"cancel"
-											  destructiveButtonTitle:nil otherButtonTitles:/*@"share on Facebook",*/ @"send email", @"save image", nil];
+											  destructiveButtonTitle:nil otherButtonTitles:@"share on Facebook", @"send email", @"save image", nil];
 	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
 	[actionSheet showInView:self.view];
 }
@@ -170,9 +170,9 @@
 #pragma mark - UIActionSheetDelegate methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        UIImageWriteToSavedPhotosAlbum(self.exportedImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-    } else if (buttonIndex == 0) {
+    if (buttonIndex == 0) {
+        NSLog(@"share on facebook button clicked");
+    } else if (buttonIndex == 1) {
         if ([MFMailComposeViewController canSendMail]) {
             MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
             picker.mailComposeDelegate = self;
@@ -188,7 +188,8 @@
             NSMutableString *s = [NSMutableString stringWithString:@"mailto:"];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[s stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
         }
-        
+    } else if (buttonIndex == 2) {
+        UIImageWriteToSavedPhotosAlbum(self.exportedImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
 }
 

@@ -79,7 +79,6 @@
 	</array>
 	<key>FacebookAppID</key>
 	<string>445278418835986</string>
-<<<<<<< HEAD
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -89,7 +88,5 @@
 			</array>
 		</dict>
 	</array>
-=======
->>>>>>> unknown stuff
 </dict>
 </plist>
