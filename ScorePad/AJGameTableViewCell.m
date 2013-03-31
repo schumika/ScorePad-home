@@ -44,7 +44,8 @@
     _nameLabel.textColor = [UIColor brownColor];
     //_nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
     //_nameLabel.font = [UIFont handwritingBoldFontWithSize:40.0];
-    _nameLabel.font = [UIFont DKCrayonFontWithSize:40.0];
+    //_nameLabel.font = [UIFont DKCrayonFontWithSize:40.0];
+    _nameLabel.font = [UIFont chalkdusterFontWithSize:25.0];
     _nameLabel.adjustsFontSizeToFitWidth = YES;
     _nameLabel.minimumFontSize = 20.0;
     _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -53,7 +54,8 @@
     _playersLabel = [[UILabel alloc] initWithFrame:CGRectMake(70.0, 40.0, 240.0, 20.0)];
     _playersLabel.backgroundColor = [UIColor clearColor];
     _playersLabel.textColor = [UIColor grayColor];
-    _playersLabel.font = [UIFont fontWithName:@"Thonburi" size:15.0];
+    //_playersLabel.font = [UIFont fontWithName:@"Thonburi" size:15.0];
+    _playersLabel.font = [UIFont chalkdusterFontWithSize:15.0];
     _playersLabel.adjustsFontSizeToFitWidth = YES;
     _playersLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:_playersLabel];
@@ -75,7 +77,7 @@
     _pictureView.frame = CGRectMake(5.0, ceil((cellHeight - 50.0) / 2.0), 50.0, 50.0);
     CGFloat pictureMaxX = CGRectGetMaxX(_pictureView.frame) + 10.0;
     //_nameLabel.frame = CGRectMake(pictureMaxX, 5.0, cellWidth - pictureMaxX, 58.0);
-    _nameLabel.frame = CGRectMake(pictureMaxX, 2.0, cellWidth - pictureMaxX - 30.0, 55.0);
+    _nameLabel.frame = CGRectMake(pictureMaxX, 2.0, cellWidth - pictureMaxX - 30.0, 45.0);
     _playersLabel.frame = CGRectMake(pictureMaxX, cellHeight - 18.0, cellWidth - pictureMaxX, 15.0);
 
     _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);

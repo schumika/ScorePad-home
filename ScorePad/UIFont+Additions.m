@@ -124,4 +124,14 @@ static NSString *DKCrayonFontFamilyName = @"DK Crayon Crumble";
     return font;
 }
 
++ (UIFont *)chalkdusterFontWithSize:(CGFloat)size {
+    UIFont *font = nil;
+    
+    if (font == nil) {
+        font = [UIFont fontWithName:@"Chalkduster" size:size];
+    }
+    
+    return font;
+}
+
 @end
