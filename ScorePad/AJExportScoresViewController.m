@@ -171,7 +171,11 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
+<<<<<<< HEAD
         NSLog(@"share on facebook button clicked");
+=======
+        NSLog(@"fb selected");
+>>>>>>> fb commit
     } else if (buttonIndex == 1) {
         if ([MFMailComposeViewController canSendMail]) {
             MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
@@ -188,7 +192,11 @@
             NSMutableString *s = [NSMutableString stringWithString:@"mailto:"];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[s stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
         }
+<<<<<<< HEAD
     } else if (buttonIndex == 2) {
+=======
+    } else {
+>>>>>>> fb commit
         UIImageWriteToSavedPhotosAlbum(self.exportedImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
 }
