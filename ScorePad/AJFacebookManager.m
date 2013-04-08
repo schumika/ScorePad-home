@@ -117,8 +117,8 @@ static AJFacebookManager *sharedAJFacebookManager = nil;
         _facebookSession = [[FBSession alloc] initWithAppID:AJGetFacebookAppId() permissions:nil urlSchemeSuffix:AJGetFacebookLocAppId() tokenCacheStrategy:tcs];
         [FBSession setActiveSession:_facebookSession];
         
-        [_facebookSession openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
-                         completionHandler:^(FBSession *session, FBSessionState status, NSError *error)];
+//        [_facebookSession openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
+//                         completionHandler:^(FBSession *session, FBSessionState status, NSError *error)];
     }
 }
 
