@@ -50,9 +50,9 @@
 		5275B83A15FF83FD006E19FE /* AJPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B83915FF83FD006E19FE /* AJPlayersTableViewController.m */; };
 		5284384C162441CE00B471B5 /* AJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5284384B162441CE00B471B5 /* AJViewController.m */; };
 		528980E7168068DD00FC2F09 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528980E6168068DD00FC2F09 /* Crashlytics.framework */; };
-		5292641616FC7DC9006F5534 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292641316FC7DC9006F5534 /* Accounts.framework */; };
-		5292641716FC7DC9006F5534 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292641416FC7DC9006F5534 /* AdSupport.framework */; };
-		5292641816FC7DC9006F5534 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292641516FC7DC9006F5534 /* Social.framework */; };
+		5292641616FC7DC9006F5534 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292641316FC7DC9006F5534 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		5292641716FC7DC9006F5534 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292641416FC7DC9006F5534 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		5292641816FC7DC9006F5534 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5292641516FC7DC9006F5534 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		529E0E601601D0E300711F5B /* UIImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E0E5F1601D0E300711F5B /* UIImage+Additions.m */; };
 		529E0E691601F6DB00711F5B /* AJSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E0E681601F6DB00711F5B /* AJSettingsViewController.m */; };
 		52A10859161F0C86006FCACD /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10851161F0C86006FCACD /* back-button.png */; };
