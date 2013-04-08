@@ -7,9 +7,11 @@
 //
 
 #import "AJExportScoresViewController.h"
+#import "UIDevice-Additions.h"
 
 #import "AJExportHandler.h"
 #import "AJScoresManager.h"
+#import "AJFacebookManager.h"
 
 #define PORTRAIT_TOOLBAR_HEIGHT			(44.0)
 #define LANDSCAPE_TOOLBAR_HEIGHT		(33.0)
@@ -20,6 +22,9 @@
 }
 
 @property (nonatomic, strong) UIImage *exportedImage;
+
+- (void)checkFacebookStateAndPermissions;
+- (void)postImageToFacebook:(UIImage *)image withDescription:(NSString *)description;
 
 @end
 
@@ -172,6 +177,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         NSLog(@"share on facebook button clicked");
+        [self checkFacebookStateAndPermissions];
     } else if (buttonIndex == 1) {
         if ([MFMailComposeViewController canSendMail]) {
             MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
@@ -198,5 +204,90 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:messageString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alertView show];
 }
+
+- (void)checkFacebookStateAndPermissions {
+    // return if user doesn not have intenet connection
+    
+    if ([[AJFacebookManager sharedInstance] isFacebookConfigured] == NO) {
+        [[AJFacebookManager sharedInstance] facebookLogin:@{@"photoShare" : @YES}];
+    } else {
+        if ([[AJFacebookManager sharedInstance] hasPermissions:@[@"publish_actions"]] == NO) {
+            dispatch_async(dispatch_get_current_queue(), ^{
+                [[AJFacebookManager sharedInstance] reauthorizeWithPublishPermissions:@[@"publish_actions"]];
+            });
+        } else {
+            [self postImageToFacebook:self.exportedImage withDescription:@""];
+        }
+    }
+}
+
+- (void)postImageToFacebook:(UIImage *)image withDescription:(NSString *)description {
+    NSDictionary *params = @{@"description" : description, @"photo": image};
+    
+    [[AJFacebookManager sharedInstance] publishPhotoWithDelegate:self andParameters:params];
+    //[self showProcessingAlert];
+}
+
+- (void)didFinishPostingPhotoToFacebookWithSucces:(id)result {
+    //[self hideprocessingalertanimated:NO];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                  message:@"Your scores have been posted to Facebook!"
+                                                 delegate:self
+                                        cancelButtonTitle:@"Done"
+                                        otherButtonTitles:nil];
+    [alert show];
+}
+
+#pragma mark - AJFacebookManagerDelegate
+
+- (void)facebookDidLoginHandler:(NSNotification*)aNotif{
+    if ([[[aNotif.userInfo valueForKey:@"AJFacebookOptionsKey"] objectForKey:@"photoShare"] boolValue] == YES) {
+        [self checkFacebookStateAndPermissions];
+    }
+}
+
+- (void)facebookDidNotLoginNotification:(NSNotification*)aNotif {
+    if ([[[aNotif.userInfo valueForKey:@"AJFacebookOptionsKey"] objectForKey:@"photoShare"] boolValue] == YES) {
+        if([UIDevice isOS60OrGreater]) {
+            BOOL cancelled = [[[aNotif userInfo] objectForKey:@"AJFacebookCancelledKey"] boolValue];
+            BOOL denied = [[[aNotif userInfo] objectForKey:@"AJFacebookPermissionsDeniedKey"] boolValue];
+            BOOL withoutError = [[[aNotif userInfo] objectForKey:@"AJFacebookFailedWithoutErrorKey"] boolValue];
+            // silvia.cret: Fix for PI-2790: Allow Facebook to use you information pop-up should be displayed if user set Facebook native to OFF
+            if (!cancelled && !denied && !withoutError) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                message:@"Please go to your device's Settings>Facebook and make sure Pinger is turned \"ON\" under \"Allow these apps to user your Account\""
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+        }
+    }
+}
+
+- (void)didFinishPostingPhotoToFacebookWithError:(NSError *)error {
+    //[self hideProcessingAlertAnimated:YES];
+    
+	if ([[AJFacebookManager sharedInstance] isInvalidSessionError:error]) {
+        [[AJFacebookManager sharedInstance] clearSession];
+        
+        if([[AJFacebookManager sharedInstance] isUsingNativeFacebookAccount]) {
+            [self performSelector:@selector(checkFacebookStateAndPermissions) withObject:nil afterDelay:1.0];
+        } else {
+            [self checkFacebookStateAndPermissions];
+        }
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post unsuccessful"
+                                                        message:@"Your scores were not posted to Facebook! Please check your network settings and try again."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+- (void)facebookDidAuthorizeWithPublishPermissionsHandler {
+    NSLog(@"facebookDidAuthorizeWithPublishPermissionsHandler");
+}
+
 
 @end

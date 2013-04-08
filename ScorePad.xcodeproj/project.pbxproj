@@ -82,6 +82,9 @@
 		52D6F40E16BBC6D8007B8A6D /* AJDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D6F40D16BBC6D8007B8A6D /* AJDefines.m */; };
 		52D904AC1712F1AF00963880 /* FBUserSettingsViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 52D904AB1712F1AF00963880 /* FBUserSettingsViewResources.bundle */; };
 		52D904AE1712F1D500963880 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D904AD1712F1D500963880 /* FacebookSDK.framework */; };
+		52D904B11712F23E00963880 /* AJFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D904B01712F23E00963880 /* AJFacebookManager.m */; };
+		52D904B41712F7C700963880 /* UIDevice-Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D904B31712F7C700963880 /* UIDevice-Additions.m */; };
+		52D904B61712F87D00963880 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D904B51712F87D00963880 /* AVFoundation.framework */; };
 		52E2465816B125A1006E61AC /* UIFont+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E2465716B125A1006E61AC /* UIFont+Additions.m */; };
 		52E2466C16B12D52006E61AC /* handwriting53-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E2466B16B12D52006E61AC /* handwriting53-regular.ttf */; };
 		52E2468D16B158C6006E61AC /* rip.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E2468B16B158C6006E61AC /* rip.png */; };
@@ -230,6 +233,11 @@
 		52D6F40D16BBC6D8007B8A6D /* AJDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJDefines.m; sourceTree = "<group>"; };
 		52D904AB1712F1AF00963880 /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
 		52D904AD1712F1D500963880 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		52D904AF1712F23E00963880 /* AJFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJFacebookManager.h; sourceTree = "<group>"; };
+		52D904B01712F23E00963880 /* AJFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJFacebookManager.m; sourceTree = "<group>"; };
+		52D904B21712F7C700963880 /* UIDevice-Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Additions.h"; sourceTree = "<group>"; };
+		52D904B31712F7C700963880 /* UIDevice-Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Additions.m"; sourceTree = "<group>"; };
+		52D904B51712F87D00963880 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		52E2465616B125A1006E61AC /* UIFont+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Additions.h"; sourceTree = "<group>"; };
 		52E2465716B125A1006E61AC /* UIFont+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Additions.m"; sourceTree = "<group>"; };
 		52E2466B16B12D52006E61AC /* handwriting53-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "handwriting53-regular.ttf"; sourceTree = "<group>"; };
@@ -285,6 +293,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52D904B61712F87D00963880 /* AVFoundation.framework in Frameworks */,
 				5292641616FC7DC9006F5534 /* Accounts.framework in Frameworks */,
 				5292641716FC7DC9006F5534 /* AdSupport.framework in Frameworks */,
 				5292641816FC7DC9006F5534 /* Social.framework in Frameworks */,
@@ -344,6 +353,8 @@
 				52D6F40516BBA57A007B8A6D /* AJExportHandler.m */,
 				52D6F40C16BBC6D8007B8A6D /* AJDefines.h */,
 				52D6F40D16BBC6D8007B8A6D /* AJDefines.m */,
+				52D904AF1712F23E00963880 /* AJFacebookManager.h */,
+				52D904B01712F23E00963880 /* AJFacebookManager.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -351,6 +362,8 @@
 		525328BD15FF587C00A28B84 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				52D904B21712F7C700963880 /* UIDevice-Additions.h */,
+				52D904B31712F7C700963880 /* UIDevice-Additions.m */,
 				52E2465616B125A1006E61AC /* UIFont+Additions.h */,
 				52E2465716B125A1006E61AC /* UIFont+Additions.m */,
 				525328BF15FF589700A28B84 /* NSString+Additions.h */,
@@ -361,8 +374,6 @@
 				529E0E5F1601D0E300711F5B /* UIImage+Additions.m */,
 				52A10861161F232F006FCACD /* UIBarButtonItem+Additions.h */,
 				52A10862161F232F006FCACD /* UIBarButtonItem+Additions.m */,
-				525E008D1678DD8D00D0D944 /* AJAlertView.h */,
-				525E008E1678DD8D00D0D944 /* AJAlertView.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -387,6 +398,7 @@
 		525CC22B15FE2A1F00E8F903 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				52D904B51712F87D00963880 /* AVFoundation.framework */,
 				52D904AD1712F1D500963880 /* FacebookSDK.framework */,
 				52D904AB1712F1AF00963880 /* FBUserSettingsViewResources.bundle */,
 				5292641316FC7DC9006F5534 /* Accounts.framework */,
@@ -525,6 +537,8 @@
 		52A663ED162455FA00554254 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				525E008D1678DD8D00D0D944 /* AJAlertView.h */,
+				525E008E1678DD8D00D0D944 /* AJAlertView.m */,
 				52E6695B1626F0580035CAAC /* TableViewCells */,
 				52D6C29A16B175B1005A7069 /* AJBrownUnderlinedView.h */,
 				52D6C29B16B175B1005A7069 /* AJBrownUnderlinedView.m */,
@@ -740,6 +754,8 @@
 				52D6F40616BBA57A007B8A6D /* AJExportHandler.m in Sources */,
 				52D6F40B16BBC4D5007B8A6D /* AJExportScoresViewController.m in Sources */,
 				52D6F40E16BBC6D8007B8A6D /* AJDefines.m in Sources */,
+				52D904B11712F23E00963880 /* AJFacebookManager.m in Sources */,
+				52D904B41712F7C700963880 /* UIDevice-Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import "AJAppDelegate.h"
 #import "AJGamesTableViewController.h"
+#import "AJFacebookManager.h"
 
 #import <Crashlytics/Crashlytics.h>
 
@@ -20,6 +21,8 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    [[AJFacebookManager sharedInstance] start];
     
     AJGamesTableViewController *gamesViewController = [[AJGamesTableViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:gamesViewController];
