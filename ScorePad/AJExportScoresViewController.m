@@ -177,6 +177,8 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         NSLog(@"share on facebook button clicked");
+        self.facebookManager = [[AJFacebookManager alloc] init];
+        [self.facebookManager startWithUserDefaultTokenInformationKeyName:[[NSUserDefaults standardUserDefaults] valueForKey:@"AJFacebookTokenInformation"]];
         [self checkFacebookStateAndPermissions];
     } else if (buttonIndex == 1) {
         if ([MFMailComposeViewController canSendMail]) {
@@ -208,12 +210,12 @@
 - (void)checkFacebookStateAndPermissions {
     // return if user doesn not have intenet connection
     
-    if ([[AJFacebookManager sharedInstance] isFacebookConfigured] == NO) {
-        [[AJFacebookManager sharedInstance] facebookLogin:@{@"photoShare" : @YES}];
+    if ([self.facebookManager isFacebookConfigured] == NO) {
+        [self.facebookManager facebookLogin:@{@"photoShare" : @YES}];
     } else {
-        if ([[AJFacebookManager sharedInstance] hasPermissions:@[@"publish_actions"]] == NO) {
+        if ([self.facebookManager hasPermissions:@[@"publish_actions"]] == NO) {
             dispatch_async(dispatch_get_current_queue(), ^{
-                [[AJFacebookManager sharedInstance] reauthorizeWithPublishPermissions:@[@"publish_actions"]];
+                [self.facebookManager reauthorizeWithPublishPermissions:@[@"publish_actions"]];
             });
         } else {
             [self postImageToFacebook:self.exportedImage withDescription:@""];
@@ -224,7 +226,7 @@
 - (void)postImageToFacebook:(UIImage *)image withDescription:(NSString *)description {
     NSDictionary *params = @{@"description" : description, @"photo": image};
     
-    [[AJFacebookManager sharedInstance] publishPhotoWithDelegate:self andParameters:params];
+    [self.facebookManager publishPhotoWithDelegate:self andParameters:params];
     //[self showProcessingAlert];
 }
 
@@ -268,10 +270,10 @@
 - (void)didFinishPostingPhotoToFacebookWithError:(NSError *)error {
     //[self hideProcessingAlertAnimated:YES];
     
-	if ([[AJFacebookManager sharedInstance] isInvalidSessionError:error]) {
-        [[AJFacebookManager sharedInstance] clearSession];
+	if ([self.facebookManager isInvalidSessionError:error]) {
+        [self.facebookManager clearSession];
         
-        if([[AJFacebookManager sharedInstance] isUsingNativeFacebookAccount]) {
+        if([self.facebookManager isUsingNativeFacebookAccount]) {
             [self performSelector:@selector(checkFacebookStateAndPermissions) withObject:nil afterDelay:1.0];
         } else {
             [self checkFacebookStateAndPermissions];

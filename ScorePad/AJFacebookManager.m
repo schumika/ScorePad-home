@@ -25,7 +25,6 @@ NSString * const AJFacebookErrorKey								= @"AJFacebookErrorKey";
 NSString * const AJFacebookCancelledKey							= @"AJFacebookCancelledKey";
 NSString * const AJFacebookPermissionsDeniedKey                 = @"AJFacebookPermissionsDeniedKey";
 NSString * const AJFacebookFailedWithoutErrorKey                = @"AJFacebookFailedWithoutErrorKey";
-NSString * const AJFacebookOptionsKey                           = @"AJFacebookOptionsKey";
 
 NSString *const FBSessionDidAuthWithSuccessViaSingleSignOn = @"com.facebook.sdk:FBSessionDidAuthWithSuccessViaSingleSignOn";
 
@@ -36,73 +35,58 @@ NSString *const FBSessionDidAuthWithSuccessViaSingleSignOn = @"com.facebook.sdk:
 
 @end
 
+@interface AJFacebookManager()
+@property(nonatomic, strong, readwrite) FBSessionTokenCachingStrategy *tokenCacheStrategy;
+@property(nonatomic, assign, readwrite) BOOL		isStarted;
+@property(nonatomic, strong, readwrite) FBSession	*facebookSession;
+@end
 
 @implementation AJFacebookManager
 
-@synthesize isStarted = _isStarted;
-@dynamic	isFacebookConfigured;
+@dynamic isFacebookConfigured;
+@dynamic isUsingNativeFacebookAccount;
 
-static AJFacebookManager *sharedAJFacebookManager = nil;
-
-#pragma mark - Singleton methods
-
-+ (AJFacebookManager *)sharedAJFacebookManager {
-    @synchronized(self) {
-        if (sharedAJFacebookManager == nil) {
-            sharedAJFacebookManager = [[self alloc] init];
-        }
+- (void)startWithUserDefaultTokenInformationKeyName:(NSString *)keyName {
+    if (self.isStarted) {
+        return;
     }
     
-    return sharedAJFacebookManager;
-}
-
-+ (AJFacebookManager *)sharedInstance {
-    return [self sharedAJFacebookManager];
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-    return self;
-}
-
-- (void)start {
-    if (!_isStarted) {
-        NSLog(@"Starting FacebookManager...");
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(facebookSessionDidAuthWithSuccessViaSingleSignOn:)
-													 name:FBSessionDidAuthWithSuccessViaSingleSignOn object:nil];
-        
-        _isStarted			 = YES;
-        
-		NSString *tokenInformationKey = [[NSUserDefaults standardUserDefaults] valueForKey:@"AJFacebookTokenInformation"];
-		FBSessionTokenCachingStrategy *tcs = [[FBSessionTokenCachingStrategy alloc] initWithUserDefaultTokenInformationKeyName:tokenInformationKey];
-		_facebookSession = [[FBSession alloc] initWithAppID:@"445278418835986" permissions:nil
-											urlSchemeSuffix:@"scorepad" tokenCacheStrategy:tcs];
-		[FBSession setActiveSession:_facebookSession];
-		
-		if ([_facebookSession state] == FBSessionStateCreatedTokenLoaded) {
-			[_facebookSession openWithCompletionHandler:nil];
-		}
-
+    NSLog(@"Starting FacebookManager...");
+    
+    self.isStarted = YES;
+    //NSString *tokenInformationKey = [[NSUserDefaults standardUserDefaults] valueForKey:@"AJFacebookTokenInformation"];
+    self.tokenCacheStrategy = [[FBSessionTokenCachingStrategy alloc] initWithUserDefaultTokenInformationKeyName:keyName];
+    
+//    self.facebookSession = [[FBSession alloc] initWithAppID:@"445278418835986" permissions:nil
+//                                        urlSchemeSuffix:@"scorepad" tokenCacheStrategy:self.tokenCacheStrategy];
+    
+    self.facebookSession = [[FBSession alloc] initWithAppID:nil permissions:nil
+                                            urlSchemeSuffix:nil tokenCacheStrategy:self.tokenCacheStrategy];
+    [FBSession setActiveSession:self.facebookSession];
+    
+    if ([self.facebookSession state] == FBSessionStateCreatedTokenLoaded) {
+        [self.facebookSession openWithCompletionHandler:nil];
     }
+
 }
 
 - (void)stop {
-	if (_isStarted == YES) {
-		NSLog(@"Stopping FacebookChatManager...");
-		
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:FBSessionDidAuthWithSuccessViaSingleSignOn object:nil];
-        
-        _isStarted = NO;
-        [_facebookSession closeAndClearTokenInformation];
-		_facebookSession = nil;
+    if (!self.isStarted) {
+        return;
     }
+    
+    NSLog(@"Stopping FacebookChatManager...");
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:FBSessionDidAuthWithSuccessViaSingleSignOn object:nil];
+    
+    self.isStarted = NO;
+    [self.facebookSession closeAndClearTokenInformation];
+    self.facebookSession = nil;
 }
 
 - (void)clearSession {
-    if(_facebookSession) {
-        [_facebookSession closeAndClearTokenInformation];
-		_facebookSession = nil;
-    }
+    [self.facebookSession closeAndClearTokenInformation];
+    self.facebookSession = nil;
 }
 
 - (void)facebookLogin:(NSDictionary*)options {
@@ -111,28 +95,32 @@ static AJFacebookManager *sharedAJFacebookManager = nil;
 		return;
 	}
 	
-	if ([_facebookSession isOpen] == NO) {
+	if ([self.facebookSession isOpen] == NO) {
 		NSLog(@"Facebook login started...");
         
-        [_facebookSession close];
-        _facebookSession = nil;
+        [self.facebookSession close];
         
-        NSString *tokenInformationKey = [[NSUserDefaults standardUserDefaults] valueForKey:@"AJFacebookTokenInformation"];
-		FBSessionTokenCachingStrategy *tcs = [[FBSessionTokenCachingStrategy alloc] initWithUserDefaultTokenInformationKeyName:tokenInformationKey];
+//        NSString *tokenInformationKey = [[NSUserDefaults standardUserDefaults] valueForKey:@"AJFacebookTokenInformation"];
+//		FBSessionTokenCachingStrategy *tcs = [[FBSessionTokenCachingStrategy alloc] initWithUserDefaultTokenInformationKeyName:tokenInformationKey];
         
-        _facebookSession = [[FBSession alloc] initWithAppID:@"445278418835986" permissions:nil
-                                            urlSchemeSuffix:@"scorepad" tokenCacheStrategy:tcs];
-        [FBSession setActiveSession:_facebookSession];
-        [_facebookSession openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
+//        _facebookSession = [[FBSession alloc] initWithAppID:@"445278418835986" permissions:nil
+//                                            urlSchemeSuffix:@"scorepad" tokenCacheStrategy:tcs];
+        
+        self.facebookSession = [[FBSession alloc] initWithAppID:nil permissions:nil
+                                                urlSchemeSuffix:nil tokenCacheStrategy:self.tokenCacheStrategy];
+
+        [FBSession setActiveSession:self.facebookSession];
+        [self.facebookSession openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
 						 completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-                             NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:options forKey:@"AJFacebookOptionsKey"];
+                             //NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:options forKey:@"AJFacebookOptionsKey"];
+                             NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 							 if (FB_ISSESSIONSTATETERMINAL(status)) {
 								 BOOL cancelled = NO;
                                  
                                  if ([[error domain] isEqualToString:FacebookSDKDomain]) {
 									 cancelled = [[error.userInfo valueForKey:FBErrorLoginFailedReason] isEqualToString:FBErrorLoginFailedReasonInlineCancelledValue];
 								 }
-                                 [userInfo setValue:[NSNumber numberWithBool:cancelled] forKey:@"AJFacebookCancelledKey"];
+                                 [userInfo setValue:[NSNumber numberWithBool:cancelled] forKey:AJFacebookCancelledKey];
                                  
                                  if ([UIDevice isOS60OrGreater]) {
                                      BOOL denied = NO;
@@ -140,10 +128,10 @@ static AJFacebookManager *sharedAJFacebookManager = nil;
                                      if ((ACErrorDomain != nil) && [[innerError domain] isEqualToString:ACErrorDomain]) {
                                          denied = ([innerError code] == ACErrorPermissionDenied);
                                      }
-                                     [userInfo setValue:[NSNumber numberWithBool:denied] forKey:@"AJFacebookPermissionsDeniedKey"];
+                                     [userInfo setValue:[NSNumber numberWithBool:denied] forKey:AJFacebookPermissionsDeniedKey];
                                  }
                                  
-                                 [userInfo setValue:[NSNumber numberWithBool:(error == nil)] forKey:@"AJFacebookFailedWithoutErrorKey"];
+                                 [userInfo setValue:[NSNumber numberWithBool:(error == nil)] forKey:AJFacebookFailedWithoutErrorKey];
                                  
 								 [[NSNotificationCenter defaultCenter] postNotificationName:AJFacebookDidNotLoginNotification
 																					 object:self userInfo:userInfo];
@@ -178,7 +166,7 @@ static AJFacebookManager *sharedAJFacebookManager = nil;
     // alexs - prevents app from crashing on exception: "FBSession: It is not valid to reauthorize while a
     // previous reauthorize call has not yet completed." and picture post flow continues as expected.
     @try {
-        [_facebookSession reauthorizeWithPublishPermissions:permissions
+        [self.facebookSession reauthorizeWithPublishPermissions:permissions
                                             defaultAudience:FBSessionDefaultAudienceFriends
                                           completionHandler:^(FBSession *session, NSError *error) {
                                               if(error) {
@@ -197,7 +185,7 @@ static AJFacebookManager *sharedAJFacebookManager = nil;
 		return NO;
 	}
 	
-	return [_facebookSession handleOpenURL:URL];
+	return [self.facebookSession handleOpenURL:URL];
 }
 
 - (void)handleDidBecomeActive {
@@ -257,8 +245,9 @@ static AJFacebookManager *sharedAJFacebookManager = nil;
 }
 
 - (BOOL)hasPermissions:(NSArray *)permissions {
+    NSArray *activePermissions = [[FBSession activeSession] permissions];
     for (NSString *obj in  permissions) {
-        if([[[FBSession activeSession] permissions] indexOfObject:obj] == NSNotFound) {
+        if([activePermissions indexOfObject:obj] == NSNotFound) {
             return NO;
         }
     }
@@ -299,7 +288,7 @@ static AJFacebookManager *sharedAJFacebookManager = nil;
 - (BOOL)isUsingNativeFacebookAccount {
     BOOL userLogedWithNativeFacebookAccount = NO;
     
-	// vbadea - We check the availablility of ACAccountTypeIdentifierFacebook constant. If this is available then it means
+	// We check the availablility of ACAccountTypeIdentifierFacebook constant. If this is available then it means
 	// we're running on an iOS version which supports Facebook account. This approach is better than checking for minimum iOS version.
     if(&ACAccountTypeIdentifierFacebook != NULL) {
         ACAccountStore *accountStore = [[ACAccountStore alloc] init];

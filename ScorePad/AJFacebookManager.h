@@ -22,33 +22,28 @@ extern NSString * const AJFacebookPermissionsDeniedKey;
 extern NSString * const AJFacebookFailedWithoutErrorKey;
 extern NSString * const AJFacebookOptionsKey;
 
-@interface AJFacebookManager : NSObject {
-    FBSession                   *_facebookSession;
-	BOOL                        _isStarted;
-}
+@interface AJFacebookManager : NSObject
 
-@property (nonatomic, readonly) BOOL		isStarted;
-@property (nonatomic, readonly) BOOL		isFacebookConfigured;
+@property (nonatomic, assign, readonly) BOOL            isStarted;
+@property (nonatomic, assign, readonly) BOOL            isFacebookConfigured;
+@property (nonatomic, assign, readonly) BOOL            isUsingNativeFacebookAccount;
+@property (nonatomic, strong, readonly) FBSession       *facebookSession;
 
-+ (AJFacebookManager*)sharedInstance;
-
-- (void)start;
+- (void)startWithUserDefaultTokenInformationKeyName:(NSString*)keyName;
 - (void)stop;
 - (void)clearSession;
 
-- (void)facebookLogin:(NSDictionary *)options;
+- (void)facebookLogin;
+- (void)facebookLogin:(NSDictionary*)options;
 - (void)facebookLogout;
 - (void)reauthorizeWithPublishPermissions:(NSArray *)permissions;
+- (BOOL)hasPermissions:(NSArray *)permissions;
 
 - (BOOL)handleFacebookURL:(NSURL*)URL;
 - (void)handleDidBecomeActive;
 
 - (void)publishPhotoWithDelegate:(id)delegate andParameters:(NSDictionary*)params;
-- (BOOL)hasPermissions:(NSArray *)permissions;
 
 - (BOOL)isInvalidSessionError:(NSError *)error;
-- (BOOL)isUsingNativeFacebookAccount;
-
-
 
 @end

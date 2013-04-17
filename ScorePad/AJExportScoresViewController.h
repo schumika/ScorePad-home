@@ -8,6 +8,8 @@
 
 #import <MessageUI/MessageUI.h>
 
+@class AJFacebookManager;
+
 @interface AJExportScoresViewController : UIViewController <UIActionSheetDelegate, UIScrollViewDelegate,
                                         UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate> {
     int _itemRowId;
@@ -16,5 +18,7 @@
 
 @property (nonatomic, assign) int itemRowId;
 @property (nonatomic, assign) int itemType;
+
+@property (nonatomic, strong) AJFacebookManager *facebookManager;
 
 @end
