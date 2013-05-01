@@ -33,7 +33,6 @@ extern NSString * const AJFacebookOptionsKey;
 - (void)stop;
 - (void)clearSession;
 
-- (void)facebookLogin;
 - (void)facebookLogin:(NSDictionary*)options;
 - (void)facebookLogout;
 - (void)reauthorizeWithPublishPermissions:(NSArray *)permissions;
