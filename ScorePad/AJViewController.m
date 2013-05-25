@@ -7,13 +7,16 @@
 //
 
 #import "AJViewController.h"
+
 #import "UIBarButtonItem+Additions.h"
+#import "UIColor+Additions.h"
+#import "UIFont+Additions.h"
 
 @implementation UINavigationBar (UINavigationBarCustomDraw)
 
 - (void)drawRect:(CGRect)rect
 {
-    [[UIImage imageNamed:@"nav-bar.png"] drawInRect:rect];
+    [[UIImage imageNamed:@"nav-bar-clear2.png"] drawInRect:rect];
 }
 
 @end
@@ -41,7 +44,7 @@
     self.navigationItem.titleView = self.titleView;
     
     if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar.png"] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear2.png"] forBarMetrics:UIBarMetricsDefault];
     }
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem backButtonItemWithTarget:self action:@selector(backButtonClicked:)];
@@ -63,11 +66,11 @@
         _titleView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
         _titleView.backgroundColor = [UIColor clearColor];
         _titleView.lineBreakMode = UILineBreakModeTailTruncation;
-        _titleView.shadowColor = [UIColor blackColor];
+        _titleView.shadowColor = [UIColor whiteColor];
         _titleView.shadowOffset = CGSizeMake(0, -1);
         _titleView.textAlignment = UITextAlignmentCenter;
-        _titleView.textColor = [UIColor whiteColor];
-        _titleView.font = [UIFont fontWithName:@"Thonburi-Bold" size:25.0];
+        _titleView.font = [UIFont DKCrayonFontWithSize:40.0];
+        _titleView.textColor = [UIColor AJBrownColor];
         _titleView.text = [self titleViewText];
     }
     

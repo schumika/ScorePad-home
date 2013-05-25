@@ -137,15 +137,11 @@
     
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
     
-    //_grabImageView.frame = CGRectMake(3.0, 25.0, 18.0, 19.0);
     _grabImageView.frame = CGRectMake(3.0, 0.0, 12.0, 70.0);
-    //_pictureView.frame = CGRectMake(22.0, 10.0, 50.0, 50.0);
     _pictureView.frame = CGRectMake(30.0, 17.0, 35.0, 35.0);
-    //_nameLabel.frame = CGRectMake(80.0, 13.0, 130.0, 65.0);
     _nameLabel.frame = CGRectMake(70.0, 5.0, 130.0, 65.0);
-    //_totalScoresLabel.frame = CGRectMake(212.0, 10.0, 91.0, 40.0);
-    _totalScoresButton.frame = CGRectMake(212.0, 10.0, 91.0, 50.0);
-    _roundsPlayedLabel.frame = CGRectMake(212.0, 55.0, 91.0, 10.0);
+    _totalScoresButton.frame = CGRectMake(cellWidth - 118.0, 10.0, 91.0, 50.0);
+    _roundsPlayedLabel.frame = CGRectMake(cellWidth - 118.0, 55.0, 91.0, 10.0);
     
     _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
     _disclosureView.frame = CGRectMake(cellWidth - 22.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);

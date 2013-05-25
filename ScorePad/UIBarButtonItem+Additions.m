@@ -7,6 +7,8 @@
 //
 
 #import "UIBarButtonItem+Additions.h"
+#import "UIFont+Additions.h"
+#import "UIColor+Additions.h"
 
 @implementation UIBarButtonItem (Additions)
 
@@ -18,9 +20,11 @@
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor AJBrownColor] forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor AJBrownColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont LDBrushFontWithSize:35.0];
     [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     [button.titleLabel setFont:[UIFont fontWithName:@"Thonburi-Bold" size:17.0]];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
