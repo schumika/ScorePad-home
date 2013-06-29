@@ -37,6 +37,5 @@
 + (NSString *)devicePlatformDescription;
 
 + (BOOL)isMicPresent;
-+ (NSString *)pingerUniqueIdentifier;
 
 @end

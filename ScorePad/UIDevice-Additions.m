@@ -228,18 +228,6 @@ NSString * const kPiPadSimulatorDeviceModel     = @"iPad Simulator";
     return NO;
 }
 
-#pragma mark - UDID
-
-+ (NSString *)pingerUniqueIdentifier {
-    static NSString *uniqueId = nil;
-    
-    if (uniqueId == nil) {
-        uniqueId = [UIDevice currentDevice].uniqueIdentifier;
-    }
-    
-    return uniqueId;
-}
-
 @end
 
 
