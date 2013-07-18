@@ -62,7 +62,7 @@
 
 - (UILabel *)titleView {
     if (_titleView == nil) {
-        _titleView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 20.0, 320.0, 44.0)];
+        _titleView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)];
         _titleView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
         _titleView.backgroundColor = [UIColor clearColor];
         _titleView.lineBreakMode = UILineBreakModeTailTruncation;

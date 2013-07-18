@@ -44,8 +44,8 @@
     _nameLabel.textColor = [UIColor brownColor];
     //_nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
     //_nameLabel.font = [UIFont handwritingBoldFontWithSize:40.0];
-    //_nameLabel.font = [UIFont DKCrayonFontWithSize:40.0];
-    _nameLabel.font = [UIFont chalkdusterFontWithSize:25.0];
+    _nameLabel.font = [UIFont DKCrayonFontWithSize:40.0];
+    //_nameLabel.font = [UIFont chalkdusterFontWithSize:25.0];
     _nameLabel.adjustsFontSizeToFitWidth = YES;
     _nameLabel.minimumFontSize = 20.0;
     _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -54,8 +54,8 @@
     _playersLabel = [[UILabel alloc] initWithFrame:CGRectMake(70.0, 40.0, 240.0, 20.0)];
     _playersLabel.backgroundColor = [UIColor clearColor];
     _playersLabel.textColor = [UIColor grayColor];
-    //_playersLabel.font = [UIFont fontWithName:@"Thonburi" size:15.0];
-    _playersLabel.font = [UIFont chalkdusterFontWithSize:15.0];
+    _playersLabel.font = [UIFont fontWithName:@"Thonburi" size:15.0];
+    //_playersLabel.font = [UIFont chalkdusterFontWithSize:15.0];
     _playersLabel.adjustsFontSizeToFitWidth = YES;
     _playersLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:_playersLabel];

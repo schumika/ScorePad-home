@@ -94,7 +94,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     [_backView setHidden:YES];
     
     CGRect bounds = self.view.bounds;
-    _scrollView = [[AJScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.height, bounds.size.width)];
+    _scrollView = [[AJScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.height + 20.0, bounds.size.width)];
     _scrollView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_scrollView];
     [_scrollView setHidden:YES];
