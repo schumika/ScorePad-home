@@ -69,7 +69,7 @@
         _titleView.shadowColor = [UIColor whiteColor];
         _titleView.shadowOffset = CGSizeMake(0, -1);
         _titleView.textAlignment = UITextAlignmentCenter;
-        _titleView.font = [UIFont DKCrayonFontWithSize:40.0];
+        _titleView.font = [UIFont LDBrushFontWithSize:55.0];
         _titleView.textColor = [UIColor AJBrownColor];
         _titleView.text = [self titleViewText];
     }
