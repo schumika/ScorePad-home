@@ -47,17 +47,20 @@
     
     _roundLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _roundLabel.font = [UIFont LDBrushFontWithSize:30.0];
+    _roundLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
     _roundLabel.backgroundColor = [UIColor clearColor];
     _roundLabel.textAlignment = UITextAlignmentCenter;
     [_backgroundView addSubview:_roundLabel];
     
     _scoreLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _scoreLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _scoreLabel.font = [UIFont LDBrushFontWithSize:40.0];
     _scoreLabel.backgroundColor = [UIColor clearColor];
     _scoreLabel.textAlignment = UITextAlignmentCenter;
     [_backgroundView addSubview:_scoreLabel];
     
     _intermediateTotalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _intermediateTotalLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
     _intermediateTotalLabel.font = [UIFont LDBrushFontWithSize:30.0];
     _intermediateTotalLabel.backgroundColor = [UIColor clearColor];
     _intermediateTotalLabel.textAlignment = UITextAlignmentCenter;
@@ -96,9 +99,10 @@
     CGFloat cellWidth = self.contentView.bounds.size.width;
     
     _backgroundView.frame = self.contentView.bounds;
+    CGFloat thirdWidth = ceil(cellWidth / 3.0);
     _roundLabel.frame = CGRectMake(10.0, 0.0, 40.0, cellHeight);
-    _scoreLabel.frame = CGRectMake(135.0, 0.0, 50.0, cellHeight);
-    _intermediateTotalLabel.frame = CGRectMake(260.0, 0.0, 40.0, cellHeight);
+    _scoreLabel.frame = CGRectMake(thirdWidth * 1.3, 0.0, 50.0, cellHeight);
+    _intermediateTotalLabel.frame = CGRectMake(2.4*thirdWidth , 0.0, 40.0, cellHeight);
     
     _leftBackgroundView.frame = CGRectMake(-cellWidth, 0.0, cellWidth, cellHeight);
     _scoreTextField.frame = CGRectMake(cellWidth - 65.0, 1.0, 65.0, 31.0);

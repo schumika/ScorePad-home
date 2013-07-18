@@ -170,13 +170,20 @@ static CGFloat kFooterViewHeight = 40.0;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        static AJBrownUnderlinedView *headerView = nil;
+        if (headerView != nil) {
+            return headerView;
+        }
+        
+        headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
         CGFloat thirdOfTableWidth = ceil(CGRectGetWidth(tableView.bounds) / 3.0);
         headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
         
         UIButton *roundButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [roundButton setTitle:@"Round" forState:UIControlStateNormal];
+        roundButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
         [roundButton setTitleColor:[UIColor AJBrownColor] forState:UIControlStateNormal];
         roundButton.titleLabel.font = [UIFont LDBrushFontWithSize:35.0];
         roundButton.backgroundColor = [UIColor clearColor];
@@ -197,6 +204,7 @@ static CGFloat kFooterViewHeight = 40.0;
         
         UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(thirdOfTableWidth, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         scoreLabel.text = @"Score";
+        scoreLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         scoreLabel.textColor = [UIColor AJBrownColor];
         scoreLabel.font = [UIFont LDBrushFontWithSize:45.0];
         scoreLabel.backgroundColor = [UIColor clearColor];
@@ -205,6 +213,7 @@ static CGFloat kFooterViewHeight = 40.0;
         
         UILabel *intemediateLabel = [[UILabel alloc] initWithFrame:CGRectMake(2 * thirdOfTableWidth, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         intemediateLabel.text = @"Intermediate";
+        intemediateLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
         intemediateLabel.textColor = [UIColor AJBrownColor];
         intemediateLabel.font = [UIFont LDBrushFontWithSize:35.0];
         intemediateLabel.backgroundColor = [UIColor clearColor];
