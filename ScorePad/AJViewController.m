@@ -22,9 +22,7 @@
 @end
 
 
-@interface AJViewController () {
-    UILabel *_titleView;
-}
+@interface AJViewController ()
 
 @property (nonatomic, readonly) UILabel *titleView;
 
@@ -32,10 +30,6 @@
 
 
 @implementation AJViewController
-
-@synthesize titleView = _titleView;
-@synthesize titleViewText = _titleViewText;
-
 
 - (void)viewDidLoad
 {
@@ -61,20 +55,22 @@
 }
 
 - (UILabel *)titleView {
-    if (_titleView == nil) {
-        _titleView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)];
-        _titleView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
-        _titleView.backgroundColor = [UIColor clearColor];
-        _titleView.lineBreakMode = UILineBreakModeTailTruncation;
-        _titleView.shadowColor = [UIColor whiteColor];
-        _titleView.shadowOffset = CGSizeMake(0, -1);
-        _titleView.textAlignment = UITextAlignmentCenter;
-        _titleView.font = [UIFont LDBrushFontWithSize:55.0];
-        _titleView.textColor = [UIColor AJPurpleColor];
-        _titleView.text = [self titleViewText];
+    static UILabel *view = nil;
+    
+    if (view == nil) {
+        view = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)];
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
+        view.backgroundColor = [UIColor clearColor];
+        view.lineBreakMode = UILineBreakModeTailTruncation;
+        view.shadowColor = [UIColor whiteColor];
+        view.shadowOffset = CGSizeMake(0, -1);
+        view.textAlignment = UITextAlignmentCenter;
+        view.font = [UIFont LDBrushFontWithSize:55.0];
+        view.textColor = [UIColor AJPurpleColor];
+        view.text = [self titleViewText];
     }
     
-    return _titleView;
+    return view;
 }
 
 #pragma mark - Actions
