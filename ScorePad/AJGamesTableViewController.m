@@ -21,8 +21,6 @@
 #import "UIFont+Additions.h"
 
 @interface AJGamesTableViewController () {
-    UILabel *_draggToAddLabel;
-    BOOL _pullDownInProgress;
     BOOL _shouldAddNewGameCell;
 }
 
@@ -49,14 +47,6 @@
     
     _editBarButton = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Edit" target:self action:@selector(editButtonClicked:)];
     _doneBarButton = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
-    
-    _draggToAddLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, -50.0)];
-    _draggToAddLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _draggToAddLabel.backgroundColor = [UIColor clearColor];
-    _draggToAddLabel.textAlignment = UITextAlignmentCenter;
-    _draggToAddLabel.textColor = [UIColor lightGrayColor];
-    _draggToAddLabel.text = @"Dragg to add new game...";
-    _draggToAddLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:20.0];
     
     _shouldAddNewGameCell = NO;
     
@@ -300,36 +290,6 @@
         
         [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
     }
-}
-
-#pragma mark - UIScrollViewDelegate methods
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    _pullDownInProgress = scrollView.contentOffset.y <= 0.0f;
-    if (_pullDownInProgress) {
-        [self.tableView insertSubview:_draggToAddLabel atIndex:0];
-    }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (_pullDownInProgress && self.tableView.contentOffset.y <= 0.0f) {
-        // maintain the location of the placeholder
-        _draggToAddLabel.text = (scrollView.contentOffset.y > -60.0) ? @"Dragg to add new game..." : @"Release to add new game...";
-        _draggToAddLabel.alpha = MIN(1.0f, - self.tableView.contentOffset.y / 60.0);
-    } else {
-        _pullDownInProgress = false;
-    }
-}
-
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (_pullDownInProgress && - self.tableView.contentOffset.y > 60.0) {
-        _shouldAddNewGameCell = YES;
-        [self.tableView reloadData];
-        [[(AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textField] becomeFirstResponder];
-    }
-    _pullDownInProgress = false;
-    [_draggToAddLabel removeFromSuperview];
 }
 
 @end
