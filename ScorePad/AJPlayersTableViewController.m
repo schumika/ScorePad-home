@@ -66,8 +66,8 @@ static CGFloat kHeaderViewHeight = 35.0;
             for (UIView *subView in [_scrollView subviews]) {
                 [subView removeFromSuperview];
             }
-            
-            CGFloat playerViewWidth = (self.playersArray.count == 0) ? 0.0 : MAX(100.0, (CGRectGetHeight(self.view.bounds) + 00.0) / (self.playersArray.count));
+            CGFloat screeenHeight = [[UIScreen mainScreen]bounds].size.height;
+            CGFloat playerViewWidth = (self.playersArray.count == 0) ? 0.0 : MAX(100.0, ceil(screeenHeight / (self.playersArray.count)));
             CGFloat maxScrollViewContentHeight = 60.0 + 30.0 * [self.game maxNumberOfScores];
             for (int playerIndex = 0; playerIndex < self.playersArray.count; playerIndex++) {
                 AJPlayer *player = (AJPlayer *)[self.playersArray objectAtIndex:playerIndex];
