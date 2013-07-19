@@ -21,6 +21,7 @@
 #import "UIImage+Additions.h"
 
 static CGFloat kHeaderViewHeight = 35.0;
+static CGFloat kLandscapeMinColumnWidth = 94.0;
 
 @interface AJPlayersTableViewController () {
     UIImageView *_backView;
@@ -67,7 +68,7 @@ static CGFloat kHeaderViewHeight = 35.0;
                 [subView removeFromSuperview];
             }
             CGFloat screeenHeight = [[UIScreen mainScreen]bounds].size.height;
-            CGFloat playerViewWidth = (self.playersArray.count == 0) ? 0.0 : MAX(100.0, ceil(screeenHeight / (self.playersArray.count)));
+            CGFloat playerViewWidth = (self.playersArray.count == 0) ? 0.0 : MAX(kLandscapeMinColumnWidth, ceil(screeenHeight / (self.playersArray.count)));
             CGFloat maxScrollViewContentHeight = 60.0 + 30.0 * [self.game maxNumberOfScores];
             for (int playerIndex = 0; playerIndex < self.playersArray.count; playerIndex++) {
                 AJPlayer *player = (AJPlayer *)[self.playersArray objectAtIndex:playerIndex];
@@ -77,7 +78,7 @@ static CGFloat kHeaderViewHeight = 35.0;
                 [verticalPlayerView setDelegate:self];
                 [_scrollView addSubview:verticalPlayerView];
             }
-            _scrollView.contentSize = CGSizeMake(self.playersArray.count * 100.0, maxScrollViewContentHeight + 40.0);
+            _scrollView.contentSize = CGSizeMake(self.playersArray.count * kLandscapeMinColumnWidth, maxScrollViewContentHeight + 40.0);
         }
     }
 }
