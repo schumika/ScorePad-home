@@ -24,7 +24,7 @@
 
 @interface AJViewController ()
 
-@property (nonatomic, readonly) UILabel *titleView;
+@property (nonatomic, strong) UILabel *titleView;
 
 @end
 
@@ -35,13 +35,22 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.titleView = self.titleView;
-    
     if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear2.png"] forBarMetrics:UIBarMetricsDefault];
     }
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem simpleBackButtonItemWithTarget:self action:@selector(backButtonClicked:)];
+    
+    self.titleView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)];
+    self.titleView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
+    self.titleView.backgroundColor = [UIColor clearColor];
+    self.titleView.lineBreakMode = UILineBreakModeTailTruncation;
+    self.titleView.shadowColor = [UIColor whiteColor];
+    self.titleView.shadowOffset = CGSizeMake(0, -1);
+    self.titleView.textAlignment = UITextAlignmentCenter;
+    self.titleView.font = [UIFont LDBrushFontWithSize:55.0];
+    self.titleView.textColor = [UIColor AJPurpleColor];
+    self.navigationItem.titleView = self.titleView;
 }
 
 #pragma mark - UI related
@@ -52,25 +61,6 @@
         
         self.titleView.text = _titleViewText;
     }
-}
-
-- (UILabel *)titleView {
-    static UILabel *view = nil;
-    
-    if (view == nil) {
-        view = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)];
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
-        view.backgroundColor = [UIColor clearColor];
-        view.lineBreakMode = UILineBreakModeTailTruncation;
-        view.shadowColor = [UIColor whiteColor];
-        view.shadowOffset = CGSizeMake(0, -1);
-        view.textAlignment = UITextAlignmentCenter;
-        view.font = [UIFont LDBrushFontWithSize:55.0];
-        view.textColor = [UIColor AJPurpleColor];
-        view.text = [self titleViewText];
-    }
-    
-    return view;
 }
 
 #pragma mark - Actions

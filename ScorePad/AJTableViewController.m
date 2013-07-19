@@ -18,8 +18,6 @@
 
 @implementation AJTableViewController
 
-@synthesize tableView = _tableView;
-
 
 - (id)initWithStyle:(UITableViewStyle)tableViewStyle
 {
@@ -33,32 +31,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:_tableViewStyle];
-    _tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    _tableView.separatorColor = [UIColor colorWithRed:112.0/255.0 green:112.0/255.0 blue:112.0/255.0 alpha:0.3];
-    [self.view addSubview:_tableView];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:_tableViewStyle];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.tableView.separatorColor = [UIColor colorWithRed:112.0/255.0 green:112.0/255.0 blue:112.0/255.0 alpha:0.3];
+    [self.view addSubview:self.tableView];
     
     [self addKeyboardNotifications];
     
     if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
-        //[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar.png"] forBarMetrics:UIBarMetricsDefault];
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear2.png"] forBarMetrics:UIBarMetricsDefault];
     }
 }
 
 - (void)dealloc {
-    [_tableView setDelegate:nil];
-    [_tableView setDataSource:nil];
+    [self.tableView setDelegate:nil];
+    [self.tableView setDataSource:nil];
     
     [self removeKeyboardNotifications];
     
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -76,74 +69,10 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
-    
     return cell;
 }
 
-#pragma mark -
-#pragma mark Keyboard State Management
-
-//- (void)keyboardWillShow:(NSNotification *)aNotif {
-//    NSDictionary *userInfo = [aNotif userInfo];
-//	NSTimeInterval keyboardAnimDuration = [[userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-//	UIViewAnimationCurve keyboardAnimCurve = [[userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] unsignedIntValue];
-//	CGRect keyboardFrameBegin = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue] fromView:nil];
-//	CGRect keyboardFrameEnd = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
-//    
-//	// If the keyboard will slide horizontally then we don't want any animation to be done.
-//	// We only want animation when the keyboard will slide to/from bottom
-//	BOOL keyboardSlidesVeritcally = (keyboardFrameBegin.origin.y != keyboardFrameEnd.origin.y);
-//	
-//	if (keyboardSlidesVeritcally) {
-//        
-//		[UIView beginAnimations:nil context:NULL];
-//		[UIView setAnimationCurve:keyboardAnimCurve];
-//		[UIView setAnimationDuration:keyboardAnimDuration];
-//		[UIView setAnimationBeginsFromCurrentState:YES];
-//        
-//	}
-//    
-//    CGRect tableViewBounds = self.tableView.frame;
-//    NSLog(@"table view bounds %@", NSStringFromCGRect(tableViewBounds));
-//    NSLog(@"view controller bounds %@", NSStringFromCGRect(self.view.bounds));
-//    NSLog(@"keyboard frameEnd: %@", NSStringFromCGRect(keyboardFrameEnd));
-//    CGFloat keyboardSizeHeight = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ? keyboardFrameEnd.size.height : keyboardFrameEnd.size.width;
-//	tableViewBounds.size.height = self.view.bounds.size.height - keyboardSizeHeight;
-//    NSLog(@"new table bounds %@", NSStringFromCGRect(tableViewBounds));
-//    self.tableView.frame = tableViewBounds;
-//    
-//    if (keyboardSlidesVeritcally) {
-//		[UIView commitAnimations];
-//	}
-//}
-//
-//- (void)keyboardWillHide:(NSNotification *)aNotif {
-//    NSDictionary *userInfo = [aNotif userInfo];
-//	NSTimeInterval keyboardAnimDuration = [[userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-//	UIViewAnimationCurve keyboardAnimCurve = [[userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] unsignedIntValue];
-//	CGRect keyboardFrameBegin = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue] fromView:nil];
-//	CGRect keyboardFrameEnd = [self.view convertRect:[[userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
-//	
-//	// If the keyboard will slide horizontally then we don't want any animation to be done.
-//	// We only want animation when the keyboard will slide to/from bottom
-//	BOOL keyboardSlidesVeritcally = (keyboardFrameBegin.origin.y != keyboardFrameEnd.origin.y);
-//	
-//	if (keyboardSlidesVeritcally) {
-//        
-//		[UIView beginAnimations:nil context:NULL];
-//		[UIView setAnimationCurve:keyboardAnimCurve];
-//		[UIView setAnimationDuration:keyboardAnimDuration];
-//    }
-//    
-//    CGRect tableViewBounds = self.tableView.frame;
-//    NSLog(@"table view bounds %@", NSStringFromCGRect(tableViewBounds));
-//    NSLog(@"view controller bounds %@", NSStringFromCGRect(self.view.bounds));
-//	tableViewBounds.size.height = self.view.bounds.size.height;
-//    self.tableView.frame = tableViewBounds;
-//    
-//    [UIView commitAnimations];
-//}
+#pragma mark - Keyboard State Management
 
 - (void)keyboardStateChanged:(NSNotification*)notification;
 {

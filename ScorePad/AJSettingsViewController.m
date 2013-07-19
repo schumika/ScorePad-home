@@ -158,6 +158,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    self.titleViewText  = self.settingsInfo.name;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -185,10 +186,6 @@ static CGFloat kHeaderViewHeight = 35.0;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
-}
-
-- (NSString *)titleViewText {
-    return self.settingsInfo.name;
 }
 
 #pragma mark - UITableViewDataSource and Delegate methods

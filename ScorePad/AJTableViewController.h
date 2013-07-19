@@ -11,11 +11,9 @@
 #import "UIBarButtonItem+Additions.h"
 #import "AJViewController.h"
 
-@interface AJTableViewController : AJViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate> {
-    UITableView *_tableView;
-}
+@interface AJTableViewController : AJViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-@property (nonatomic, readonly) UITableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 
 - (id)initWithStyle:(UITableViewStyle)style;
 

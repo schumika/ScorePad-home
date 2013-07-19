@@ -54,6 +54,7 @@
     
     self.navigationItem.rightBarButtonItem = _editBarButton;
     self.navigationItem.leftBarButtonItem = nil;
+    self.titleViewText = @"ScorePad";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,10 +67,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
-}
-
-- (NSString*)titleViewText {
-	return @"Score Pad";
 }
 
 #pragma mark - Keyboard notifications
