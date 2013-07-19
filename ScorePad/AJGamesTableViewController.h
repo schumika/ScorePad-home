@@ -11,13 +11,6 @@
 #import "AJPanDeleteTableViewCell.h"
 
 @interface AJGamesTableViewController : AJTableViewController <UITextFieldDelegate, UIAlertViewDelegate,
-                                                                AJPanDeleteTableViewCellDelegate> {
-    NSArray *_gamesArray;
-    
-    UIBarButtonItem *_editBarButton;
-    UIBarButtonItem *_doneBarButton;
-}
-
-@property (nonatomic, strong) NSArray *gamesArray;
+                                                                AJPanDeleteTableViewCellDelegate>
 
 @end
