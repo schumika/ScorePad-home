@@ -46,6 +46,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.playersArray = [self getOrderedPlayersArray];
     self.titleViewText = self.game.name;
+    
     if (updateUI) {
         if (self.tableView.hidden == NO) {
             [self.tableView reloadData];
@@ -54,7 +55,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
             }
         } else {
             // remove old vertical columns
-            for (UIView *subView in [_scrollView subviews]) {
+            for (UIView *subView in [self.scrollView subviews]) {
                 [subView removeFromSuperview];
             }
             CGFloat screeenHeight = [[UIScreen mainScreen]bounds].size.height;
@@ -66,9 +67,36 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
                                                             andName:player.name andScores:[player scoreValues] andColor:player.color];
                 verticalPlayerView.isFirstColumn = (playerIndex == 0);
                 [verticalPlayerView setDelegate:self];
-                [_scrollView addSubview:verticalPlayerView];
+                [self.scrollView addSubview:verticalPlayerView];
             }
-            _scrollView.contentSize = CGSizeMake(self.playersArray.count * kLandscapeMinColumnWidth, maxScrollViewContentHeight + 40.0);
+            CGFloat contentSizeWidth = MAX(self.scrollView.frame.size.width, self.playersArray.count * kLandscapeMinColumnWidth);
+            self.scrollView.contentSize = CGSizeMake(contentSizeWidth, maxScrollViewContentHeight + 40.0);
+            
+            // horizontal lines
+            UIImage *horizSepImage = [[UIImage imageNamed:@"separator_new2.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(1.0, 40.0, 3.0, 40.0)];
+            
+            UIImageView *topLineImage = [[UIImageView alloc] initWithImage:horizSepImage];
+            topLineImage.frame = (CGRect){CGPointZero, {contentSizeWidth, horizSepImage.size.height}};
+            [self.scrollView addSubview:topLineImage];
+            
+            CGFloat maxY = 60.0 - 2*horizSepImage.size.height + 1.0;
+            UIImageView *topLineImage2 = [[UIImageView alloc] initWithImage:horizSepImage];
+            topLineImage2.frame = (CGRect){{0.0, maxY}, {contentSizeWidth, horizSepImage.size.height}};
+            [self.scrollView addSubview:topLineImage2];
+            maxY = 60.0 - horizSepImage.size.height;
+            
+            UIImageView *bottomLineImage = [[UIImageView alloc] initWithImage:horizSepImage];
+            bottomLineImage.frame = (CGRect){{0.0, maxY}, {contentSizeWidth, horizSepImage.size.height}};
+            [self.scrollView addSubview:bottomLineImage];
+            maxY += 30;
+            
+            for (int round = 0; round < [self.game maxNumberOfScores]; round ++) {
+                UIImageView *bottomSeparatorView = [[UIImageView alloc] initWithImage:horizSepImage];
+                bottomSeparatorView.frame = (CGRect){{0.0, maxY}, {contentSizeWidth, horizSepImage.size.height}};
+                maxY += 30.0;
+                [self.scrollView addSubview:bottomSeparatorView];
+            }
+
         }
     }
 }
@@ -80,15 +108,16 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     
     // Landscape
     UIImage *backImage = IS_TALLSCREEN ? [UIImage imageNamed:@"landscape_background-568h@2x.png"] : [UIImage imageNamed:@"landscape_background.png"];
-    _backView = [[UIImageView alloc] initWithImage:backImage];
+    self.backView = [[UIImageView alloc] initWithImage:backImage];
     [self.view addSubview:_backView];
-    [_backView setHidden:YES];
+    [self.backView setHidden:YES];
     
     CGRect bounds = self.view.bounds;
-    _scrollView = [[AJScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.height + 20.0, bounds.size.width)];
-    _scrollView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_scrollView];
-    [_scrollView setHidden:YES];
+    self.scrollView = [[AJScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.height + 20.0, bounds.size.width)];
+    self.scrollView.backgroundColor = [UIColor clearColor];
+    self.scrollView.directionalLockEnabled = YES;
+    [self.view addSubview:self.scrollView];
+    [self.scrollView setHidden:YES];
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
     
@@ -226,12 +255,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        static AJBrownUnderlinedView *headerView = nil;
-        if (headerView != nil) {
-            return headerView;
-        }
-        
-        headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
         headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
         

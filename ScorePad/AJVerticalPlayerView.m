@@ -11,32 +11,28 @@
 #import "UIColor+Additions.h"
 #import "UIFont+Additions.h"
 
-@interface AJVerticalPlayerHeaderView : UIView {
-    
-    UIButton *__weak _nameButton;
-    UILabel *_totalLabel;
-}
+@interface AJVerticalPlayerHeaderView : UIView
 
-@property (weak, nonatomic, readonly) UIButton *nameButton;
-@property (nonatomic, readonly) UILabel *totalLabel;
+@property (nonatomic, strong) UIButton *nameButton;
+@property (nonatomic, strong) UILabel *totalLabel;
 
 @end
 
 
 @interface AJVerticalPlayerView()
 
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *color;
+@property (nonatomic, strong) NSArray *scores;
+
+@property (nonatomic, assign) double maxViewHeight;
+
+@property (nonatomic, strong) UIImageView *rightSeparatorView;
+@property (nonatomic, strong) UIImageView *leftSeparatorView;
 @end
 
 
 @implementation AJVerticalPlayerView
-
-@synthesize name = _name;
-@synthesize scores = _scores;
-@synthesize color = _color;
-
-@synthesize isFirstColumn = _isFirstColumn;
-
-@synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame andName:(NSString *)name andScores:(NSArray *)scores andColor:(NSString *)color
 {
@@ -67,44 +63,24 @@
             [self addSubview:scoreLabel];
         }
         [headerView.totalLabel setText:[NSString stringWithFormat:@"%g", sum]];
+        
+        UIImage *sepImage = [[UIImage imageNamed:@"separator_vertical.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(40.0, 1.0, 40.0, 3.0)];
+        
+        self.rightSeparatorView = [[UIImageView alloc] initWithImage:sepImage];
+        CGFloat separatorX = CGRectGetWidth(frame) - sepImage.size.width;
+        self.rightSeparatorView.frame = (CGRect){{separatorX, 0.0}, {sepImage.size.width, frame.size.height}};
+        [self addSubview:self.rightSeparatorView];
+        
+        self.leftSeparatorView = [[UIImageView alloc] initWithImage:sepImage];
+        self.leftSeparatorView.frame = (CGRect){CGPointZero, {sepImage.size.width, frame.size.height}};
+        [self addSubview:self.leftSeparatorView];
+        self.leftSeparatorView.hidden = YES;
     }
     return self;
 }
 
-
-- (void)drawRect:(CGRect)rect {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGColorRef grayColor = [UIColor lightGrayColor].CGColor;
-    
-    // Right line
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, rect.size.width, rect.origin.y);
-    CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
-    CGContextSetStrokeColorWithColor(context, grayColor);
-    CGContextStrokePath(context);
-    
-    // Top line
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);
-    CGContextAddLineToPoint(context, rect.size.width, rect.origin.y);
-    CGContextSetStrokeColorWithColor(context, grayColor);
-    CGContextStrokePath(context);
-    
-    // Bottom line
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, rect.origin.x, rect.size.height);
-    CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
-    CGContextSetStrokeColorWithColor(context, grayColor);
-    CGContextStrokePath(context);
-    
-    if (_isFirstColumn) {
-        // Left line
-        CGContextBeginPath(context);
-        CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);
-        CGContextAddLineToPoint(context, rect.origin.x, rect.size.height);
-        CGContextSetStrokeColorWithColor(context, grayColor);
-        CGContextStrokePath(context);
-    }
+- (void)setIsFirstColumn:(BOOL)isFirstColumn {
+    self.leftSeparatorView.hidden = !isFirstColumn;
 }
 
 - (IBAction)nameButtonCliked:(id)sender {
@@ -119,9 +95,6 @@
 
 @implementation AJVerticalPlayerHeaderView
 
-@synthesize nameButton = _nameButton;
-@synthesize totalLabel = _totalLabel;
-
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     
@@ -129,35 +102,22 @@
     
     [self setBackgroundColor:[UIColor clearColor]];
     
-    _nameButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nameButton.frame = CGRectMake(0.0, 4.0, frame.size.width, 25.0);
-    _nameButton.backgroundColor = [UIColor clearColor];
-    //[_nameButton.titleLabel setFont:[UIFont fontWithName:@"Thonburi" size:20.0]];
-    [_nameButton.titleLabel setFont:[UIFont LDBrushFontWithSize:35.0]];
-    [_nameButton.titleLabel setAdjustsFontSizeToFitWidth:YES];
-    [self addSubview:_nameButton];
+    self.nameButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.nameButton.frame = CGRectMake(0.0, 4.0, frame.size.width, 25.0);
+    self.nameButton.backgroundColor = [UIColor clearColor];
+    [self.nameButton.titleLabel setFont:[UIFont LDBrushFontWithSize:35.0]];
+    [self.nameButton.titleLabel setAdjustsFontSizeToFitWidth:YES];
+    [self addSubview:self.nameButton];
     
     
-    _totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 33.0, frame.size.width, 37.0)];
-    [_totalLabel setBackgroundColor:[UIColor clearColor]];
-    [_totalLabel setTextColor:[UIColor brownColor]];
-    [_totalLabel setTextAlignment:UITextAlignmentCenter];
-    //[_totalLabel setFont:[UIFont fontWithName:@"Thonburi-Bold" size:25.0]];
-    [_totalLabel setFont:[UIFont LDBrushFontWithSize:45.0]];
-    [self addSubview:_totalLabel];
+    self.totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 33.0, frame.size.width, 37.0)];
+    [self.totalLabel setBackgroundColor:[UIColor clearColor]];
+    [self.totalLabel setTextColor:[UIColor AJPurpleColor]];
+    [self.totalLabel setTextAlignment:UITextAlignmentCenter];
+    [self.totalLabel setFont:[UIFont LDBrushFontWithSize:45.0]];
+    [self addSubview:self.totalLabel];
     
     return self;
-}
-
-- (void)drawRect:(CGRect)rect {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGColorRef grayColor = [UIColor lightGrayColor].CGColor;
-    
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, rect.origin.x, rect.size.height);
-    CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
-    CGContextSetStrokeColorWithColor(context, grayColor);
-    CGContextStrokePath(context);
 }
 
 @end

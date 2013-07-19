@@ -10,24 +10,10 @@
 
 @protocol AJVerticalPlayerViewDelegate;
 
-@interface AJVerticalPlayerView : UIView {
-    NSString *_name;
-    NSArray *_scores;
-    NSString *_color;
-    
-    double _maxViewHeight;
-    BOOL _isFirstColumn;
-    
-    id<AJVerticalPlayerViewDelegate> __weak _delegate;
-}
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *color;
-@property (nonatomic, strong) NSArray *scores;
+@interface AJVerticalPlayerView : UIView
 
-@property (nonatomic, assign) double maxViewHeight;
 @property (nonatomic, assign) BOOL isFirstColumn;
-
 @property (nonatomic, weak) id<AJVerticalPlayerViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame andName:(NSString *)name andScores:(NSArray *)scores andColor:(NSString *)color;
