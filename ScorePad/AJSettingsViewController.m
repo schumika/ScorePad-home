@@ -90,8 +90,8 @@ static CGFloat kHeaderViewHeight = 35.0;
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Cancel" target:self action:@selector(cancelButtonClicked:)];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Cancel" target:self action:@selector(cancelButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
     
     
     _pictureButton = [UIButton buttonWithType:UIButtonTypeCustom];

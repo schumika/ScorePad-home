@@ -47,8 +47,8 @@
 {
     [super viewDidLoad];
     
-    _editBarButton = [UIBarButtonItem clearBarButtonItemWithTitle:@"Edit" target:self action:@selector(editButtonClicked:)];
-    _doneBarButton = [UIBarButtonItem clearBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
+    _editBarButton = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Edit" target:self action:@selector(editButtonClicked:)];
+    _doneBarButton = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
     
     _draggToAddLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, -50.0)];
     _draggToAddLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;

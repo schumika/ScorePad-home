@@ -47,7 +47,7 @@
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear2.png"] forBarMetrics:UIBarMetricsDefault];
     }
     
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem backButtonItemWithTarget:self action:@selector(backButtonClicked:)];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem simpleBackButtonItemWithTarget:self action:@selector(backButtonClicked:)];
 }
 
 #pragma mark - UI related

@@ -64,7 +64,7 @@ static CGFloat kFooterViewHeight = 40.0;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
     
     self.indexPathOfSelectedTextField = nil;
     

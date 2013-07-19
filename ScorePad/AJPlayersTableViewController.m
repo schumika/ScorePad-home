@@ -99,7 +99,7 @@ static CGFloat kHeaderViewHeight = 35.0;
     [self.view addSubview:_scrollView];
     [_scrollView setHidden:YES];
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem clearBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
     //self.navigationItem.leftBarButtonItem = [self backButtonItem];
     
 //    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.width, 100.0)];
