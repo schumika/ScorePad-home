@@ -16,16 +16,8 @@
 #import "AJSettingsViewController.h"
 
 @interface AJPlayersTableViewController : AJTableViewController <UITextFieldDelegate, AJSettingsViewControllerDelegate, UIAlertViewDelegate,
-                                            AJVerticalPlayerViewDelegate, AJPlayerTableViewCellDelegate, AJPanDeleteTableViewCellDelegate> {
-    AJGame *_game;
-    
-    NSArray *_playersArray;
-    AJScrollView *_scrollView;
-}
+                                            AJVerticalPlayerViewDelegate, AJPlayerTableViewCellDelegate, AJPanDeleteTableViewCellDelegate>
 
 @property (nonatomic, strong) AJGame *game;
-@property (nonatomic, strong) NSArray *playersArray;
-
-@property (nonatomic, assign) AJPlayersSortingType playersSortingType;
 
 @end

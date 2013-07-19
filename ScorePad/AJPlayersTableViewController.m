@@ -23,35 +23,25 @@
 static CGFloat kHeaderViewHeight = 35.0;
 static CGFloat kLandscapeMinColumnWidth = 94.0;
 
-@interface AJPlayersTableViewController () {
-    UIImageView *_backView;
-    NSIndexPath *_indexPathOfSelectedTextField;
-    NSIndexPath *_indexPathOfCellShowingLeftSide;
-    
-    BOOL _addScoreViewIsDisplayed;
-}
+@interface AJPlayersTableViewController ()
+
+@property (nonatomic, strong) UIImageView *backView;
+@property (nonatomic, strong) NSArray *playersArray;
+@property (nonatomic, assign) AJPlayersSortingType playersSortingType;
+
+@property (nonatomic, strong) AJScrollView *scrollView;
 
 @property (nonatomic, assign) BOOL addScoreViewIsDisplayed;
 @property (nonatomic, strong) NSIndexPath *indexPathOfSelectedTextField;
 @property (nonatomic, strong) NSIndexPath *indexPathOfCellShowingLeftSide;
 
 - (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-
-- (BOOL)addScoreViewIsDisplayed;
-
 - (NSArray *)getOrderedPlayersArray;
 
 @end
 
 
 @implementation AJPlayersTableViewController
-
-@synthesize game = _game;
-@synthesize playersArray = _playersArray;
-@synthesize indexPathOfSelectedTextField = _indexPathOfSelectedTextField;
-@synthesize indexPathOfCellShowingLeftSide = _indexPathOfCellShowingLeftSide;
-
-@synthesize playersSortingType = _playersSortingType;
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.playersArray = [self getOrderedPlayersArray];
@@ -101,22 +91,11 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     [_scrollView setHidden:YES];
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
-    //self.navigationItem.leftBarButtonItem = [self backButtonItem];
-    
-//    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.width, 100.0)];
-//    tableHeaderView.backgroundColor = [UIColor clearColor];
-//    [self.tableView setTableHeaderView:tableHeaderView];
-//    [tableHeaderView release];
-//    
-//    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [doneButton setTitle:@"done" forState:UIControlStateNormal];
-//    [doneButton setFrame:CGRectMake(200.0, 60.0, 60.0, 35.0)];
-//    [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    [tableHeaderView addSubview:doneButton];
     
     self.indexPathOfSelectedTextField = nil;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.rowHeight = 70.0;
     
     self.playersSortingType = self.game.sortOrder.intValue;
 }
@@ -125,20 +104,12 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 {
     [super viewWillAppear:animated];
     
-    self.tableView.rowHeight = 70.0;
-    
     [self prepareUIForInterfaceOrientation:self.interfaceOrientation];
     [self loadDataAndUpdateUI:YES];
     
     if (self.playersArray.count > 0) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
-}
-
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
 }
 
 #pragma mark - Rotation methods
@@ -168,23 +139,19 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     if (self.indexPathOfSelectedTextField != nil) {
         [self.tableView scrollToRowAtIndexPath:self.indexPathOfSelectedTextField atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
-    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (section == 0) ? [self.playersArray count] : 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *playerCellIdentifier = @"PlayerCell";
     static NSString *newPlayerCellIdentifier = @"NewPlayerCell";
     
@@ -194,6 +161,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         AJPlayerTableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:playerCellIdentifier];
         if (!aCell) {
             aCell = [[AJPlayerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:playerCellIdentifier];
+            aCell.selectionStyle = UITableViewCellSelectionStyleGray;
             aCell.delegate = self;
             aCell.panGestureDelegate = self;
             aCell.accessoryType = UITableViewCellAccessoryNone;
@@ -224,6 +192,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         if (!aCell) {
             aCell = [[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:newPlayerCellIdentifier];
             aCell.accessoryType = UITableViewCellAccessoryNone;
+            aCell.selectionStyle = UITableViewCellSelectionStyleGray;
             aCell.textField.placeholder = @"Tap to add New Player ...";
             aCell.textField.text = @"";
             aCell.textField.delegate = self;
@@ -233,15 +202,13 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         cell = aCell;
     }
     
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     return cell;
 }
 
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if ([self addScoreViewIsDisplayed]) return;
@@ -259,7 +226,12 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        static AJBrownUnderlinedView *headerView = nil;
+        if (headerView != nil) {
+            return headerView;
+        }
+        
+        headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
         headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
         
@@ -521,24 +493,6 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
     }
 }
-/*
-#pragma mark - Helper methods
-
-- (BOOL)addScoreViewIsDisplayed {
-    BOOL leftSideIsDisplayed = NO;
-    
-    for (int playerCellIndex = 0; playerCellIndex < [self.tableView numberOfRowsInSection:0]; playerCellIndex++) {
-        AJPlayerTableViewCell *playerCell = (AJPlayerTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:playerCellIndex inSection:0]];
-        if (playerCell.displaysLeftSide) {
-            leftSideIsDisplayed = YES;
-            break;
-        }
-    }
-    
-    return leftSideIsDisplayed;
-}
-
- */
 
 - (NSArray *)getOrderedPlayersArray {
     NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[[AJScoresManager sharedInstance] getAllPlayersForGame:self.game]];
