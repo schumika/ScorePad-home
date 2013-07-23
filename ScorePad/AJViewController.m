@@ -12,19 +12,12 @@
 #import "UIColor+Additions.h"
 #import "UIFont+Additions.h"
 
-@implementation UINavigationBar (UINavigationBarCustomDraw)
-
-- (void)drawRect:(CGRect)rect
-{
-    [[UIImage imageNamed:@"nav-bar-clear2.png"] drawInRect:rect];
-}
-
-@end
-
 
 @interface AJViewController ()
 
 @property (nonatomic, strong) UILabel *titleView;
+
+- (void)updateNavigationBarWithOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 @end
 
@@ -35,8 +28,10 @@
 {
     [super viewDidLoad];
     
-    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear2.png"] forBarMetrics:UIBarMetricsDefault];
+    [self updateNavigationBarWithOrientation:[UIApplication sharedApplication].statusBarOrientation];
+    
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setShadowImage:)]) {
+        [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     }
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem simpleBackButtonItemWithTarget:self action:@selector(backButtonClicked:)];
@@ -51,6 +46,10 @@
     self.titleView.font = [UIFont LDBrushFontWithSize:55.0];
     self.titleView.textColor = [UIColor AJPurpleColor];
     self.navigationItem.titleView = self.titleView;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self updateNavigationBarWithOrientation:toInterfaceOrientation];
 }
 
 #pragma mark - UI related
@@ -104,6 +103,16 @@
 - (void)removeKeyboardNotifications {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
+
+#pragma mark - Privates
+
+- (void)updateNavigationBarWithOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear3.png"] forBarMetrics:UIBarMetricsDefault];
+    } else {
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear3.png"] forBarMetrics:UIBarMetricsDefault];
+    }
 }
 
 @end

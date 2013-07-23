@@ -25,7 +25,6 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 
 @interface AJPlayersTableViewController ()
 
-@property (nonatomic, strong) UIImageView *backView;
 @property (nonatomic, strong) NSArray *playersArray;
 @property (nonatomic, assign) AJPlayersSortingType playersSortingType;
 
@@ -108,14 +107,10 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     [super viewDidLoad];
     
     // Landscape
-    UIImage *backImage = IS_TALLSCREEN ? [UIImage imageNamed:@"landscape_background-568h@2x.png"] : [UIImage imageNamed:@"landscape_background.png"];
-    self.backView = [[UIImageView alloc] initWithImage:backImage];
-    [self.view addSubview:_backView];
-    [self.backView setHidden:YES];
     
     CGRect bounds = self.view.bounds;
     self.scrollView = [[AJScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, bounds.size.height + 20.0, bounds.size.width)];
-    self.scrollView.backgroundColor = [UIColor clearColor];
+    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.scrollView.directionalLockEnabled = YES;
     [self.view addSubview:self.scrollView];
     [self.scrollView setHidden:YES];
@@ -152,12 +147,10 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 - (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
         self.tableView.hidden = YES;
-        _scrollView.hidden = NO;
-        _backView.hidden = NO;
+        self.scrollView.hidden = NO;
     } else {
         self.tableView.hidden = NO;
-        _scrollView.hidden = YES;
-        _backView.hidden = YES;
+        self.scrollView.hidden = YES;
     }
 }
 
@@ -423,7 +416,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 
 - (void)verticalPlayerViewDidClickName:(AJVerticalPlayerView *)verticalPlayerView {
     AJScoresTableViewController *scoresViewController = [[AJScoresTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    scoresViewController.player = [self.playersArray objectAtIndex:[[_scrollView subviews] indexOfObject:verticalPlayerView]];
+    scoresViewController.player = [self.playersArray objectAtIndex:[[self.scrollView subviews] indexOfObject:verticalPlayerView]];
     [self.navigationController pushViewController:scoresViewController animated:YES];
 }
 

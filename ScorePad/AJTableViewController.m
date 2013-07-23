@@ -13,6 +13,8 @@
     UITableViewStyle _tableViewStyle;
 }
 
+- (void)updateNavigationBarWithOrientation:(UIInterfaceOrientation)interfaceOrientation;
+
 @end
 
 
@@ -31,6 +33,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self updateNavigationBarWithOrientation:[UIApplication sharedApplication].statusBarOrientation];
+    
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setShadowImage:)]) {
+        [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    }
+    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:_tableViewStyle];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.tableView.delegate = self;
@@ -40,10 +48,6 @@
     [self.view addSubview:self.tableView];
     
     [self addKeyboardNotifications];
-    
-    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear2.png"] forBarMetrics:UIBarMetricsDefault];
-    }
 }
 
 - (void)dealloc {
@@ -57,6 +61,10 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self updateNavigationBarWithOrientation:toInterfaceOrientation];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -115,6 +123,16 @@
         self.tableView.contentInset = newInsets;
         self.tableView.scrollIndicatorInsets = newInsets;
     }];
+}
+
+#pragma mark - Privates
+
+- (void)updateNavigationBarWithOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"nav-bar-clear3.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 20.0, 2.0, 20.0)] forBarMetrics:UIBarMetricsDefault];
+    } else {
+        [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"nav-bar-clear3-landscape.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 20.0, 2.0, 20.0)] forBarMetrics:UIBarMetricsDefault];
+    }
 }
 
 @end
