@@ -50,8 +50,8 @@ static CGFloat kFooterViewHeight = 40.0;
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.scoresArray = [self getOrderedScoresArray];
     
-    //[self reloadTitleView];
     self.titleViewText = self.player.name;
+    self.titleViewColor = [UIColor colorWithHexString:self.player.color];
     
     if (updateUI) {
         [self.tableView reloadData];

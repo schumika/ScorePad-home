@@ -46,6 +46,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.playersArray = [self getOrderedPlayersArray];
     self.titleViewText = self.game.name;
+    self.titleViewColor = [UIColor colorWithHexString:self.game.color];
     
     if (updateUI) {
         if (self.tableView.hidden == NO) {

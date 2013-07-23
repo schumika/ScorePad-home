@@ -63,6 +63,14 @@
     }
 }
 
+- (void)setTitleViewColor:(UIColor *)titleViewColor {
+    if (titleViewColor != _titleViewColor) {
+        _titleViewColor = titleViewColor;
+        
+        self.titleView.textColor = titleViewColor;
+    }
+}
+
 #pragma mark - Actions
 
 - (IBAction)backButtonClicked:(id)sender {

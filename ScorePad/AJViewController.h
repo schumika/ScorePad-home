@@ -10,7 +10,8 @@
 
 @interface AJViewController : UIViewController
 
-@property (nonatomic, strong) NSString *titleViewText;
+@property (nonatomic, strong) NSString      *titleViewText;
+@property (nonatomic, strong) UIColor       *titleViewColor;
 
 - (IBAction)backButtonClicked:(id)sender;
 
