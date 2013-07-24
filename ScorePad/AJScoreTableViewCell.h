@@ -11,12 +11,7 @@
 
 @protocol AJScoreTableViewCellDelegate;
 
-@interface AJScoreTableViewCell : AJPanDeleteTableViewCell <UITextFieldDelegate> {
-    UITextField *_scoreTextField;
-    UIButton *_plusMinusButton;
-    
-    BOOL _displaysLeftSide;
-}
+@interface AJScoreTableViewCell : AJPanDeleteTableViewCell <UITextFieldDelegate> 
 
 @property (nonatomic, readonly) UITextField *scoreTextField;
 

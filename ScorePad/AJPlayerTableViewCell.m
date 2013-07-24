@@ -16,35 +16,25 @@
 #import "UIFont+Additions.h"
 
 
-@interface AJPlayerTableViewCell () {
-    UIImageView *_pictureView;
-    UILabel *_nameLabel;
-    UIButton *_totalScoresButton;
-    UILabel *_roundsPlayedLabel;
-    AJBrownUnderlinedView *_underlinedView;
-    UIImageView *_grabImageView;
-    UIImageView *_separatorView;
-    UIImageView *_disclosureView;
-    
-    UITextField *_scoreTextField;
-    UIButton *_plusButton;
-    UIButton *_minusButton;
-}
+@interface AJPlayerTableViewCell ()
+@property (nonatomic, strong)    UIImageView *pictureView;
+@property (nonatomic, strong)    UILabel *nameLabel;
+@property (nonatomic, strong)    UIButton *totalScoresButton;
+@property (nonatomic, strong)    UILabel *roundsPlayedLabel;
+@property (nonatomic, strong)    AJBrownUnderlinedView *underlinedView;
+@property (nonatomic, strong)    UIImageView *grabImageView;
+@property (nonatomic, strong)    UIImageView *lineSeparatorView;
+@property (nonatomic, strong)    UIImageView *disclosureView;
+
+@property (nonatomic, strong)    UIButton *plusButton;
+@property (nonatomic, strong)    UIButton *minusButton;
+
+@property (nonatomic, strong, readwrite)    UITextField *scoreTextField;
 
 @end
 
 
 @implementation AJPlayerTableViewCell
-
-@synthesize name = _name;
-@synthesize color = _color;
-@synthesize picture = _picture;
-@synthesize totalScores = _totalScores;
-@synthesize numberOfRounds = _numberOfRounds;
-
-@synthesize displaysLeftSide = _displaysLeftSide;
-
-@synthesize scoreTextField = _scoreTextField;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -55,78 +45,78 @@
         _grabImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [self.contentView addSubview:_grabImageView];
         
-        _pictureView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        _pictureView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
-        [self.contentView addSubview:_pictureView];
+        self.pictureView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        self.pictureView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        [self.contentView addSubview:self.pictureView];
         
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _nameLabel.backgroundColor = [UIColor clearColor];
-        _nameLabel.textColor = [UIColor brownColor];
-        //_nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
-        //_nameLabel.font = [UIFont handwritingBoldFontWithSize:45.0];
-        _nameLabel.font = [UIFont LDBrushFontWithSize:55.0];
-        _nameLabel.adjustsFontSizeToFitWidth = YES;
-        _nameLabel.minimumFontSize = 25.0;
-        _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self.contentView addSubview:_nameLabel];
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.nameLabel.backgroundColor = [UIColor clearColor];
+        self.nameLabel.textColor = [UIColor brownColor];
+        //self.nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
+        //self.nameLabel.font = [UIFont handwritingBoldFontWithSize:45.0];
+        self.nameLabel.font = [UIFont LDBrushFontWithSize:55.0];
+        self.nameLabel.adjustsFontSizeToFitWidth = YES;
+        self.nameLabel.minimumFontSize = 25.0;
+        self.nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.contentView addSubview:self.nameLabel];
         
-        _totalScoresButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _totalScoresButton.backgroundColor = [UIColor clearColor];
-        [_totalScoresButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
+        self.totalScoresButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.totalScoresButton.backgroundColor = [UIColor clearColor];
+        [self.totalScoresButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
         //_totalScoresLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:40.0];
         //_totalScoresLabel.font = [UIFont handwritingFontWithSize:45.0];
-        _totalScoresButton.titleLabel.font = [UIFont LDBrushFontWithSize:65.0];
-        _totalScoresButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-        _totalScoresButton.titleLabel.textAlignment = UITextAlignmentCenter;
-        _totalScoresButton.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [_totalScoresButton addTarget:self action:@selector(totalScoresButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:_totalScoresButton];
+        self.totalScoresButton.titleLabel.font = [UIFont LDBrushFontWithSize:65.0];
+        self.totalScoresButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+        self.totalScoresButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        self.totalScoresButton.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.totalScoresButton addTarget:self action:@selector(totalScoresButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:self.totalScoresButton];
         
-        _roundsPlayedLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _roundsPlayedLabel.backgroundColor = [UIColor clearColor];
-        _roundsPlayedLabel.textColor = [UIColor grayColor];
-        _roundsPlayedLabel.textAlignment = UITextAlignmentCenter;
-        _roundsPlayedLabel.font = [UIFont fontWithName:@"Thonburi" size:12.0];
-        _roundsPlayedLabel.adjustsFontSizeToFitWidth = YES;
-        _roundsPlayedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self.contentView addSubview:_roundsPlayedLabel];
+        self.roundsPlayedLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.roundsPlayedLabel.backgroundColor = [UIColor clearColor];
+        self.roundsPlayedLabel.textColor = [UIColor grayColor];
+        self.roundsPlayedLabel.textAlignment = UITextAlignmentCenter;
+        self.roundsPlayedLabel.font = [UIFont fontWithName:@"Thonburi" size:12.0];
+        self.roundsPlayedLabel.adjustsFontSizeToFitWidth = YES;
+        self.roundsPlayedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.contentView addSubview:self.roundsPlayedLabel];
         
-        _separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator_new2.png"]];
-        [self.contentView addSubview:_separatorView];
+        self.lineSeparatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator_new2.png"]];
+        [self.contentView addSubview:self.lineSeparatorView];
         
-        _disclosureView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure.png"]];
-        [self.contentView addSubview:_disclosureView];
+        self.disclosureView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure.png"]];
+        [self.contentView addSubview:self.disclosureView];
         
-        _underlinedView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
-        [self addSubview:_underlinedView];
+        self.underlinedView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        [self addSubview:self.underlinedView];
         
-        _scoreTextField = [[UITextField alloc] initWithFrame:CGRectZero];
-        _scoreTextField.borderStyle = UITextBorderStyleNone;
-        _scoreTextField.background = [UIImage roundTextFieldImage];
-        _scoreTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-        _scoreTextField.placeholder = [NSString stringWithFormat:@"%g",0.0];
-        _scoreTextField.font = [UIFont fontWithName:@"Thonburi" size:17.0];
-        _scoreTextField.textColor = [UIColor brownColor];
-        _scoreTextField.textAlignment = UITextAlignmentCenter;
-        _scoreTextField.delegate = self;
-        _scoreTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        [_underlinedView addSubview:_scoreTextField];
+        self.scoreTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        self.scoreTextField.borderStyle = UITextBorderStyleNone;
+        self.scoreTextField.background = [UIImage roundTextFieldImage];
+        self.scoreTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        self.scoreTextField.placeholder = [NSString stringWithFormat:@"%g",0.0];
+        self.scoreTextField.font = [UIFont fontWithName:@"Thonburi" size:17.0];
+        self.scoreTextField.textColor = [UIColor brownColor];
+        self.scoreTextField.textAlignment = UITextAlignmentCenter;
+        self.scoreTextField.delegate = self;
+        self.scoreTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        [self.underlinedView addSubview:self.scoreTextField];
         
-        _plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_plusButton setBackgroundImage:[UIImage roundTextFieldImage] forState:UIControlStateNormal];
-        _plusButton.titleLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:17.0];
-        [_plusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
-        [_plusButton setTitle:@"+" forState:UIControlStateNormal];
-        [_plusButton addTarget:self action:@selector(plusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [_underlinedView addSubview:_plusButton];
+        self.plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.plusButton setBackgroundImage:[UIImage roundTextFieldImage] forState:UIControlStateNormal];
+        self.plusButton.titleLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:17.0];
+        [self.plusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
+        [self.plusButton setTitle:@"+" forState:UIControlStateNormal];
+        [self.plusButton addTarget:self action:@selector(plusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.underlinedView addSubview:self.plusButton];
         
-        _minusButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_minusButton setBackgroundImage:[UIImage roundTextFieldImage] forState:UIControlStateNormal];
-        _minusButton.titleLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:17.0];
-        [_minusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
-        [_minusButton setTitle:@"-" forState:UIControlStateNormal];
-        [_minusButton addTarget:self action:@selector(minusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [_underlinedView addSubview:_minusButton];
+        self.minusButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.minusButton setBackgroundImage:[UIImage roundTextFieldImage] forState:UIControlStateNormal];
+        self.minusButton.titleLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:17.0];
+        [self.minusButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
+        [self.minusButton setTitle:@"-" forState:UIControlStateNormal];
+        [self.minusButton addTarget:self action:@selector(minusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.underlinedView addSubview:self.minusButton];
     }
     return self;
 }
@@ -138,18 +128,18 @@
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
     
     _grabImageView.frame = CGRectMake(3.0, 0.0, 12.0, 70.0);
-    _pictureView.frame = CGRectMake(30.0, 17.0, 35.0, 35.0);
-    _nameLabel.frame = CGRectMake(70.0, 5.0, 130.0, 65.0);
-    _totalScoresButton.frame = CGRectMake(cellWidth - 118.0, 10.0, 91.0, 50.0);
-    _roundsPlayedLabel.frame = CGRectMake(cellWidth - 118.0, 55.0, 91.0, 10.0);
+    self.pictureView.frame = CGRectMake(30.0, 17.0, 35.0, 35.0);
+    self.nameLabel.frame = CGRectMake(70.0, 5.0, 130.0, 65.0);
+    self.totalScoresButton.frame = CGRectMake(cellWidth - 118.0, 10.0, 91.0, 50.0);
+    self.roundsPlayedLabel.frame = CGRectMake(cellWidth - 118.0, 55.0, 91.0, 10.0);
     
-    _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
-    _disclosureView.frame = CGRectMake(cellWidth - 22.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);
+    self.lineSeparatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
+    self.disclosureView.frame = CGRectMake(cellWidth - 22.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);
     
-    _underlinedView.frame = CGRectMake(-cellWidth, 0, cellWidth, self.frame.size.height);
-    _scoreTextField.frame = CGRectMake(cellWidth - 100.0, 2.0, 85.0, 31.0);
-    _plusButton.frame = CGRectMake(cellWidth - 100.0, 35.0, 40.0, 31.0);
-    _minusButton.frame = CGRectMake(cellWidth - 55.0, 35.0, 40.0, 31.0);
+    self.underlinedView.frame = CGRectMake(-cellWidth, 0, cellWidth, self.frame.size.height);
+    self.scoreTextField.frame = CGRectMake(cellWidth - 100.0, 2.0, 85.0, 31.0);
+    self.plusButton.frame = CGRectMake(cellWidth - 100.0, 35.0, 40.0, 31.0);
+    self.minusButton.frame = CGRectMake(cellWidth - 55.0, 35.0, 40.0, 31.0);
 }
 
 
@@ -157,7 +147,7 @@
     if (name != _name) {
         _name = name;
         
-        _nameLabel.text = _name;
+        self.nameLabel.text = _name;
     }
 }
 
@@ -165,7 +155,7 @@
     if (color != _color) {
         _color = color;
         
-        _nameLabel.textColor = [UIColor colorWithHexString:_color];
+        self.nameLabel.textColor = [UIColor colorWithHexString:_color];
     }
 }
 
@@ -173,20 +163,20 @@
     if (picture != _picture) {
         _picture = picture;
         
-        [_pictureView setImage:[_picture applyMask:[UIImage imageNamed:@"mask.png"]]];
+        [self.pictureView setImage:[_picture applyMask:[UIImage imageNamed:@"mask.png"]]];
     }
 }
 
 - (void)setTotalScores:(double)totalScores {
     _totalScores = totalScores;
     
-    [_totalScoresButton setTitle:[NSString stringWithFormat:@"%g", _totalScores] forState:UIControlStateNormal];
+    [self.totalScoresButton setTitle:[NSString stringWithFormat:@"%g", _totalScores] forState:UIControlStateNormal];
 }
 
 - (void)setNumberOfRounds:(int)numberOfRounds {
     _numberOfRounds = numberOfRounds;
     
-    _roundsPlayedLabel.text = [NSString stringWithFormat:@"%d %@ played", _numberOfRounds, (_numberOfRounds == 1) ? @"round" : @"rounds"];
+    self.roundsPlayedLabel.text = [NSString stringWithFormat:@"%d %@ played", _numberOfRounds, (_numberOfRounds == 1) ? @"round" : @"rounds"];
 }
 
 #pragma mark - Buttons actions
@@ -276,7 +266,7 @@
             if (self.delegate && [self.delegate respondsToSelector:@selector(playerCellDidHideNewScoreView:)]) {
                 [self.delegate playerCellDidHideNewScoreView:self];
                 [self moveToOriginalFrameAnimated];
-                [_scoreTextField resignFirstResponder];
+                [self.scoreTextField resignFirstResponder];
             }
         } else {
             [self showLeftView];
@@ -298,13 +288,13 @@
             if ([self.delegate respondsToSelector:@selector(playerCellDidShowNewScoreView:)]) {
                 [self.delegate playerCellDidShowNewScoreView:self];
                 self.frame = CGRectMake(self.bounds.size.width / 3.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
-                [_scoreTextField becomeFirstResponder];
+                [self.scoreTextField becomeFirstResponder];
             }
         } else {
             if ([self.delegate respondsToSelector:@selector(playerCellDidHideNewScoreView:)]) {
                 [self.delegate playerCellDidHideNewScoreView:self];
                 [self moveToOriginalFrameAnimated];
-                [_scoreTextField resignFirstResponder];
+                [self.scoreTextField resignFirstResponder];
             }
         }
     }

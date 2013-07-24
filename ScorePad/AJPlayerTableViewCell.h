@@ -11,15 +11,7 @@
 
 @protocol AJPlayerTableViewCellDelegate;
 
-@interface AJPlayerTableViewCell : AJPanDeleteTableViewCell <UITextFieldDelegate> {
-    NSString *_name;
-    NSString *_color;
-    UIImage *_picture;
-    double _totalScores;
-    int _numberOfRounds;
-    
-    BOOL _displaysLeftSide;
-}
+@interface AJPlayerTableViewCell : AJPanDeleteTableViewCell <UITextFieldDelegate>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *color;

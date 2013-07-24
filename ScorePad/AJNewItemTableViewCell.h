@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AJNewItemTableViewCell : UITableViewCell {
-    UITextField *_textField;
-}
+@interface AJNewItemTableViewCell : UITableViewCell
 
 @property (nonatomic, readonly) UITextField *textField;
 

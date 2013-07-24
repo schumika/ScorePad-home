@@ -9,12 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AJPanDeleteTableViewCell.h"
 
-@interface AJGameTableViewCell : AJPanDeleteTableViewCell {
-    NSString *_name;
-    NSString *_color;
-    UIImage *_picture;
-    int _numberOfPlayers;
-}
+@interface AJGameTableViewCell : AJPanDeleteTableViewCell
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *color;

@@ -12,59 +12,52 @@
 #import "UIColor+Additions.h"
 #import "UIFont+Additions.h"
 
-@interface AJGameTableViewCell () {
-    UIImageView *_pictureView;
-    UILabel *_nameLabel;
-    UILabel *_playersLabel;
+@interface AJGameTableViewCell ()
+@property (nonatomic, strong)    UIImageView *pictureView;
+@property (nonatomic, strong)    UILabel *nameLabel;
+@property (nonatomic, strong)    UILabel *playersLabel;
     
-    UIImageView *_separatorView;
-    UIImageView *_disclosureView;
-}
-
+@property (nonatomic, strong)    UIImageView *lineSeparatorView;
+@property (nonatomic, strong)    UIImageView *disclosureView;
 @end
 
 @implementation AJGameTableViewCell
-
-@synthesize name = _name;
-@synthesize color = _color;
-@synthesize picture = _picture;
-@synthesize numberOfPlayers = _numberOfPlayers;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (!self)  return  nil;
     
-    _pictureView = [[UIImageView alloc] initWithFrame:CGRectMake(5.0, 5.0, 50.0, 50.0)];
-    _pictureView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
-    [self.contentView addSubview:_pictureView];
+    self.pictureView = [[UIImageView alloc] initWithFrame:CGRectMake(5.0, 5.0, 50.0, 50.0)];
+    self.pictureView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+    [self.contentView addSubview:self.pictureView];
     
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70.0, 3.0, 240.0, 40.0)];
-    _nameLabel.backgroundColor = [UIColor clearColor];
-    _nameLabel.textColor = [UIColor brownColor];
-    //_nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
-    //_nameLabel.font = [UIFont handwritingBoldFontWithSize:40.0];
-    _nameLabel.font = [UIFont DKCrayonFontWithSize:40.0];
-    //_nameLabel.font = [UIFont chalkdusterFontWithSize:25.0];
-    _nameLabel.adjustsFontSizeToFitWidth = YES;
-    _nameLabel.minimumFontSize = 20.0;
-    _nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [self.contentView addSubview:_nameLabel];
+    self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70.0, 3.0, 240.0, 40.0)];
+    self.nameLabel.backgroundColor = [UIColor clearColor];
+    self.nameLabel.textColor = [UIColor brownColor];
+    //self.nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
+    //self.nameLabel.font = [UIFont handwritingBoldFontWithSize:40.0];
+    self.nameLabel.font = [UIFont DKCrayonFontWithSize:40.0];
+    //self.nameLabel.font = [UIFont chalkdusterFontWithSize:25.0];
+    self.nameLabel.adjustsFontSizeToFitWidth = YES;
+    self.nameLabel.minimumFontSize = 20.0;
+    self.nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.contentView addSubview:self.nameLabel];
     
-    _playersLabel = [[UILabel alloc] initWithFrame:CGRectMake(70.0, 40.0, 240.0, 20.0)];
-    _playersLabel.backgroundColor = [UIColor clearColor];
-    _playersLabel.textColor = [UIColor grayColor];
-    _playersLabel.font = [UIFont fontWithName:@"Thonburi" size:15.0];
-    //_playersLabel.font = [UIFont chalkdusterFontWithSize:15.0];
-    _playersLabel.adjustsFontSizeToFitWidth = YES;
-    _playersLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [self.contentView addSubview:_playersLabel];
+    self.playersLabel = [[UILabel alloc] initWithFrame:CGRectMake(70.0, 40.0, 240.0, 20.0)];
+    self.playersLabel.backgroundColor = [UIColor clearColor];
+    self.playersLabel.textColor = [UIColor grayColor];
+    self.playersLabel.font = [UIFont fontWithName:@"Thonburi" size:15.0];
+    //self.playersLabel.font = [UIFont chalkdusterFontWithSize:15.0];
+    self.playersLabel.adjustsFontSizeToFitWidth = YES;
+    self.playersLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.contentView addSubview:self.playersLabel];
     
-    _separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator_new2.png"]];
-    [self.contentView addSubview:_separatorView];
+    self.lineSeparatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"separator_new2.png"]];
+    [self.contentView addSubview:self.lineSeparatorView];
     
-    _disclosureView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure.png"]];
-    [self.contentView addSubview:_disclosureView];
+    self.disclosureView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure.png"]];
+    [self.contentView addSubview:self.disclosureView];
     
     return self;
 }
@@ -74,21 +67,21 @@
     [super layoutSubviews];
     
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
-    _pictureView.frame = CGRectMake(5.0, ceil((cellHeight - 50.0) / 2.0), 50.0, 50.0);
-    CGFloat pictureMaxX = CGRectGetMaxX(_pictureView.frame) + 10.0;
-    //_nameLabel.frame = CGRectMake(pictureMaxX, 5.0, cellWidth - pictureMaxX, 58.0);
-    _nameLabel.frame = CGRectMake(pictureMaxX, 2.0, cellWidth - pictureMaxX - 30.0, 45.0);
-    _playersLabel.frame = CGRectMake(pictureMaxX, cellHeight - 18.0, cellWidth - pictureMaxX, 15.0);
+    self.pictureView.frame = CGRectMake(5.0, ceil((cellHeight - 50.0) / 2.0), 50.0, 50.0);
+    CGFloat pictureMaxX = CGRectGetMaxX(self.pictureView.frame) + 10.0;
+    //self.nameLabel.frame = CGRectMake(pictureMaxX, 5.0, cellWidth - pictureMaxX, 58.0);
+    self.nameLabel.frame = CGRectMake(pictureMaxX, 2.0, cellWidth - pictureMaxX - 30.0, 45.0);
+    self.playersLabel.frame = CGRectMake(pictureMaxX, cellHeight - 18.0, cellWidth - pictureMaxX, 15.0);
 
-    _separatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
-    _disclosureView.frame = CGRectMake(cellWidth - 30.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);
+    self.lineSeparatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
+    self.disclosureView.frame = CGRectMake(cellWidth - 30.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);
 }
 
 - (void)setName:(NSString *)name {
     if (name != _name) {
         _name = name;
         
-        _nameLabel.text = _name;
+        self.nameLabel.text = _name;
     }
 }
 
@@ -96,7 +89,7 @@
     if (color != _color) {
         _color = color;
         
-        _nameLabel.textColor = [UIColor colorWithHexString:_color];
+        self.nameLabel.textColor = [UIColor colorWithHexString:_color];
     }
 }
 
@@ -104,14 +97,14 @@
     if (picture != _picture) {
         _picture = picture;
         
-        [_pictureView setImage:[_picture applyMask:[UIImage imageNamed:@"mask.png"]]];
+        [self.pictureView setImage:[_picture applyMask:[UIImage imageNamed:@"mask.png"]]];
     }
 }
 
 - (void)setNumberOfPlayers:(int)numberOfPlayers {
     _numberOfPlayers = numberOfPlayers;
         
-    _playersLabel.text = [NSString stringWithFormat:@"%d %@", _numberOfPlayers, (_numberOfPlayers == 1) ? @"player" : @"players"];;
+    self.playersLabel.text = [NSString stringWithFormat:@"%d %@", _numberOfPlayers, (_numberOfPlayers == 1) ? @"player" : @"players"];;
 }
 
 @end
