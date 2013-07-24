@@ -13,3 +13,8 @@ NSString const * kAJPlayerColorStringKey    = @"AJPlayerColorStringKey";
 NSString const * kAJPlayerPictureDataKey    = @"AJPlayerPictureDataKey";
 NSString const * kAJPlayerTotalScoresKey    = @"AJPlayerTotalScoresKey";
 NSString const * kAJPlayerNumberOfRoundsKey = @"AJPlayerNumberOfRoundsKey";
+
+NSString const * kAJGameNameKey             = @"AJGameNameKey";
+NSString const * kAJGameColorStringKey      = @"AJGameColorStringKey";
+NSString const * kAJGamePictureDataKey      = @"AJGamePictureDataKey";
+NSString const * kAJGameNumberOfPlayersKey  = @"AJGameNumberOfPlayersKey";

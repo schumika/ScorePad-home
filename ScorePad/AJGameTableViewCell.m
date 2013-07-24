@@ -77,34 +77,17 @@
     self.disclosureView.frame = CGRectMake(cellWidth - 30.0, ceil((cellHeight - 20.0) / 2.0), 20.0, 20.0);
 }
 
-- (void)setName:(NSString *)name {
-    if (name != _name) {
-        _name = name;
+- (void)setDisplayDictionary:(NSDictionary *)displayDictionary {
+    if (displayDictionary != _displayDictionary) {
+        self.nameLabel.text = displayDictionary[kAJGameNameKey];
+        self.nameLabel.textColor = [UIColor colorWithHexString:displayDictionary[kAJGameColorStringKey]];
         
-        self.nameLabel.text = _name;
+        UIImage *gameImage = [UIImage imageWithData:displayDictionary[kAJGamePictureDataKey]];
+        [self.pictureView setImage:[[gameImage resizeToNewSize:CGSizeMake(50.0, 50.0)] applyMask:[UIImage imageNamed:@"mask.png"]]];
+        
+        int numberOfPlayers = [(NSNumber *)displayDictionary[kAJGameNumberOfPlayersKey] intValue];
+        self.playersLabel.text = [NSString stringWithFormat:@"%d %@", numberOfPlayers, (numberOfPlayers == 1) ? @"player" : @"players"];;
     }
-}
-
-- (void)setColor:(NSString *)color {
-    if (color != _color) {
-        _color = color;
-        
-        self.nameLabel.textColor = [UIColor colorWithHexString:_color];
-    }
-}
-
-- (void)setPicture:(UIImage *)picture {
-    if (picture != _picture) {
-        _picture = picture;
-        
-        [self.pictureView setImage:[_picture applyMask:[UIImage imageNamed:@"mask.png"]]];
-    }
-}
-
-- (void)setNumberOfPlayers:(int)numberOfPlayers {
-    _numberOfPlayers = numberOfPlayers;
-        
-    self.playersLabel.text = [NSString stringWithFormat:@"%d %@", _numberOfPlayers, (_numberOfPlayers == 1) ? @"player" : @"players"];;
 }
 
 @end

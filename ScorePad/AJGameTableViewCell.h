@@ -11,9 +11,6 @@
 
 @interface AJGameTableViewCell : AJPanDeleteTableViewCell
 
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *color;
-@property (nonatomic, strong) UIImage *picture;
-@property (nonatomic, assign) int numberOfPlayers;
+@property (nonatomic, strong) NSDictionary *displayDictionary;
 
 @end

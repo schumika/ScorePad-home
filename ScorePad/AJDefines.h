@@ -22,3 +22,8 @@ extern NSString const * kAJPlayerColorStringKey;
 extern NSString const * kAJPlayerPictureDataKey;
 extern NSString const * kAJPlayerTotalScoresKey;
 extern NSString const * kAJPlayerNumberOfRoundsKey;
+
+extern NSString const * kAJGameNameKey;
+extern NSString const * kAJGameColorStringKey;
+extern NSString const * kAJGamePictureDataKey;
+extern NSString const * kAJGameNumberOfPlayersKey;

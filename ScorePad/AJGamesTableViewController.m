@@ -104,16 +104,7 @@
         }
         
         AJGame *game = (AJGame *)[self.gamesArray objectAtIndex:indexPath.row];
-        cell.name = game.name;
-        cell.color = game.color;
-        int playersNumber = [[game players] count];
-        cell.numberOfPlayers = playersNumber;
-        
-        if (game.imageData == nil) {
-            cell.picture = [[UIImage defaultGamePicture] resizeToNewSize:CGSizeMake(50.0, 50.0)];
-        } else {
-            cell.picture = [[UIImage imageWithData:game.imageData] resizeToNewSize:CGSizeMake(50.0, 50.0)];
-        }
+        cell.displayDictionary = [game toDisplayDictionary];
         
         aCell = cell;
     } else {
