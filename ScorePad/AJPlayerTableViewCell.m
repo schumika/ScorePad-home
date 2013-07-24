@@ -9,6 +9,7 @@
 #import "AJPlayerTableViewCell.h"
 #import "AJBrownUnderlinedView.h"
 #import "AJUnderlinedView.h"
+#import "AJDefines.h"
 
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
@@ -19,7 +20,7 @@
 @interface AJPlayerTableViewCell ()
 @property (nonatomic, strong)    UIImageView *pictureView;
 @property (nonatomic, strong)    UILabel *nameLabel;
-@property (nonatomic, strong)    UIButton *totalScoresButton;
+@property (nonatomic, strong)    UILabel *totalScoresLabel;
 @property (nonatomic, strong)    UILabel *roundsPlayedLabel;
 @property (nonatomic, strong)    AJBrownUnderlinedView *underlinedView;
 @property (nonatomic, strong)    UIImageView *grabImageView;
@@ -31,6 +32,8 @@
 
 @property (nonatomic, strong, readwrite)    UITextField *scoreTextField;
 
+@property (nonatomic, strong) NSTimer *longPressTimer;
+
 @end
 
 
@@ -41,9 +44,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        _grabImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rip.png"]];
-        _grabImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
-        [self.contentView addSubview:_grabImageView];
+        self.grabImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rip.png"]];
+        self.grabImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        [self.contentView addSubview:self.grabImageView];
         
         self.pictureView = [[UIImageView alloc] initWithFrame:CGRectZero];
         self.pictureView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
@@ -60,17 +63,16 @@
         self.nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:self.nameLabel];
         
-        self.totalScoresButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.totalScoresButton.backgroundColor = [UIColor clearColor];
-        [self.totalScoresButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
+        self.totalScoresLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.totalScoresLabel.backgroundColor = [UIColor clearColor];
+        [self.totalScoresLabel setTextColor:[UIColor brownColor]];
         //_totalScoresLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:40.0];
         //_totalScoresLabel.font = [UIFont handwritingFontWithSize:45.0];
-        self.totalScoresButton.titleLabel.font = [UIFont LDBrushFontWithSize:65.0];
-        self.totalScoresButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-        self.totalScoresButton.titleLabel.textAlignment = UITextAlignmentCenter;
-        self.totalScoresButton.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self.totalScoresButton addTarget:self action:@selector(totalScoresButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:self.totalScoresButton];
+        self.totalScoresLabel.font = [UIFont LDBrushFontWithSize:65.0];
+        self.totalScoresLabel.adjustsFontSizeToFitWidth = YES;
+        self.totalScoresLabel.textAlignment = UITextAlignmentCenter;
+        self.totalScoresLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.contentView addSubview:self.totalScoresLabel];
         
         self.roundsPlayedLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         self.roundsPlayedLabel.backgroundColor = [UIColor clearColor];
@@ -117,8 +119,18 @@
         [self.minusButton setTitle:@"-" forState:UIControlStateNormal];
         [self.minusButton addTarget:self action:@selector(minusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.underlinedView addSubview:self.minusButton];
+        
+        UILongPressGestureRecognizer *gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureHandler:)];
+        gestureRecognizer.minimumPressDuration = 0.7;
+        gestureRecognizer.delegate = self;
+        [self addGestureRecognizer:gestureRecognizer];
     }
     return self;
+}
+
+- (void)dealloc {
+    [self.longPressTimer invalidate];
+    self.longPressTimer = nil;
 }
 
 
@@ -127,10 +139,10 @@
     
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
     
-    _grabImageView.frame = CGRectMake(3.0, 0.0, 12.0, 70.0);
+    self.grabImageView.frame = CGRectMake(3.0, 0.0, 12.0, 70.0);
     self.pictureView.frame = CGRectMake(30.0, 17.0, 35.0, 35.0);
     self.nameLabel.frame = CGRectMake(70.0, 5.0, 130.0, 65.0);
-    self.totalScoresButton.frame = CGRectMake(cellWidth - 118.0, 10.0, 91.0, 50.0);
+    self.totalScoresLabel.frame = CGRectMake(cellWidth - 118.0, 10.0, 91.0, 50.0);
     self.roundsPlayedLabel.frame = CGRectMake(cellWidth - 118.0, 55.0, 91.0, 10.0);
     
     self.lineSeparatorView.frame = CGRectMake(0.0, cellHeight - 2.0, cellWidth, 2.0);
@@ -142,42 +154,24 @@
     self.minusButton.frame = CGRectMake(cellWidth - 55.0, 35.0, 40.0, 31.0);
 }
 
-
-- (void)setName:(NSString *)name {
-    if (name != _name) {
-        _name = name;
+- (void)setPlayerDisplayDictionary:(NSDictionary *)playerDisplayDictionary {
+    if (_playerDisplayDictionary != playerDisplayDictionary) {
+        _playerDisplayDictionary = playerDisplayDictionary;
         
-        self.nameLabel.text = _name;
+        self.nameLabel.text = playerDisplayDictionary[kAJPlayerNameKey];
+        self.nameLabel.textColor = [UIColor colorWithHexString:playerDisplayDictionary[kAJPlayerColorStringKey]];
+        
+        UIImage *pic = [UIImage imageWithData:playerDisplayDictionary[kAJPlayerPictureDataKey]];
+        [self.pictureView setImage:[[pic resizeToNewSize:CGSizeMake(50.0, 50.0)] applyMask:[UIImage imageNamed:@"mask.png"]]];
+        
+        double totalScores = [(NSNumber *)playerDisplayDictionary[kAJPlayerTotalScoresKey] doubleValue];
+        [self.totalScoresLabel setText:[NSString stringWithFormat:@"%g", totalScores]];
+        
+        int numberOfRounds = [(NSNumber *)playerDisplayDictionary[kAJPlayerNumberOfRoundsKey] intValue];
+        self.roundsPlayedLabel.text = [NSString stringWithFormat:@"%d %@ played", numberOfRounds, (numberOfRounds == 1) ? @"round" : @"rounds"];
     }
 }
 
-- (void)setColor:(NSString *)color {
-    if (color != _color) {
-        _color = color;
-        
-        self.nameLabel.textColor = [UIColor colorWithHexString:_color];
-    }
-}
-
-- (void)setPicture:(UIImage *)picture {
-    if (picture != _picture) {
-        _picture = picture;
-        
-        [self.pictureView setImage:[_picture applyMask:[UIImage imageNamed:@"mask.png"]]];
-    }
-}
-
-- (void)setTotalScores:(double)totalScores {
-    _totalScores = totalScores;
-    
-    [self.totalScoresButton setTitle:[NSString stringWithFormat:@"%g", _totalScores] forState:UIControlStateNormal];
-}
-
-- (void)setNumberOfRounds:(int)numberOfRounds {
-    _numberOfRounds = numberOfRounds;
-    
-    self.roundsPlayedLabel.text = [NSString stringWithFormat:@"%d %@ played", _numberOfRounds, (_numberOfRounds == 1) ? @"round" : @"rounds"];
-}
 
 #pragma mark - Buttons actions
 
@@ -197,13 +191,6 @@
         [self.delegate playerCellClickedMinusButton:self];
         [self.delegate playerCellDidHideNewScoreView:self];
     }
-}
-
-- (IBAction)totalScoresButtonClicked:(id)sender {
-    self.displaysLeftSide = YES;
-    [UIView animateWithDuration:0.5 animations:^{
-        [self showLeftView];
-    }];
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -232,9 +219,41 @@
     return YES;
 }
 
-#pragma mark - horizontal pan gesture methods
+#pragma mark - UIGestureRecognizer methods
+
+- (void)longPressGestureHandler:(UILongPressGestureRecognizer *)gesureHandler {
+    if (gesureHandler.state == UIGestureRecognizerStateBegan) {
+        self.longPressTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f
+                                                               target:self
+                                                             selector:@selector(animateLeftView:)
+                                                             userInfo:nil
+                                                              repeats:NO];
+    } else if (gesureHandler.state == UIGestureRecognizerStateEnded || gesureHandler.state == UIGestureRecognizerStateCancelled) {
+        if (self.longPressTimer != nil) {
+            [self.longPressTimer invalidate];
+            self.longPressTimer = nil;
+        }
+    }
+}
+
+- (void)animateLeftView:(NSTimer *)timer {
+        self.displaysLeftSide = YES;
+        [UIView animateWithDuration:0.3 animations:^{
+            [self showLeftView];
+        }];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+        return YES;
+    }
+    return [super gestureRecognizer:gestureRecognizer shouldReceiveTouch:touch];
+}
+
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]]) return NO;
+    
+    if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) return YES;
     
     CGPoint translation = [gestureRecognizer translationInView:[self superview]];
     // check if is a horizontal gesture
@@ -247,8 +266,8 @@
 #pragma mark - pan gesture handler overriden from base class
 
 - (void)moveToOriginalFrameAnimated {
-    CGRect originalFrame = CGRectMake(0.0, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
-    [UIView animateWithDuration:0.2
+    CGRect originalFrame = (CGRect){{0.0, self.frame.origin.y}, self.bounds.size};
+    [UIView animateWithDuration:0.3
                      animations:^{
                          self.frame = originalFrame;
                      }];

@@ -13,12 +13,7 @@
 
 @interface AJPlayerTableViewCell : AJPanDeleteTableViewCell <UITextFieldDelegate>
 
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *color;
-@property (nonatomic, strong) UIImage *picture;
-@property (nonatomic, assign) double totalScores;
-@property (nonatomic, assign) int numberOfRounds;
-
+@property (nonatomic, strong) NSDictionary *playerDisplayDictionary;
 @property (nonatomic, assign) BOOL displaysLeftSide;
 
 @property (nonatomic, weak) id<AJPlayerTableViewCellDelegate> delegate;

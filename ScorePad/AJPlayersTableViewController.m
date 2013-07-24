@@ -191,20 +191,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         }
         
         AJPlayer *player = (AJPlayer *)[self.playersArray objectAtIndex:indexPath.row];
-        aCell.name = player.name; 
-        aCell.color = player.color;
-        int totalScore = [player totalScore];
-        aCell.totalScores = totalScore;
-        aCell.numberOfRounds = [[player scores] count];
-        
-        UIImage *playerImage = nil;
-        if (player.imageData == nil) {
-            playerImage  = [[UIImage defaultPlayerPicture] resizeToNewSize:CGSizeMake(50.0, 50.0)];
-        } else {
-            playerImage = [[UIImage imageWithData:player.imageData] resizeToNewSize:CGSizeMake(50.0, 50.0)];
-        }
-        
-        aCell.picture = [playerImage applyMask:[UIImage imageNamed:@"mask.png"]];
+        aCell.playerDisplayDictionary = [player toDisplayDictionary];
         aCell.scoreTextField.text = @"";
         AJScore *lastPlayerScore = (AJScore *)[[[AJScoresManager sharedInstance] getAllScoresForPlayer:player] lastObject];
         aCell.scoreTextField.placeholder = [NSString stringWithFormat:@"%g", fabs(lastPlayerScore.value.doubleValue)];

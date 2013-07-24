@@ -7,8 +7,11 @@
 //
 
 #import "AJPlayer.h"
+#import "AJDefines.h"
+
 #import "AJGame+Additions.h"
 #import "AJScore+Additions.h"
+
 
 typedef enum {
     AJScoresSortingNone = 0,
@@ -22,5 +25,7 @@ typedef enum {
 - (double)totalScore;
 - (AJSettingsInfo *)settingsInfo;
 - (NSArray *)scoreValues;
+
+- (NSDictionary *)toDisplayDictionary;
 
 @end
