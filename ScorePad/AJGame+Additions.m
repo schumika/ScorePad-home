@@ -7,7 +7,6 @@
 //
 
 #import "AJGame+Additions.h"
-#import "AJSettingsInfo.h"
 #import "AJPlayer+Additions.h"
 
 #import "UIImage+Additions.h"
@@ -27,12 +26,7 @@
     return game;
 }
 
-- (AJSettingsInfo *)settingsInfo {
-    return [AJSettingsInfo createSettingsInfoWithImageData:self.imageData ? self.imageData : UIImagePNGRepresentation([UIImage defaultGamePicture])
-                                                   andName:self.name
-                                            andColorString:self.color
-                                                  andRowId:self.rowId.intValue];
-}
+#pragma mark - Pbublic properties
 
 - (int)maxNumberOfScores; {
     int maxNumber = 0;
@@ -43,6 +37,8 @@
     
     return maxNumber;
 }
+
+#pragma mark - Public methods
 
 - (NSDictionary *)toDictionary {
     NSMutableDictionary *displayDictionary = [NSMutableDictionary dictionary];
@@ -60,6 +56,12 @@
     displayDictionary[kAJGameNumberOfPlayersKey] = @([self.players count]);
     
     return displayDictionary;
+}
+
+- (void)setPropertiesFromDictionary:(NSDictionary *)dictionary {
+    self.name = dictionary[kAJNameKey];
+    self.color = dictionary[kAJColorStringKey];
+    self.imageData = dictionary[kAJPictureDataKey];
 }
 
 @end

@@ -32,15 +32,15 @@ static CGFloat kHeaderViewHeight = 35.0;
 #define SELECT_PICTURE_WITHOUT_CAMERA_ACTION_SHEET_TAG (4)
 
 
-@interface AJSettingsViewController () {
-    UIView *_colorsContainerView;
-    NSArray *_pencilsArray;
-    NSArray *_colorsArray;
-    
-    UIButton *_pictureButton;
-    UITextField *_nameTextField;
-}
+@interface AJSettingsViewController ()
 
+@property (nonatomic, assign) AJItemType itemType;
+@property (nonatomic, strong) NSMutableDictionary *itemProperties;
+
+@property (nonatomic, strong) UIView *colorsContainerView;
+@property (nonatomic, strong) NSArray *colorsArray;
+@property (nonatomic, strong) UIButton *pictureButton;
+@property (nonatomic, strong) UITextField *nameTextField;
 @property (nonatomic, strong) NSArray *pencilsArray;
 
 - (IBAction)selectPictureButtonClicked;
@@ -54,34 +54,26 @@ static CGFloat kHeaderViewHeight = 35.0;
 
 @implementation AJSettingsViewController
 
-@synthesize settingsInfo = _settingsInfo;
-@synthesize itemType = _itemType;
-@synthesize delegate = _delegate;
-@synthesize pencilsArray = _pencilsArray;
-
-- (id)initWithSettingsInfo:(AJSettingsInfo *)settingsInfo andItemType:(AJItemType)itemType {
+- (id)initWithItemProperties:(NSDictionary *)itemProperties andItemType:(AJItemType)itemType {
     self = [super initWithNibName:nil bundle:nil];
     
     if (!self) return nil;
     
-    self.settingsInfo = settingsInfo;
+    self.itemProperties = [NSMutableDictionary dictionaryWithDictionary:itemProperties];
     self.itemType = itemType;
-    _colorsArray = [[NSArray alloc] initWithObjects:[UIColor blackColor], [UIColor AJBlueColor], [UIColor AJBrownColor],
-                    [UIColor AJGreenColor], [UIColor AJOrangeColor], [UIColor AJPinkColor], [UIColor AJPurpleColor],
-                    [UIColor AJRedColor], [UIColor AJYellowColor], [UIColor whiteColor], nil];
+    self.colorsArray = [[NSArray alloc] initWithObjects:[UIColor blackColor], [UIColor AJBlueColor], [UIColor AJBrownColor],
+                        [UIColor AJGreenColor], [UIColor AJOrangeColor], [UIColor AJPinkColor], [UIColor AJPurpleColor],
+                        [UIColor AJRedColor], [UIColor AJYellowColor], [UIColor whiteColor], nil];
     
-    _pencilsArray = @[@"pencil_black.png", @"pencil_blue.png", @"pencil_brown.png", @"pencil_green.png", @"pencil_orange.png",
-                        @"pencil_pink.png", @"pencil_purple.png", @"pencil_red.png", @"pencil_yellow.png", @"pencil_white.png"];
-
+    self.pencilsArray = @[@"pencil_black.png", @"pencil_blue.png", @"pencil_brown.png", @"pencil_green.png", @"pencil_orange.png",
+                          @"pencil_pink.png", @"pencil_purple.png", @"pencil_red.png", @"pencil_yellow.png", @"pencil_white.png"];
+    
     
     return self;
 }
 
 - (void)dealloc {
-    
-    [_nameTextField setDelegate:nil];
-    
-    
+    [self.nameTextField setDelegate:nil];
 }
 
 - (void)viewDidLoad
@@ -94,71 +86,71 @@ static CGFloat kHeaderViewHeight = 35.0;
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Done" target:self action:@selector(doneButtonClicked:)];
     
     
-    _pictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _pictureButton.frame = CGRectMake(20.0, 5.0, 70.0, 70.0);
-    UIImage *itemImage = [UIImage imageWithData:self.settingsInfo.imageData];
-    [_pictureButton setImage:itemImage forState:UIControlStateNormal];
-    [_pictureButton addTarget:self action:@selector(pictureButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    self.pictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.pictureButton.frame = CGRectMake(20.0, 5.0, 70.0, 70.0);
+    UIImage *itemImage = [UIImage imageWithData:self.itemProperties[kAJPictureDataKey]];
+    [self.pictureButton setImage:itemImage forState:UIControlStateNormal];
+    [self.pictureButton addTarget:self action:@selector(pictureButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:_pictureButton.bounds];
+    UILabel *label = [[UILabel alloc] initWithFrame:self.pictureButton.bounds];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = UITextAlignmentCenter;
     label.font = [UIFont LDBrushFontWithSize:40.0];
     label.textColor = [UIColor AJBrownColor];
     label.text = @"edit\npicture";
     label.numberOfLines = 2;
-    [_pictureButton addSubview:label];
+    [self.pictureButton addSubview:label];
     
-    _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(120.0, 30.0, 190.0, 40.0)];
-    _nameTextField.borderStyle = UITextBorderStyleNone;
-    _nameTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _nameTextField.background = [UIImage roundTextFieldImage];
-    _nameTextField.backgroundColor = [UIColor clearColor];
-    _nameTextField.delegate = self;
-    _nameTextField.placeholder = @"Enter the Name";
-    _nameTextField.font = [UIFont LDBrushFontWithSize:44.0];
-    _nameTextField.textAlignment = UITextAlignmentCenter;
-    _nameTextField.adjustsFontSizeToFitWidth = YES;
-    _nameTextField.textColor = [UIColor AJBrownColor];
-    _nameTextField.returnKeyType = UIReturnKeyDone;
-    _nameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    _nameTextField.text = self.settingsInfo.name;
+    self.nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(120.0, 30.0, 190.0, 40.0)];
+    self.nameTextField.borderStyle = UITextBorderStyleNone;
+    self.nameTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.nameTextField.background = [UIImage roundTextFieldImage];
+    self.nameTextField.backgroundColor = [UIColor clearColor];
+    self.nameTextField.delegate = self;
+    self.nameTextField.placeholder = @"Enter the Name";
+    self.nameTextField.font = [UIFont LDBrushFontWithSize:44.0];
+    self.nameTextField.textAlignment = UITextAlignmentCenter;
+    self.nameTextField.adjustsFontSizeToFitWidth = YES;
+    self.nameTextField.textColor = [UIColor AJBrownColor];
+    self.nameTextField.returnKeyType = UIReturnKeyDone;
+    self.nameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.nameTextField.text = self.itemProperties[kAJNameKey];
     
-    _colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 40.0, 300.0, 100.0)];
-    _colorsContainerView.backgroundColor = [UIColor clearColor];
+    self.colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 40.0, 300.0, 100.0)];
+    self.colorsContainerView.backgroundColor = [UIColor clearColor];
     UIImageView *containerFrameImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]];
-    containerFrameImageView.frame = _colorsContainerView.bounds;
-    [_colorsContainerView addSubview:containerFrameImageView];
+    containerFrameImageView.frame = self.colorsContainerView.bounds;
+    [self.colorsContainerView addSubview:containerFrameImageView];
     
     CGSize pencilSize = CGSizeMake(40.0, 40.0);
-    CGFloat pencilOffset = (_colorsContainerView.frame.size.width) / (_pencilsArray.count);
+    CGFloat pencilOffset = (self.colorsContainerView.frame.size.width) / (self.pencilsArray.count);
     CGFloat xOffset = 10.0;
     CGFloat yOffset = 10.0;
     
-    for (NSString *pencilImageName in _pencilsArray) {
+    for (NSString *pencilImageName in self.pencilsArray) {
         UIButton *pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [pencilButton setFrame:CGRectMake(xOffset, yOffset, pencilSize.width, pencilSize.height)];
         
-        if (xOffset + (pencilSize.width - 15.0) > _colorsContainerView.frame.size.width - 2 * pencilOffset) {
+        if (xOffset + (pencilSize.width - 15.0) > self.colorsContainerView.frame.size.width - 2 * pencilOffset) {
             xOffset = pencilSize.width - 15.0 + ceil(pencilOffset / 2.0);
             yOffset += pencilSize.height + 5.0;
         } else {
             xOffset += pencilSize.width - 15.0 + pencilOffset;
         }
         
-        [pencilButton setTag:[_pencilsArray indexOfObject:pencilImageName]];
+        [pencilButton setTag:[self.pencilsArray indexOfObject:pencilImageName]];
         [pencilButton setImageEdgeInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
         
         UIImage *pencilImage = [UIImage imageNamed:pencilImageName];
         [pencilButton setImage:pencilImage forState:UIControlStateNormal];
         
         [pencilButton addTarget:self action:@selector(pencilButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [_colorsContainerView addSubview:pencilButton];
+        [self.colorsContainerView addSubview:pencilButton];
     }
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.titleViewText  = self.settingsInfo.name;
+    self.titleViewText  = self.itemProperties[kAJNameKey];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -168,12 +160,12 @@ static CGFloat kHeaderViewHeight = 35.0;
 }
 
 - (void)loadSelectedPencil {
-    for (UIView *pencilButton in _colorsContainerView.subviews) {
+    for (UIView *pencilButton in self.colorsContainerView.subviews) {
         if ([pencilButton isKindOfClass:[UIButton class]]) {
             int colorIndex = pencilButton.tag;
             
-            UIColor *pencilColor = [_colorsArray objectAtIndex:colorIndex];
-            if ([self.settingsInfo.colorString isEqualToString:[pencilColor toHexString:YES]]) {
+            UIColor *pencilColor = [self.colorsArray objectAtIndex:colorIndex];
+            if ([self.itemProperties[kAJColorStringKey] isEqualToString:[pencilColor toHexString:YES]]) {
                 [(UIButton *)pencilButton setBackgroundImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]
                                                     forState:UIControlStateNormal];
             } else {
@@ -181,11 +173,6 @@ static CGFloat kHeaderViewHeight = 35.0;
             }
         }
     }
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
 }
 
 #pragma mark - UITableViewDataSource and Delegate methods
@@ -213,9 +200,9 @@ static CGFloat kHeaderViewHeight = 35.0;
                 aCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoAndNameCellIdentifier];
                 aCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
-                [aCell.contentView addSubview:_pictureButton];
+                [aCell.contentView addSubview:self.pictureButton];
                 
-                CGRect tfFrame = _nameTextField.frame;
+                CGRect tfFrame = self.nameTextField.frame;
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(tfFrame.origin.x, tfFrame.origin.y - 20.0, tfFrame.size.width, 20.0)];
                 label.backgroundColor = [UIColor clearColor];
                 label.font = [UIFont LDBrushFontWithSize:30.0];
@@ -223,7 +210,7 @@ static CGFloat kHeaderViewHeight = 35.0;
                 label.text = @"Name :";
                 [aCell.contentView addSubview:label];
                 
-                [aCell.contentView addSubview:_nameTextField];
+                [aCell.contentView addSubview:self.nameTextField];
             }
             
             cell = aCell;
@@ -234,7 +221,7 @@ static CGFloat kHeaderViewHeight = 35.0;
                 aCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:colorCellIdentifier];
                 aCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
-                CGRect containerFrame = _colorsContainerView.frame;
+                CGRect containerFrame = self.colorsContainerView.frame;
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(containerFrame.origin.x, containerFrame.origin.y - 25.0, containerFrame.size.width, 25.0)];
                 label.backgroundColor = [UIColor clearColor];
                 label.font = [UIFont LDBrushFontWithSize:30.0];
@@ -242,7 +229,7 @@ static CGFloat kHeaderViewHeight = 35.0;
                 label.text = [NSString stringWithFormat:@"%@ color :", (self.itemType == AJGameItem) ? @"Game" : @"Player"];
                 [aCell.contentView addSubview:label];
                 
-                [aCell.contentView addSubview:_colorsContainerView];
+                [aCell.contentView addSubview:self.colorsContainerView];
             }
             
             cell = aCell;
@@ -375,30 +362,30 @@ static CGFloat kHeaderViewHeight = 35.0;
 #pragma mark - Buttons Actions
 
 -(IBAction)pencilButtonClicked:(UIButton *)sender {
-    [self.settingsInfo setColorString:[(UIColor *)[_colorsArray objectAtIndex:sender.tag] toHexString:YES]];
+    self.itemProperties[kAJColorStringKey] = [(UIColor *)[self.colorsArray objectAtIndex:sender.tag] toHexString:YES];
     
     [self loadSelectedPencil];
 }
 
 - (IBAction)cancelButtonClicked:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(settingsViewControllerDidFinishEditing:withSettingsInfo:)]) {
-        [self.delegate settingsViewControllerDidFinishEditing:self withSettingsInfo:nil];
+    if ([self.delegate respondsToSelector:@selector(settingsViewController:didFinishEditingItemProperties:)]) {
+        [self.delegate settingsViewController:self didFinishEditingItemProperties:nil];
     }
 }
 
 - (IBAction)doneButtonClicked:(id)sender {
-    [self.settingsInfo  setName:[_nameTextField text]];
+    self.itemProperties[kAJNameKey] = [self.nameTextField text];
     
-    if ([self.delegate respondsToSelector:@selector(settingsViewControllerDidFinishEditing:withSettingsInfo:)]) {
-        [self.delegate settingsViewControllerDidFinishEditing:self withSettingsInfo:self.settingsInfo];
+    if ([self.delegate respondsToSelector:@selector(settingsViewController:didFinishEditingItemProperties:)]) {
+        [self.delegate settingsViewController:self didFinishEditingItemProperties:self.itemProperties];
     }
 }
 
 #pragma mark - UITextFieldDelegate methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [_nameTextField resignFirstResponder];
-    [self.settingsInfo setName:[textField text]];
+    [self.nameTextField resignFirstResponder];
+    self.itemProperties[kAJNameKey] = textField.text;
     
     return YES;
 }
@@ -441,11 +428,12 @@ static CGFloat kHeaderViewHeight = 35.0;
             }
             
         } else if (alertView.tag == EXPORT_PLAYERS_SCORES_ALERT_TAG) {
-            AJGame *game = [[AJScoresManager sharedInstance] getGameWithRowId:self.settingsInfo.rowId];
+            int gameRowId = [(NSNumber *)self.itemProperties[kAJRowIdKey] intValue];
+            AJGame *game = [[AJScoresManager sharedInstance] getGameWithRowId:gameRowId];
             if (game != nil) {
                 AJExportScoresViewController *exportViewController = [[AJExportScoresViewController alloc] initWithNibName:nil bundle:nil];
                 exportViewController.itemType = self.itemType;
-                exportViewController.itemRowId = self.settingsInfo.rowId;
+                exportViewController.itemRowId = gameRowId;
                 [self.navigationController pushViewController:exportViewController animated:YES];
             }
         }
@@ -482,8 +470,8 @@ static CGFloat kHeaderViewHeight = 35.0;
 		UIImageWriteToSavedPhotosAlbum(originalImage, nil, NULL, NULL);
 	}
     
-    [_pictureButton setImage:[editedImage applyMask:[UIImage imageNamed:@"mask.png"]] forState:UIControlStateNormal];
-    [self.settingsInfo setImageData:UIImagePNGRepresentation(editedImage)];
+    [self.pictureButton setImage:[[editedImage resizeToNewSize:CGSizeMake(50.0, 50.0)] applyMask:[UIImage imageNamed:@"mask.png"]] forState:UIControlStateNormal];
+    self.itemProperties[kAJPictureDataKey] = UIImagePNGRepresentation(editedImage);
 }
 
 #pragma mark - Private Actions
@@ -509,8 +497,8 @@ static CGFloat kHeaderViewHeight = 35.0;
 - (IBAction)setDefaultButtonClicked {
     UIImage *defaultImage = (_itemType == AJGameItem) ? [UIImage defaultGamePicture] : [UIImage defaultPlayerPicture];
     
-    [_pictureButton setImage:[defaultImage applyMask:[UIImage imageNamed:@"mask.png"]] forState:UIControlStateNormal];
-    [self.settingsInfo setImageData:UIImagePNGRepresentation(defaultImage)];
+    [self.pictureButton setImage:[defaultImage applyMask:[UIImage imageNamed:@"mask.png"]] forState:UIControlStateNormal];
+    self.itemProperties[kAJPictureDataKey] = UIImagePNGRepresentation(defaultImage);
 }
 
 @end

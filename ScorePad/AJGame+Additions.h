@@ -8,8 +8,6 @@
 
 #import "AJGame.h"
 
-@class AJSettingsInfo;
-
 typedef enum {
     AJPlayersSortingNone = 0,
     AJPlayersSortingByTotalASC,
@@ -20,11 +18,11 @@ typedef enum {
 
 @interface AJGame (Additions)
 
+@property (nonatomic, assign, readonly) int maxNumberOfScores;
+
 + (AJGame *)createGameWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context;
 
-- (AJSettingsInfo *)settingsInfo;
-- (int)maxNumberOfScores;
-
 - (NSDictionary *)toDictionary;
+- (void)setPropertiesFromDictionary:(NSDictionary *)dictionary;
 
 @end

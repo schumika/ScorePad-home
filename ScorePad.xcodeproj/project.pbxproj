@@ -72,7 +72,6 @@
 		52A10867161F2976006FCACD /* table_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A10865161F2975006FCACD /* table_background@2x.png */; };
 		52A2D03E17991D47005196F4 /* separator_vertical.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A2D03C17991D3B005196F4 /* separator_vertical.png */; };
 		52A2D03F17991D47005196F4 /* separator_vertical@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A2D03D17991D40005196F4 /* separator_vertical@2x.png */; };
-		52A59A251614249500AB4341 /* AJSettingsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A59A241614249500AB4341 /* AJSettingsInfo.m */; };
 		52A663E51624489000554254 /* AJScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A663E41624489000554254 /* AJScore.m */; };
 		52A663EB1624533500554254 /* landscape_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A663E91624533500554254 /* landscape_background.png */; };
 		52A663EC1624533500554254 /* landscape_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A663EA1624533500554254 /* landscape_background@2x.png */; };
@@ -228,8 +227,6 @@
 		52A10865161F2975006FCACD /* table_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table_background@2x.png"; sourceTree = "<group>"; };
 		52A2D03C17991D3B005196F4 /* separator_vertical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = separator_vertical.png; sourceTree = "<group>"; };
 		52A2D03D17991D40005196F4 /* separator_vertical@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "separator_vertical@2x.png"; sourceTree = "<group>"; };
-		52A59A231614249500AB4341 /* AJSettingsInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJSettingsInfo.h; sourceTree = "<group>"; };
-		52A59A241614249500AB4341 /* AJSettingsInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJSettingsInfo.m; sourceTree = "<group>"; };
 		52A663E31624489000554254 /* AJScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJScore.h; sourceTree = "<group>"; };
 		52A663E41624489000554254 /* AJScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJScore.m; sourceTree = "<group>"; };
 		52A663E91624533500554254 /* landscape_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landscape_background.png; sourceTree = "<group>"; };
@@ -369,8 +366,6 @@
 		5253287A15FF126700A28B84 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				52A59A231614249500AB4341 /* AJSettingsInfo.h */,
-				52A59A241614249500AB4341 /* AJSettingsInfo.m */,
 				5253287B15FF128600A28B84 /* AJScoresManager.h */,
 				5253287C15FF128600A28B84 /* AJScoresManager.m */,
 				52D6F40416BBA57A007B8A6D /* AJExportHandler.h */,
@@ -781,7 +776,6 @@
 				521E133C1600C2AF00022B1E /* AJScoresTableViewController.m in Sources */,
 				529E0E601601D0E300711F5B /* UIImage+Additions.m in Sources */,
 				529E0E691601F6DB00711F5B /* AJSettingsViewController.m in Sources */,
-				52A59A251614249500AB4341 /* AJSettingsInfo.m in Sources */,
 				52EF57EB161DB01B004B069B /* AJTableViewController.m in Sources */,
 				52A10863161F25B4006FCACD /* UIBarButtonItem+Additions.m in Sources */,
 				5284384C162441CE00B471B5 /* AJViewController.m in Sources */,

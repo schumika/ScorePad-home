@@ -12,7 +12,6 @@
 #import "AJNewItemTableViewCell.h"
 #import "AJBrownUnderlinedView.h"
 #import "AJScoresManager.h"
-#import "AJSettingsInfo.h"
 #import "AJAlertView.h"
 
 #import "UIFont+Additions.h"
@@ -332,13 +331,12 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 #pragma mark - Buttons Action
 
 - (IBAction)settingsButtonClicked:(id)sender {
-    AJSettingsViewController *settingsViewController = [[AJSettingsViewController alloc] initWithSettingsInfo:[self.game settingsInfo] andItemType:AJGameItem];
+    AJSettingsViewController *settingsViewController = [[AJSettingsViewController alloc] initWithItemProperties:self.game.toDictionary andItemType:AJGameItem];
     settingsViewController.delegate = self;
     [self.navigationController pushViewController:settingsViewController animated:YES];
 }
 
 - (IBAction)doneButtonClicked:(id)sender {
-    //self.tableView.contentOffset = CGPointMake(0, 100.0);
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
@@ -370,14 +368,12 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 
 #pragma mark - AJSettingsViewControllerDelegate methods
 
-- (void)settingsViewControllerDidFinishEditing:(AJSettingsViewController *)settingsViewController withSettingsInfo:(AJSettingsInfo *)settingsInfo {
+- (void)settingsViewController:(AJSettingsViewController *)settingsViewController didFinishEditingItemProperties:(NSDictionary *)itemProperties {
     
     [self.navigationController popToViewController:self animated:YES];
     
-    if (settingsInfo != nil) {
-        [self.game setName:settingsInfo.name];
-        [self.game setColor:settingsInfo.colorString];
-        [self.game setImageData:settingsInfo.imageData];
+    if (itemProperties != nil) {
+        [self.game setPropertiesFromDictionary:itemProperties];
         
         [[AJScoresManager sharedInstance] saveContext];
         [self loadDataAndUpdateUI:YES];

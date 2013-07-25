@@ -8,7 +8,6 @@
 
 #import "AJScoresManager.h"
 #import "UIColor+Additions.h"
-#import "AJSettingsInfo.h"
 
 @interface AJScoresManager()
 
@@ -252,10 +251,6 @@ static AJScoresManager *sharedAJScoresManager = nil;
         }
     }
     return YES;
-}
-
-+ (AJSettingsInfo *)createSettingsInfo {
-    return [[AJSettingsInfo alloc] init];
 }
 
 #pragma mark - Private methods

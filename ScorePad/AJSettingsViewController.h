@@ -8,33 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-#import "AJSettingsInfo.h"
-
 @protocol AJSettingsViewControllerDelegate;
 
 @class AJImageAndNameView;
-@class AJSettingsInfo;
 
 @interface AJSettingsViewController : AJTableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate,
-                                                        UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
-    AJItemType _itemType;
-    AJSettingsInfo *_settingsInfo;
-    
-    id<AJSettingsViewControllerDelegate> __weak _delegate;
-}
+                                                        UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (nonatomic, assign) AJItemType itemType;
-@property (nonatomic, strong) AJSettingsInfo *settingsInfo;
 @property (nonatomic, weak) id<AJSettingsViewControllerDelegate> delegate;
 
-- (id)initWithSettingsInfo:(AJSettingsInfo *)settingsInfo andItemType:(AJItemType)itemType;
+- (id)initWithItemProperties:(NSDictionary *)itemProperties andItemType:(AJItemType)itemType;
 
 @end
 
 
 @protocol AJSettingsViewControllerDelegate<NSObject>
 
-- (void)settingsViewControllerDidFinishEditing:(AJSettingsViewController *)settingsViewController withSettingsInfo:(AJSettingsInfo *)settingsInfo;
+- (void)settingsViewController:(AJSettingsViewController *)settingsViewController didFinishEditingItemProperties:(NSDictionary *)itemProperties;
 
 @optional
 - (void)settingsViewControllerDidSelectClearAllScoresForCurrentPlayer:(AJSettingsViewController *)settingsViewController;

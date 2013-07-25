@@ -21,11 +21,12 @@ typedef enum {
 
 @interface AJPlayer (Additions)
 
+@property (nonatomic, assign, readonly) double totalScore;
+@property (nonatomic, readonly) NSArray *scoreValues;
+
 + (AJPlayer *)createPlayerWithName:(NSString *)name forGame:(AJGame *)game;
-- (double)totalScore;
-- (AJSettingsInfo *)settingsInfo;
-- (NSArray *)scoreValues;
 
 - (NSDictionary *)toDictionary;
+- (void)setPropertiesFromDictionary:(NSDictionary *)dictionary;
 
 @end

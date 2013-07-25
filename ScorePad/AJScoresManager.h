@@ -12,8 +12,6 @@
 #import "AJPlayer+Additions.h"
 #import "AJScore+Additions.h"
 
-@class AJSettingsInfo;
-
 @interface AJScoresManager : NSObject
 
 + (AJScoresManager *)sharedInstance;
@@ -40,7 +38,6 @@
 // Other public methods
 - (BOOL)saveContext;
 
-+ (AJSettingsInfo *)createSettingsInfo;
 - (int)maxNumberOfScoresInGame:(AJGame *)game;
 
 // Methods used for testing

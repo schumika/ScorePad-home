@@ -10,7 +10,6 @@
 #import "AJNewItemTableViewCell.h"
 #import "AJBrownUnderlinedView.h"
 #import "AJScoresManager.h"
-#import "AJSettingsInfo.h"
 
 #import "UIFont+Additions.h"
 #import "UIColor+Additions.h"
@@ -353,7 +352,7 @@ static CGFloat kFooterViewHeight = 40.0;
 
 #pragma mark - Actions
 - (IBAction)settingsButtonClicked:(id)sender {
-    AJSettingsViewController *settingsViewController = [[AJSettingsViewController alloc] initWithSettingsInfo:[self.player settingsInfo] andItemType:AJPlayerItem];
+    AJSettingsViewController *settingsViewController = [[AJSettingsViewController alloc] initWithItemProperties:[self.player toDictionary] andItemType:AJPlayerItem];
     settingsViewController.delegate = self;
     [self.navigationController pushViewController:settingsViewController animated:YES];
 }
@@ -373,19 +372,16 @@ static CGFloat kFooterViewHeight = 40.0;
 
 #pragma mark - AJSettingsViewControllerDelegate methods
 
-- (void)settingsViewControllerDidFinishEditing:(AJSettingsViewController *)settingsViewController withSettingsInfo:(AJSettingsInfo *)settingsInfo {
+- (void)settingsViewController:(AJSettingsViewController *)settingsViewController didFinishEditingItemProperties:(NSDictionary *)itemProperties {
     
     [self.navigationController popToViewController:self animated:YES];
     
-    if (settingsInfo != nil) {
-        [self.player setName:settingsInfo.name];
-        [self.player setColor:settingsInfo.colorString];
-        [self.player setImageData:settingsInfo.imageData];
+    if (itemProperties != nil) {
+        [self.player setPropertiesFromDictionary:itemProperties];
+        
+        [[AJScoresManager sharedInstance] saveContext];
+        [self loadDataAndUpdateUI:YES];
     }
-    
-    
-    [[AJScoresManager sharedInstance] saveContext];
-    [self loadDataAndUpdateUI:YES];
 }
 
 - (void)settingsViewControllerDidSelectClearAllScoresForCurrentPlayer:(AJSettingsViewController *)settingsViewController {

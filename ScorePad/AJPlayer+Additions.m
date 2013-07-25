@@ -7,7 +7,6 @@
 //
 
 #import "AJPlayer+Additions.h"
-#import "AJSettingsInfo.h"
 
 #import "UIImage+Additions.h"
 
@@ -25,6 +24,9 @@
     return player;
 }
 
+
+#pragma mark - Public properties
+
 - (double)totalScore {
     double total = 0.0;
     
@@ -33,13 +35,6 @@
     }
     
     return total;
-}
-
-- (AJSettingsInfo *)settingsInfo {
-    return [AJSettingsInfo createSettingsInfoWithImageData:self.imageData ? self.imageData : UIImagePNGRepresentation([UIImage defaultPlayerPicture])
-                                                   andName:self.name
-                                            andColorString:self.color
-                                                  andRowId:-1];
 }
 
 - (NSArray *)scoreValues {
@@ -51,6 +46,8 @@
     
     return values;
 }
+
+#pragma mark - Public methods
 
 - (NSDictionary *)toDictionary {
     NSMutableDictionary *displayDictionary = [NSMutableDictionary dictionary];
@@ -69,6 +66,12 @@
     displayDictionary[kAJPlayerNumberOfRoundsKey] = @([self.scores count]);
     
     return displayDictionary;
+}
+
+- (void)setPropertiesFromDictionary:(NSDictionary *)dictionary {
+    self.name = dictionary[kAJNameKey];
+    self.color = dictionary[kAJColorStringKey];
+    self.imageData = dictionary[kAJPictureDataKey];
 }
 
 @end
