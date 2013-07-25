@@ -104,7 +104,7 @@
         }
         
         AJGame *game = (AJGame *)[self.gamesArray objectAtIndex:indexPath.row];
-        cell.displayDictionary = [game toDisplayDictionary];
+        cell.displayDictionary = [game toDictionary];
         
         aCell = cell;
     } else {

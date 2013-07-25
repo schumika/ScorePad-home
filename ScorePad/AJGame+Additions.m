@@ -44,18 +44,19 @@
     return maxNumber;
 }
 
-- (NSDictionary *)toDisplayDictionary {
+- (NSDictionary *)toDictionary {
     NSMutableDictionary *displayDictionary = [NSMutableDictionary dictionary];
     
-    displayDictionary[kAJGameNameKey] = self.name;
-    displayDictionary[kAJGameColorStringKey] = self.color;
+    displayDictionary[kAJNameKey] = self.name;
+    displayDictionary[kAJColorStringKey] = self.color;
     
     NSData *data = self.imageData;
     if (!data) {
         data = UIImagePNGRepresentation([UIImage defaultGamePicture]);
     }
-    displayDictionary[kAJGamePictureDataKey] = data;
+    displayDictionary[kAJPictureDataKey] = data;
     
+    displayDictionary[kAJRowIdKey] = self.rowId;
     displayDictionary[kAJGameNumberOfPlayersKey] = @([self.players count]);
     
     return displayDictionary;

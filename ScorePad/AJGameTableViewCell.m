@@ -79,10 +79,10 @@
 
 - (void)setDisplayDictionary:(NSDictionary *)displayDictionary {
     if (displayDictionary != _displayDictionary) {
-        self.nameLabel.text = displayDictionary[kAJGameNameKey];
-        self.nameLabel.textColor = [UIColor colorWithHexString:displayDictionary[kAJGameColorStringKey]];
+        self.nameLabel.text = displayDictionary[kAJNameKey];
+        self.nameLabel.textColor = [UIColor colorWithHexString:displayDictionary[kAJColorStringKey]];
         
-        UIImage *gameImage = [UIImage imageWithData:displayDictionary[kAJGamePictureDataKey]];
+        UIImage *gameImage = [UIImage imageWithData:displayDictionary[kAJPictureDataKey]];
         [self.pictureView setImage:[[gameImage resizeToNewSize:CGSizeMake(50.0, 50.0)] applyMask:[UIImage imageNamed:@"mask.png"]]];
         
         int numberOfPlayers = [(NSNumber *)displayDictionary[kAJGameNumberOfPlayersKey] intValue];

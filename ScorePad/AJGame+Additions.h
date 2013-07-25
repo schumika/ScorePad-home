@@ -25,6 +25,6 @@ typedef enum {
 - (AJSettingsInfo *)settingsInfo;
 - (int)maxNumberOfScores;
 
-- (NSDictionary *)toDisplayDictionary;
+- (NSDictionary *)toDictionary;
 
 @end

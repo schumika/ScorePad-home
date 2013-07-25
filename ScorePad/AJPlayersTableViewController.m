@@ -191,7 +191,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         }
         
         AJPlayer *player = (AJPlayer *)[self.playersArray objectAtIndex:indexPath.row];
-        aCell.playerDisplayDictionary = [player toDisplayDictionary];
+        aCell.playerDisplayDictionary = [player toDictionary];
         aCell.scoreTextField.text = @"";
         AJScore *lastPlayerScore = (AJScore *)[[[AJScoresManager sharedInstance] getAllScoresForPlayer:player] lastObject];
         aCell.scoreTextField.placeholder = [NSString stringWithFormat:@"%g", fabs(lastPlayerScore.value.doubleValue)];

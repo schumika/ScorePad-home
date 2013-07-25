@@ -52,19 +52,19 @@
     return values;
 }
 
-- (NSDictionary *)toDisplayDictionary {
+- (NSDictionary *)toDictionary {
     NSMutableDictionary *displayDictionary = [NSMutableDictionary dictionary];
     
-    displayDictionary[kAJPlayerNameKey] = self.name;
-    displayDictionary[kAJPlayerColorStringKey] = self.color;
+    displayDictionary[kAJNameKey] = self.name;
+    displayDictionary[kAJColorStringKey] = self.color;
     
     NSData *data = self.imageData;
     if (!data) {
         data = UIImagePNGRepresentation([UIImage defaultPlayerPicture]);
     }
-    displayDictionary[kAJPlayerPictureDataKey] = data;
+    displayDictionary[kAJPictureDataKey] = data;
     
-    
+    displayDictionary[kAJRowIdKey] = [NSNumber numberWithInt:-1];
     displayDictionary[kAJPlayerTotalScoresKey] = @([self totalScore]);
     displayDictionary[kAJPlayerNumberOfRoundsKey] = @([self.scores count]);
     

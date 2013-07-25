@@ -158,10 +158,10 @@
     if (_playerDisplayDictionary != playerDisplayDictionary) {
         _playerDisplayDictionary = playerDisplayDictionary;
         
-        self.nameLabel.text = playerDisplayDictionary[kAJPlayerNameKey];
-        self.nameLabel.textColor = [UIColor colorWithHexString:playerDisplayDictionary[kAJPlayerColorStringKey]];
+        self.nameLabel.text = playerDisplayDictionary[kAJNameKey];
+        self.nameLabel.textColor = [UIColor colorWithHexString:playerDisplayDictionary[kAJColorStringKey]];
         
-        UIImage *pic = [UIImage imageWithData:playerDisplayDictionary[kAJPlayerPictureDataKey]];
+        UIImage *pic = [UIImage imageWithData:playerDisplayDictionary[kAJPictureDataKey]];
         [self.pictureView setImage:[[pic resizeToNewSize:CGSizeMake(50.0, 50.0)] applyMask:[UIImage imageNamed:@"mask.png"]]];
         
         double totalScores = [(NSNumber *)playerDisplayDictionary[kAJPlayerTotalScoresKey] doubleValue];

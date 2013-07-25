@@ -8,13 +8,12 @@
 
 #import "AJDefines.h"
 
-NSString const * kAJPlayerNameKey           = @"AJPlayerNameKey";
-NSString const * kAJPlayerColorStringKey    = @"AJPlayerColorStringKey";
-NSString const * kAJPlayerPictureDataKey    = @"AJPlayerPictureDataKey";
+NSString const * kAJNameKey           = @"AJNameKey";
+NSString const * kAJColorStringKey    = @"AJColorStringKey";
+NSString const * kAJPictureDataKey    = @"AJPictureDataKey";
+NSString const * kAJRowIdKey          = @"AJRowIdKey";
+
 NSString const * kAJPlayerTotalScoresKey    = @"AJPlayerTotalScoresKey";
 NSString const * kAJPlayerNumberOfRoundsKey = @"AJPlayerNumberOfRoundsKey";
 
-NSString const * kAJGameNameKey             = @"AJGameNameKey";
-NSString const * kAJGameColorStringKey      = @"AJGameColorStringKey";
-NSString const * kAJGamePictureDataKey      = @"AJGamePictureDataKey";
 NSString const * kAJGameNumberOfPlayersKey  = @"AJGameNumberOfPlayersKey";

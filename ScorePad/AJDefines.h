@@ -17,13 +17,12 @@ typedef enum {
     AJPlayerItem
 } AJItemType;
 
-extern NSString const * kAJPlayerNameKey;
-extern NSString const * kAJPlayerColorStringKey;
-extern NSString const * kAJPlayerPictureDataKey;
+extern NSString const * kAJNameKey;
+extern NSString const * kAJColorStringKey;
+extern NSString const * kAJPictureDataKey;
+extern NSString const * kAJRowIdKey;
+
 extern NSString const * kAJPlayerTotalScoresKey;
 extern NSString const * kAJPlayerNumberOfRoundsKey;
 
-extern NSString const * kAJGameNameKey;
-extern NSString const * kAJGameColorStringKey;
-extern NSString const * kAJGamePictureDataKey;
 extern NSString const * kAJGameNumberOfPlayersKey;
