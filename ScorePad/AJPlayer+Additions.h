@@ -14,8 +14,7 @@
 
 
 typedef enum {
-    AJScoresSortingNone = 0,
-    AJScoresSortingByRoundASC,
+    AJScoresSortingByRoundASC = 0,
     AJScoresSortingByRoundDESC,
 } AJScoresSortingType;
 

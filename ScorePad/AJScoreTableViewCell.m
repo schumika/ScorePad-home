@@ -176,7 +176,7 @@
     double score = [(NSNumber *)self.scoreDictionary[kAJScoreValueKey] doubleValue];
     if (![NSString isNilOrEmpty:textField.text] && (textField.text.doubleValue != score)) {
         if ([self.delegate respondsToSelector:@selector(scoreCell:didEndEditingScoreWithNewScoreValue:)]) {
-            [self.delegate scoreCell:self didEndEditingScoreWithNewScoreValue:@(score)];
+            [self.delegate scoreCell:self didEndEditingScoreWithNewScoreValue:@(textField.text.doubleValue)];
         }
     }
     

@@ -165,12 +165,7 @@ static CGFloat kFooterViewHeight = 40.0;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        static AJBrownUnderlinedView *headerView = nil;
-        if (headerView != nil) {
-            return headerView;
-        }
-        
-        headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
+        AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
         CGFloat thirdOfTableWidth = ceil(CGRectGetWidth(tableView.bounds) / 3.0);
@@ -192,7 +187,7 @@ static CGFloat kFooterViewHeight = 40.0;
             roundArrow.text = self.scoresSortingType == AJScoresSortingByRoundDESC ? [NSString upArrow] : [NSString downArrow];
             roundArrow.textColor = [UIColor AJBrownColor];
             roundArrow.font = [UIFont LDBrushFontWithSize:20.0];
-            roundArrow.backgroundColor = [UIColor redColor];
+            roundArrow.backgroundColor = [UIColor clearColor];
             [headerView addSubview:roundArrow];
             roundArrow.frame = CGRectMake(CGRectGetMaxX(roundButton.frame), 13.0, 20.0, 23.0);
         }
@@ -375,18 +370,9 @@ static CGFloat kFooterViewHeight = 40.0;
 
 #pragma mark - AJScoreTableViewCellDelegate methods
 
-- (void)scoreCellDidEndEditingScore:(AJScoreTableViewCell *)cell {
-    int scoreRound = [self.tableView indexPathForCell:cell].row;
-    AJScore *modifiedScore = [self.scoresArray objectAtIndex:scoreRound];
-    
-    modifiedScore.value = [NSNumber numberWithDouble:[cell.scoreTextField text].doubleValue];
-    [[AJScoresManager sharedInstance] saveContext];
-    [self loadDataAndUpdateUI:YES];
-}
-
 - (void)scoreCell:(AJScoreTableViewCell *)cell didEndEditingScoreWithNewScoreValue:(NSNumber *)newScore {
-    int scoreRound = [self.tableView indexPathForCell:cell].row;
-    AJScore *modifiedScore = [self.scoresArray objectAtIndex:scoreRound];
+    int scoreIndex = [self.tableView indexPathForCell:cell].row;
+    AJScore *modifiedScore = [self.scoresArray objectAtIndex:scoreIndex];
     modifiedScore.value = newScore;
     
     [[AJScoresManager sharedInstance] saveContext];

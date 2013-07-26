@@ -19,7 +19,7 @@
     player.name = name;
     player.game = game;
     player.time = [NSDate date];
-    player.sortOrder = @(AJScoresSortingNone);
+    player.sortOrder = @(AJScoresSortingByRoundASC);
     
     return player;
 }
@@ -48,19 +48,23 @@
 }
 
 - (NSArray *)orderedScoresArray {
-    NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[self.scores allObjects]];
+    return [self orderedScoresArraySortedAscending:(self.sortOrder.intValue == AJScoresSortingByRoundASC)];
     
-    int scoresSortingOrder = self.sortOrder.intValue;
-    if (scoresSortingOrder == AJScoresSortingNone) return orderedArray;
+}
+
+- (NSArray *)orderedScoresArraySortedAscending:(BOOL)ascending {
+    NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[self.scores allObjects]];
     
     [orderedArray sortUsingComparator:^NSComparisonResult(AJScore *score1, AJScore *score2) {
         if (score1.round.intValue < score2.round.intValue) {
-            return (scoresSortingOrder == AJScoresSortingByRoundASC) ? NSOrderedAscending : NSOrderedDescending;
+            return ascending ? NSOrderedAscending : NSOrderedDescending;
         } else {
-            return (scoresSortingOrder == AJScoresSortingByRoundDESC) ? NSOrderedDescending : NSOrderedAscending;
+            return ascending ? NSOrderedDescending : NSOrderedAscending;
         }
     }];
+        
     return orderedArray;
+
 }
 
 #pragma mark - Public methods
@@ -92,25 +96,19 @@
 
 - (double)intermediateTotalAtRound:(int)row {
     double total = 0.0;
-    NSArray *scores = [NSArray arrayWithArray:self.orderedScoresArray];
-    int rounds = scores.count;
-    if (self.sortOrder.intValue == AJScoresSortingByRoundDESC || self.sortOrder.intValue == AJScoresSortingNone) {
-        for (int rowIndex = rounds; rowIndex >= row; rowIndex--) {
-            AJScore *score = scores[rowIndex - 1];
-            total += [score.value doubleValue];
-        }
-    } else {
-        for (int rowIndex = 0; rowIndex < row; rowIndex++) {
+    
+    NSArray *scores = [self orderedScoresArraySortedAscending:YES];
+    int currentRow = row;
+    for (int rowIndex = 0; rowIndex < currentRow; rowIndex++) {
             AJScore *score = scores[rowIndex];
             total += [score.value doubleValue];
-        }
     }
     
     return total;
 }
 
 - (void)updateRoundsForScores {
-    NSArray *orderedArray = self.orderedScoresArray;
+    NSArray *orderedArray = [NSArray arrayWithArray:self.orderedScoresArray];
     
     int rounds = self.orderedScoresArray.count;
     int scoresSortingType = self.sortOrder.intValue;
