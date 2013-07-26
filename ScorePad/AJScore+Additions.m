@@ -16,11 +16,21 @@
     AJScore *score = nil;
     
     score = [NSEntityDescription insertNewObjectForEntityForName:@"AJScore" inManagedObjectContext:player.managedObjectContext];
-    score.value = [NSNumber numberWithDouble:value];
-    score.round = [NSNumber numberWithInt:round];
+    score.value = @(value);
+    score.round = @(round);
     score.player = player;
     
     return score;
+}
+
+- (NSDictionary *)toDictionary {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    
+    dictionary[kAJScoreValueKey] = self.value;
+    dictionary[kAJScoreRoundKey] = self.round;
+    dictionary[kAJScoreIntermediateTotal] = @([self.player intermediateTotalAtRound:self.round.intValue]);
+    
+    return dictionary;
 }
 
 @end

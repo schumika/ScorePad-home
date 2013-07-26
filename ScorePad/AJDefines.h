@@ -26,3 +26,7 @@ extern NSString const * kAJPlayerTotalScoresKey;
 extern NSString const * kAJPlayerNumberOfRoundsKey;
 
 extern NSString const * kAJGameNumberOfPlayersKey;
+
+extern NSString const * kAJScoreRoundKey;
+extern NSString const * kAJScoreValueKey;
+extern NSString const * kAJScoreIntermediateTotal;

@@ -8,6 +8,7 @@
 
 #import "AJScoreTableViewCell.h"
 #import "AJBrownUnderlinedView.h"
+#import "AJDefines.h"
 
 #import "UIFont+Additions.h"
 #import "UIImage+Additions.h"
@@ -102,7 +103,6 @@
 }
 
 - (void)setScore:(double)score {
-    _score = score;
     self.scoreLabel.text = [NSString stringWithFormat:@"%g", score];
     self.scoreTextField.text = [NSString stringWithFormat:@"%g", score];
     
@@ -113,14 +113,12 @@
     }
 }
 
-- (void)setRound:(int)round {
-    _round = round;
-    self.roundLabel.text = [NSString stringWithFormat:@"%d", round];
-}
-
-- (void)setIntermediateTotal:(double)intermediateTotal {
-    _intermediateTotal = intermediateTotal;
-    self.intermediateTotalLabel.text = [NSString stringWithFormat:@"%g", intermediateTotal];
+- (void)setScoreDictionary:(NSDictionary *)scoreDictionary {
+    _scoreDictionary = scoreDictionary;
+    
+    [self setScore:[(NSNumber *)scoreDictionary[kAJScoreValueKey] doubleValue]];
+    self.roundLabel.text = [NSString stringWithFormat:@"%d", [(NSNumber *)scoreDictionary[kAJScoreRoundKey] intValue]];
+    self.intermediateTotalLabel.text = [NSString stringWithFormat:@"%g", [(NSNumber *)scoreDictionary[kAJScoreIntermediateTotal] doubleValue]];
 }
 
 #pragma mark - horizontal pan gesture methods
@@ -175,9 +173,10 @@
     
     [self moveToOriginalFrameAnimated];
     
-    if (![NSString isNilOrEmpty:textField.text] && (textField.text.doubleValue != self.score)) {
-        if ([self.delegate respondsToSelector:@selector(scoreCellDidEndEditingScore:)]) {
-            [self.delegate scoreCellDidEndEditingScore:self];
+    double score = [(NSNumber *)self.scoreDictionary[kAJScoreValueKey] doubleValue];
+    if (![NSString isNilOrEmpty:textField.text] && (textField.text.doubleValue != score)) {
+        if ([self.delegate respondsToSelector:@selector(scoreCell:didEndEditingScoreWithNewScoreValue:)]) {
+            [self.delegate scoreCell:self didEndEditingScoreWithNewScoreValue:@(score)];
         }
     }
     
@@ -225,7 +224,13 @@
 #pragma mark - Buttons actions
 
 - (IBAction)plusMinusButtonClicked:(id)sender {
-    [self setScore:-self.scoreTextField.text.doubleValue];
+    double newScore = -[(NSNumber *)self.scoreDictionary[kAJScoreValueKey] doubleValue];
+    [self setScore:newScore];
+    
+    if ([self.delegate respondsToSelector:@selector(scoreCell:didEndEditingScoreWithNewScoreValue:)]) {
+        [self.delegate scoreCell:self didEndEditingScoreWithNewScoreValue:@(newScore)];
+    }
+
 }
 
 @end

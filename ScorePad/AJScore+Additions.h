@@ -13,4 +13,6 @@
 
 + (AJScore *)createScoreWithValue:(double)value inRound:(int)round forPlayer:(AJPlayer *)player;
 
+- (NSDictionary *)toDictionary;
+
 @end

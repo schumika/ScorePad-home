@@ -34,7 +34,6 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 @property (nonatomic, strong) NSIndexPath *indexPathOfCellShowingLeftSide;
 
 - (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-- (NSArray *)getOrderedPlayersArray;
 
 @end
 
@@ -42,7 +41,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 @implementation AJPlayersTableViewController
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
-    self.playersArray = [self getOrderedPlayersArray];
+    self.playersArray = self.game.orderedPlayersArray;
     self.titleViewText = self.game.name;
     self.titleViewColor = [UIColor colorWithHexString:self.game.color];
     
@@ -347,7 +346,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         self.playersSortingType = AJPlayersSortingByNameASC;
     }
     
-    self.game.sortOrder = [NSNumber numberWithInt:self.playersSortingType];
+    self.game.sortOrder = @(self.playersSortingType);
     [[AJScoresManager sharedInstance] saveContext];
     
     [self loadDataAndUpdateUI:YES];
@@ -360,7 +359,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         self.playersSortingType = AJPlayersSortingByTotalASC;
     }
     
-    self.game.sortOrder = [NSNumber numberWithInt:self.playersSortingType];
+    self.game.sortOrder = @(self.playersSortingType);
     [[AJScoresManager sharedInstance] saveContext];
     
     [self loadDataAndUpdateUI:YES];
@@ -493,32 +492,5 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         
         [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
     }
-}
-
-- (NSArray *)getOrderedPlayersArray {
-    NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[[AJScoresManager sharedInstance] getAllPlayersForGame:self.game]];
-    
-    if (self.playersSortingType == AJPlayersSortingNone) return orderedArray;
-        
-    BOOL isSortingByTotal = (self.playersSortingType == AJPlayersSortingByTotalASC || self.playersSortingType == AJPlayersSortingByTotalDESC);
-    BOOL isSortingASC = (self.playersSortingType == AJPlayersSortingByTotalASC || self.playersSortingType == AJPlayersSortingByNameASC);
-    
-    [orderedArray sortUsingComparator:^NSComparisonResult(AJPlayer *player1, AJPlayer *player2) {
-        if (isSortingByTotal) {
-            if (player1.totalScore < player2.totalScore) {
-                return isSortingASC ? NSOrderedAscending : NSOrderedDescending;
-            } else {
-                return isSortingASC ? NSOrderedDescending : NSOrderedAscending;
-            }
-        } else {
-            if ([player1.name compare:player2.name] == NSOrderedAscending) {
-                return isSortingASC ? NSOrderedAscending : NSOrderedDescending;
-            } else {
-                return isSortingASC ? NSOrderedDescending : NSOrderedAscending;
-            }
-        }
-    }];
-    
-    return orderedArray;
 }
 @end

@@ -23,10 +23,14 @@ typedef enum {
 
 @property (nonatomic, assign, readonly) double totalScore;
 @property (nonatomic, readonly) NSArray *scoreValues;
+@property (nonatomic, readonly) NSArray *orderedScoresArray;
 
 + (AJPlayer *)createPlayerWithName:(NSString *)name forGame:(AJGame *)game;
 
 - (NSDictionary *)toDictionary;
 - (void)setPropertiesFromDictionary:(NSDictionary *)dictionary;
+
+- (double)intermediateTotalAtRound:(int)row;
+- (void)updateRoundsForScores;
 
 @end

@@ -29,8 +29,6 @@ static CGFloat kFooterViewHeight = 40.0;
 @property (nonatomic, strong) NSIndexPath *indexPathOfCellShowingLeftSide;
 
 - (void)updateRoundsForScores;
-- (double)intermediateTotalAtRow:(int)round;
-- (NSArray *)getOrderedScoresArray;
 
 @end
 
@@ -47,7 +45,7 @@ static CGFloat kFooterViewHeight = 40.0;
 
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
-    self.scoresArray = [self getOrderedScoresArray];
+    self.scoresArray = self.player.orderedScoresArray;
     
     self.titleViewText = self.player.name;
     self.titleViewColor = [UIColor colorWithHexString:self.player.color];
@@ -134,9 +132,7 @@ static CGFloat kFooterViewHeight = 40.0;
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
         }
         AJScore *score = [self.scoresArray objectAtIndex:indexPath.row];
-        cell.round = score.round.intValue;
-        cell.score = score.value.doubleValue;
-        cell.intermediateTotal = [self intermediateTotalAtRow:indexPath.row];
+        cell.scoreDictionary = score.toDictionary;
         
         aCell = cell;
     }
@@ -196,7 +192,7 @@ static CGFloat kFooterViewHeight = 40.0;
             roundArrow.text = self.scoresSortingType == AJScoresSortingByRoundDESC ? [NSString upArrow] : [NSString downArrow];
             roundArrow.textColor = [UIColor AJBrownColor];
             roundArrow.font = [UIFont LDBrushFontWithSize:20.0];
-            roundArrow.backgroundColor = [UIColor clearColor];
+            roundArrow.backgroundColor = [UIColor redColor];
             [headerView addSubview:roundArrow];
             roundArrow.frame = CGRectMake(CGRectGetMaxX(roundButton.frame), 13.0, 20.0, 23.0);
         }
@@ -316,40 +312,6 @@ static CGFloat kFooterViewHeight = 40.0;
     [[AJScoresManager sharedInstance] saveContext];
 }
 
-- (double)intermediateTotalAtRow:(int)row {
-    double total = 0.0;
-    int rounds = self.scoresArray.count;
-    if (self.scoresSortingType == AJScoresSortingByRoundDESC) {
-        for (int rowIndex = rounds; rowIndex > row; rowIndex--) {
-            AJScore *score = [self.scoresArray objectAtIndex:(rowIndex - 1)];
-            total += [[score value] doubleValue];
-        }
-    } else {
-        for (int rowIndex = 0; rowIndex <= row; rowIndex++) {
-            AJScore *score = [self.scoresArray objectAtIndex:rowIndex];
-            total += [[score value] doubleValue];
-        }
-    }
-    
-    return total;
-}
-
-- (NSArray *)getOrderedScoresArray {
-    NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[[AJScoresManager sharedInstance] getAllScoresForPlayer:self.player]];
-    
-    if (self.scoresSortingType == AJScoresSortingNone) return orderedArray;
-    
-    [orderedArray sortUsingComparator:^NSComparisonResult(AJScore *score1, AJScore *score2) {
-        if (score1.round.intValue < score2.round.intValue) {
-            return (self.scoresSortingType == AJScoresSortingByRoundASC) ? NSOrderedAscending : NSOrderedDescending;
-        } else {
-            return (self.scoresSortingType == AJScoresSortingByRoundDESC) ? NSOrderedDescending : NSOrderedAscending;
-        }
-    }];
-    
-    return orderedArray;
-}
-
 #pragma mark - Actions
 - (IBAction)settingsButtonClicked:(id)sender {
     AJSettingsViewController *settingsViewController = [[AJSettingsViewController alloc] initWithItemProperties:[self.player toDictionary] andItemType:AJPlayerItem];
@@ -364,7 +326,7 @@ static CGFloat kFooterViewHeight = 40.0;
         self.scoresSortingType = AJScoresSortingByRoundASC;
     }
     
-   self.player.sortOrder = [NSNumber numberWithInt:self.scoresSortingType];
+   self.player.sortOrder = @(self.scoresSortingType);
    [[AJScoresManager sharedInstance] saveContext];
     
     [self loadDataAndUpdateUI:YES];
@@ -403,7 +365,8 @@ static CGFloat kFooterViewHeight = 40.0;
     [self.tableView beginUpdates];
     [[AJScoresManager sharedInstance] deleteScore:[self.scoresArray objectAtIndex:indexPath.row]];
     [self loadDataAndUpdateUI:NO];
-    [self updateRoundsForScores];
+    [self.player updateRoundsForScores];
+    self.scoresArray = [self.player orderedScoresArray];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
 
@@ -417,6 +380,15 @@ static CGFloat kFooterViewHeight = 40.0;
     AJScore *modifiedScore = [self.scoresArray objectAtIndex:scoreRound];
     
     modifiedScore.value = [NSNumber numberWithDouble:[cell.scoreTextField text].doubleValue];
+    [[AJScoresManager sharedInstance] saveContext];
+    [self loadDataAndUpdateUI:YES];
+}
+
+- (void)scoreCell:(AJScoreTableViewCell *)cell didEndEditingScoreWithNewScoreValue:(NSNumber *)newScore {
+    int scoreRound = [self.tableView indexPathForCell:cell].row;
+    AJScore *modifiedScore = [self.scoresArray objectAtIndex:scoreRound];
+    modifiedScore.value = newScore;
+    
     [[AJScoresManager sharedInstance] saveContext];
     [self loadDataAndUpdateUI:YES];
 }

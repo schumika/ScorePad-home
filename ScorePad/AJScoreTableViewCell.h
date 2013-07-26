@@ -13,12 +13,9 @@
 
 @interface AJScoreTableViewCell : AJPanDeleteTableViewCell <UITextFieldDelegate> 
 
+@property (nonatomic, strong) NSDictionary *scoreDictionary;
+
 @property (nonatomic, readonly) UITextField *scoreTextField;
-
-@property (nonatomic, assign) int round;
-@property (nonatomic, assign) double score;
-@property (nonatomic, assign) double intermediateTotal;
-
 @property (nonatomic, assign) BOOL displaysLeftSide;
 
 @property (nonatomic, weak) id<AJScoreTableViewCellDelegate> delegate;
@@ -32,9 +29,7 @@
 @protocol AJScoreTableViewCellDelegate <NSObject>
 
 - (void)scoreCellShouldStartEditingScore:(AJScoreTableViewCell *)cell;
-- (void)scoreCellDidEndEditingScore:(AJScoreTableViewCell *)cell;
-//- (void)scoreCellClickedPlusButton:(AJScoreTableViewCell *)cell;
-//- (void)scoreCellClickedMinusButton:(AJScoreTableViewCell *)cell;
+- (void)scoreCell:(AJScoreTableViewCell *)cell didEndEditingScoreWithNewScoreValue:(NSNumber *)newScore;
 
 - (BOOL)scoreCellShouldShowLeftView:(AJScoreTableViewCell *)cell;
 - (void)scoreCellDidShowLeftView:(AJScoreTableViewCell *)cell;

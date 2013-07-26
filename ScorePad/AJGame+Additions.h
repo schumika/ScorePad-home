@@ -19,6 +19,7 @@ typedef enum {
 @interface AJGame (Additions)
 
 @property (nonatomic, assign, readonly) int maxNumberOfScores;
+@property (nonatomic, strong, readonly) NSArray *orderedPlayersArray;
 
 + (AJGame *)createGameWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context;
 

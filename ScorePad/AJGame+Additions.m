@@ -18,8 +18,8 @@
     
     game = [NSEntityDescription insertNewObjectForEntityForName:@"AJGame" inManagedObjectContext:context];
     game.name = name;
-    game.rowId = [NSNumber numberWithInt:0];
-    game.sortOrder = AJPlayersSortingNone;
+    game.rowId = @(0);
+    game.sortOrder = @(AJPlayersSortingNone);
     
     CLSNSLog(@"a game was created with name %@", name);
     
@@ -36,6 +36,34 @@
     }
     
     return maxNumber;
+}
+
+- (NSArray *)orderedPlayersArray {
+    NSMutableArray *orderedArray = [NSMutableArray arrayWithArray:[self.players allObjects]];
+    
+    int playersSortingType = self.sortOrder.intValue;
+    if (playersSortingType == AJPlayersSortingNone) return orderedArray;
+    
+    BOOL isSortingByTotal = (playersSortingType == AJPlayersSortingByTotalASC || playersSortingType == AJPlayersSortingByTotalDESC);
+    BOOL isSortingASC = (playersSortingType == AJPlayersSortingByTotalASC || playersSortingType == AJPlayersSortingByNameASC);
+    
+    [orderedArray sortUsingComparator:^NSComparisonResult(AJPlayer *player1, AJPlayer *player2) {
+        if (isSortingByTotal) {
+            if (player1.totalScore < player2.totalScore) {
+                return isSortingASC ? NSOrderedAscending : NSOrderedDescending;
+            } else {
+                return isSortingASC ? NSOrderedDescending : NSOrderedAscending;
+            }
+        } else {
+            if ([player1.name compare:player2.name] == NSOrderedAscending) {
+                return isSortingASC ? NSOrderedAscending : NSOrderedDescending;
+            } else {
+                return isSortingASC ? NSOrderedDescending : NSOrderedAscending;
+            }
+        }
+    }];
+    
+    return orderedArray;
 }
 
 #pragma mark - Public methods
