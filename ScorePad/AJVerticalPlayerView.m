@@ -13,8 +13,9 @@
 
 @interface AJVerticalPlayerHeaderView : UIView
 
-@property (nonatomic, strong) UIButton *nameButton;
+@property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *totalLabel;
+@property (nonatomic, strong) UIButton *transparentButton;
 
 @end
 
@@ -45,9 +46,9 @@
         self.color = color;
         
         AJVerticalPlayerHeaderView *headerView = [[AJVerticalPlayerHeaderView alloc] initWithFrame:CGRectMake(0.0, 0.0, frame.size.width, 60.0)];
-        [headerView.nameButton setTitle:self.name forState:UIControlStateNormal];
-        [headerView.nameButton setTitleColor:[UIColor colorWithHexString:self.color] forState:UIControlStateNormal];
-        [headerView.nameButton addTarget:self action:@selector(nameButtonCliked:) forControlEvents:UIControlEventTouchUpInside];
+        [headerView.nameLabel setText:self.name];
+        [headerView.nameLabel setTextColor:[UIColor colorWithHexString:self.color]];
+        [headerView.transparentButton addTarget:self action:@selector(nameButtonCliked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:headerView];
         
         double sum = 0.0;
@@ -102,12 +103,12 @@
     
     [self setBackgroundColor:[UIColor clearColor]];
     
-    self.nameButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.nameButton.frame = CGRectMake(0.0, 4.0, frame.size.width, 25.0);
-    self.nameButton.backgroundColor = [UIColor clearColor];
-    [self.nameButton.titleLabel setFont:[UIFont LDBrushFontWithSize:35.0]];
-    [self.nameButton.titleLabel setAdjustsFontSizeToFitWidth:YES];
-    [self addSubview:self.nameButton];
+    self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 6.0, frame.size.width, 26.0)];
+    self.nameLabel.backgroundColor = [UIColor clearColor];
+    [self.nameLabel setFont:[UIFont LDBrushFontWithSize:35.0]];
+    [self.nameLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.nameLabel setTextAlignment:UITextAlignmentCenter];
+    [self addSubview:self.nameLabel];
     
     
     self.totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 33.0, frame.size.width, 37.0)];
@@ -116,6 +117,12 @@
     [self.totalLabel setTextAlignment:UITextAlignmentCenter];
     [self.totalLabel setFont:[UIFont LDBrushFontWithSize:45.0]];
     [self addSubview:self.totalLabel];
+    
+    self.transparentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.transparentButton.frame = self.bounds;
+    self.transparentButton.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.transparentButton];
+    
     
     return self;
 }
