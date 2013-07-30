@@ -14,6 +14,7 @@
 }
 
 - (void)updateNavigationBarWithOrientation:(UIInterfaceOrientation)interfaceOrientation;
+- (void)updateToolbarWithOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 @end
 
@@ -34,9 +35,14 @@
     [super viewDidLoad];
     
     [self updateNavigationBarWithOrientation:[UIApplication sharedApplication].statusBarOrientation];
+    [self updateToolbarWithOrientation:[UIApplication sharedApplication].statusBarOrientation];
     
     if ([self.navigationController.navigationBar respondsToSelector:@selector(setShadowImage:)]) {
         [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    }
+    
+    if ([self.navigationController.toolbar respondsToSelector:@selector(setShadowImage:forToolbarPosition:)]) {
+        [self.navigationController.toolbar setShadowImage:[[UIImage alloc] init] forToolbarPosition:UIToolbarPositionAny];
     }
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:_tableViewStyle];
@@ -48,6 +54,12 @@
     [self.view addSubview:self.tableView];
     
     [self addKeyboardNotifications];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 - (void)dealloc {
@@ -65,6 +77,7 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self updateNavigationBarWithOrientation:toInterfaceOrientation];
+    [self updateToolbarWithOrientation:toInterfaceOrientation];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -132,6 +145,14 @@
         [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"nav-bar-clear3.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 20.0, 2.0, 20.0)] forBarMetrics:UIBarMetricsDefault];
     } else {
         [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"nav-bar-clear3-landscape.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 20.0, 2.0, 20.0)] forBarMetrics:UIBarMetricsDefault];
+    }
+}
+
+- (void)updateToolbarWithOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-clear3.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+    } else {
+        [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-clear3-landscape.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     }
 }
 

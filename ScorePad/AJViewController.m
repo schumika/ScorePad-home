@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *titleView;
 
 - (void)updateNavigationBarWithOrientation:(UIInterfaceOrientation)interfaceOrientation;
+- (void)updateToolbarWithOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 @end
 
@@ -29,9 +30,14 @@
     [super viewDidLoad];
     
     [self updateNavigationBarWithOrientation:[UIApplication sharedApplication].statusBarOrientation];
+    [self updateToolbarWithOrientation:[UIApplication sharedApplication].statusBarOrientation];
     
     if ([self.navigationController.navigationBar respondsToSelector:@selector(setShadowImage:)]) {
         [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    }
+    
+    if ([self.navigationController.toolbar respondsToSelector:@selector(setShadowImage:forToolbarPosition:)]) {
+        [self.navigationController.toolbar setShadowImage:[[UIImage alloc] init] forToolbarPosition:UIToolbarPositionAny];
     }
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem simpleBackButtonItemWithTarget:self action:@selector(backButtonClicked:)];
@@ -48,8 +54,15 @@
     self.navigationItem.titleView = self.titleView;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setToolbarHidden:YES animated:YES];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self updateNavigationBarWithOrientation:toInterfaceOrientation];
+    [self updateToolbarWithOrientation:toInterfaceOrientation];
 }
 
 #pragma mark - UI related
@@ -111,7 +124,15 @@
     if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear3.png"] forBarMetrics:UIBarMetricsDefault];
     } else {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear3.png"] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-clear3-landscape.png"] forBarMetrics:UIBarMetricsDefault];
+    }
+}
+
+- (void)updateToolbarWithOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-clear3.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+    } else {
+        [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-clear3-landscape.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     }
 }
 

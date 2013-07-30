@@ -92,6 +92,8 @@
 		52D904B11712F23E00963880 /* AJFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D904B01712F23E00963880 /* AJFacebookManager.m */; };
 		52D904B41712F7C700963880 /* UIDevice-Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D904B31712F7C700963880 /* UIDevice-Additions.m */; };
 		52D904B61712F87D00963880 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D904B51712F87D00963880 /* AVFoundation.framework */; };
+		52E0F8EB17A7C464002D6DBF /* toolbar-clear3.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E0F8E917A7C464002D6DBF /* toolbar-clear3.png */; };
+		52E0F8EC17A7C464002D6DBF /* toolbar-clear3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E0F8EA17A7C464002D6DBF /* toolbar-clear3@2x.png */; };
 		52E2465816B125A1006E61AC /* UIFont+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E2465716B125A1006E61AC /* UIFont+Additions.m */; };
 		52E2466C16B12D52006E61AC /* handwriting53-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E2466B16B12D52006E61AC /* handwriting53-regular.ttf */; };
 		52E2468D16B158C6006E61AC /* rip.png in Resources */ = {isa = PBXBuildFile; fileRef = 52E2468B16B158C6006E61AC /* rip.png */; };
@@ -255,6 +257,8 @@
 		52D904B21712F7C700963880 /* UIDevice-Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Additions.h"; sourceTree = "<group>"; };
 		52D904B31712F7C700963880 /* UIDevice-Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Additions.m"; sourceTree = "<group>"; };
 		52D904B51712F87D00963880 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		52E0F8E917A7C464002D6DBF /* toolbar-clear3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-clear3.png"; sourceTree = "<group>"; };
+		52E0F8EA17A7C464002D6DBF /* toolbar-clear3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-clear3@2x.png"; sourceTree = "<group>"; };
 		52E2465616B125A1006E61AC /* UIFont+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Additions.h"; sourceTree = "<group>"; };
 		52E2465716B125A1006E61AC /* UIFont+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Additions.m"; sourceTree = "<group>"; };
 		52E2466B16B12D52006E61AC /* handwriting53-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "handwriting53-regular.ttf"; sourceTree = "<group>"; };
@@ -486,6 +490,8 @@
 		52A10850161F0C86006FCACD /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				52E0F8E917A7C464002D6DBF /* toolbar-clear3.png */,
+				52E0F8EA17A7C464002D6DBF /* toolbar-clear3@2x.png */,
 				527AADFD179EBCE700EA8EEB /* nav-bar-clear3-landscape.png */,
 				527AADFE179EBCE700EA8EEB /* nav-bar-clear3-landscape@2x.png */,
 				527AADF9179EB1E800EA8EEB /* nav-bar-clear3.png */,
@@ -736,6 +742,8 @@
 				527AADFC179EB1E800EA8EEB /* nav-bar-clear3@2x.png in Resources */,
 				527AADFF179EBCE700EA8EEB /* nav-bar-clear3-landscape.png in Resources */,
 				527AAE00179EBCE700EA8EEB /* nav-bar-clear3-landscape@2x.png in Resources */,
+				52E0F8EB17A7C464002D6DBF /* toolbar-clear3.png in Resources */,
+				52E0F8EC17A7C464002D6DBF /* toolbar-clear3@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,6 +33,8 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 @property (nonatomic, strong) NSIndexPath *indexPathOfSelectedTextField;
 @property (nonatomic, strong) NSIndexPath *indexPathOfCellShowingLeftSide;
 
+@property (nonatomic, assign) BOOL shouldShowAddPlayerCell;
+
 - (void)prepareUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 @end
@@ -49,7 +51,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         if (self.tableView.hidden == NO) {
             [self.tableView reloadData];
             if (self.playersArray.count > 0) {
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
             }
         } else {
             // remove old vertical columns
@@ -113,7 +115,13 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     [self.view addSubview:self.scrollView];
     [self.scrollView setHidden:YES];
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@" + " target:self action:@selector(addPlayerButtonClicked:)];
+    
+    self.toolbarItems  = @[[UIBarButtonItem simpleBarButtonItemWithTitle:@"Options" target:self action:@selector(settingsButtonClicked:)],
+                           [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                           [UIBarButtonItem simpleBarButtonItemWithTitle:@"Clear all" target:self action:@selector(clearAllButtonClicked:)],
+                           [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                           [UIBarButtonItem simpleBarButtonItemWithTitle:@"Share" target:self action:@selector(shareButtonClicked:)]];
     
     self.indexPathOfSelectedTextField = nil;
     
@@ -121,6 +129,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     self.tableView.rowHeight = 70.0;
     
     self.playersSortingType = self.game.sortOrder.intValue;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -131,7 +140,11 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     [self loadDataAndUpdateUI:YES];
     
     if (self.playersArray.count > 0) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+    
+    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+        [self.navigationController setToolbarHidden:NO animated:YES];
     }
 }
 
@@ -146,9 +159,11 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
         self.tableView.hidden = YES;
         self.scrollView.hidden = NO;
+        self.navigationController.toolbarHidden = YES;
     } else {
         self.tableView.hidden = NO;
         self.scrollView.hidden = YES;
+        self.navigationController.toolbarHidden = NO;
     }
 }
 
@@ -169,7 +184,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (section == 0) ? [self.playersArray count] : 1;
+    return (section == 0) ? (self.shouldShowAddPlayerCell ? 1 : 0) : [self.playersArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -178,7 +193,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     
     UITableViewCell *cell = nil;
     
-    if (indexPath.section == 0) {
+    if (indexPath.section == 1) {
         AJPlayerTableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:playerCellIdentifier];
         if (!aCell) {
             aCell = [[AJPlayerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:playerCellIdentifier];
@@ -201,7 +216,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
             aCell = [[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:newPlayerCellIdentifier];
             aCell.accessoryType = UITableViewCellAccessoryNone;
             aCell.selectionStyle = UITableViewCellSelectionStyleGray;
-            aCell.textField.placeholder = @"Tap to add New Player ...";
+            aCell.textField.placeholder = @"Add New Player Name ...";
             aCell.textField.text = @"";
             aCell.textField.delegate = self;
             aCell.textField.font = [UIFont LDBrushFontWithSize:43.0];
@@ -223,7 +238,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     
     if (self.tableView.editing) return;
     
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
         [((AJNewItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).textField becomeFirstResponder];
     } else {        
         AJScoresTableViewController *scoresViewController = [[AJScoresTableViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -233,7 +248,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
+    if (section == 1) {
         AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
         headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
@@ -285,7 +300,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return (section == 0) ? kHeaderViewHeight : 0.0;
+    return (section == 1) ? kHeaderViewHeight : 0.0;
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -296,16 +311,16 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     self.indexPathOfSelectedTextField = nil;
     
     for (int cellIndex = 0; cellIndex < [self.game.players count]; cellIndex++) {
-        AJPlayerTableViewCell *cell = (AJPlayerTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:0]];
+        AJPlayerTableViewCell *cell = (AJPlayerTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:1]];
         if (cell.scoreTextField == textField) {
-            self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:0];
+            self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:1];
             break;
         }
     }
     
-    AJNewItemTableViewCell *cell = (AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+    AJNewItemTableViewCell *cell = (AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     if (cell.textField == textField) {
-        self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:0 inSection:1];
+        self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:0 inSection:0];
     }
     
     return !self.tableView.editing;
@@ -313,6 +328,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    self.shouldShowAddPlayerCell = NO;
     
     NSString *text = textField.text;
     if (![NSString isNilOrEmpty:text]) {
@@ -320,8 +336,10 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
         [textField setText:nil];
         
         [self loadDataAndUpdateUI:YES];
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]
                               atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    } else {
+        [self.tableView reloadData];
     }
     
     return YES;
@@ -336,7 +354,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 }
 
 - (IBAction)doneButtonClicked:(id)sender {
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 - (IBAction)playerButtonClicked:(id)sender {
@@ -363,6 +381,24 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     [[AJScoresManager sharedInstance] saveContext];
     
     [self loadDataAndUpdateUI:YES];
+}
+
+- (IBAction)clearAllButtonClicked:(id)sender {
+    NSLog(@"clear all button clicked");
+}
+
+- (IBAction)shareButtonClicked:(id)sender {
+    NSLog(@"share button clicked");
+}
+
+- (IBAction)addPlayerButtonClicked:(id)sender {
+    self.shouldShowAddPlayerCell = YES;
+    
+    [self.tableView reloadData];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+//    
+     [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]).textField becomeFirstResponder];
 }
 
 #pragma mark - AJSettingsViewControllerDelegate methods
