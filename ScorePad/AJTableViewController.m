@@ -62,12 +62,15 @@
     [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+     [self removeKeyboardNotifications];
+}
+
 - (void)dealloc {
     [self.tableView setDelegate:nil];
     [self.tableView setDataSource:nil];
-    
-    [self removeKeyboardNotifications];
-    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

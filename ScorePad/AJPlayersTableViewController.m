@@ -238,9 +238,12 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     
     if (self.tableView.editing) return;
     
-    if (indexPath.section == 0) {
-        [((AJNewItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).textField becomeFirstResponder];
-    } else {        
+    if (indexPath.section == 1) {
+        if (self.shouldShowAddPlayerCell) {
+            [((AJNewItemTableViewCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField resignFirstResponder];
+            self.shouldShowAddPlayerCell = NO;
+        }
+        
         AJScoresTableViewController *scoresViewController = [[AJScoresTableViewController alloc] initWithStyle:UITableViewStylePlain];
         scoresViewController.player = [self.playersArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:scoresViewController animated:YES];
