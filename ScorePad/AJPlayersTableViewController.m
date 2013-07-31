@@ -20,7 +20,7 @@
 #import "UIImage+Additions.h"
 
 
-#define CLEAR_ALL_PLAYER_SCORES_ALERT_TAG   (0)
+#define CLEAR_ALL_PLAYERS_ALERT_TAG   (0)
 #define DELETE_PLAYER_ALERT_TAG             (1)
 
 static CGFloat kHeaderViewHeight = 35.0;
@@ -391,12 +391,11 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 }
 
 - (IBAction)clearAllButtonClicked:(id)sender {
-
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Are you sure?"
-                                                        message:@"The scores for all players in this game will be deleted."
+                                                        message:@"All players in this game will be deleted."
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
-    alertView.tag = CLEAR_ALL_PLAYER_SCORES_ALERT_TAG;
+    alertView.tag = CLEAR_ALL_PLAYERS_ALERT_TAG;
     [alertView show];
 }
 
@@ -530,8 +529,8 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex != alertView.cancelButtonIndex) {
-        if (alertView.tag == CLEAR_ALL_PLAYER_SCORES_ALERT_TAG) {
-            [[AJScoresManager sharedInstance] deleteScoresForAllPlayersInGame:self.game];
+        if (alertView.tag == CLEAR_ALL_PLAYERS_ALERT_TAG) {
+            [[AJScoresManager sharedInstance] deleteAllPlayersForGame:self.game];
             [self loadDataAndUpdateUI:YES];
         } else { // User clicked "delete"
             AJPlayerTableViewCell *cell = (AJPlayerTableViewCell *)[(AJAlertView *)alertView userInfo][@"cell"];
