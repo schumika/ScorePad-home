@@ -42,6 +42,8 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    self.textField.frame = CGRectInset(self.contentView.bounds, -5.0, -5.0);
+    
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
     self.underlinedView.frame = CGRectMake(0.0, 0.0, cellWidth, cellHeight);
     CGFloat tfY = ceil((cellHeight - 31.0) / 2.0);

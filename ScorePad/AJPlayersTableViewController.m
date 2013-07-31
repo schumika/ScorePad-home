@@ -20,7 +20,8 @@
 #import "UIImage+Additions.h"
 
 
-#define CLEAR_ALL_PLAYER_SCORES_ALERT_TAG (0)
+#define CLEAR_ALL_PLAYER_SCORES_ALERT_TAG   (0)
+#define DELETE_PLAYER_ALERT_TAG             (1)
 
 static CGFloat kHeaderViewHeight = 35.0;
 static CGFloat kLandscapeMinColumnWidth = 94.0;
@@ -521,6 +522,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Delete", nil];
     alertView.userInfo = @{@"cell" : cell};
+    alertView.tag = DELETE_PLAYER_ALERT_TAG;
     [alertView show];
 }
 
