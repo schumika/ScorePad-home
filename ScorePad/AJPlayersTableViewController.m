@@ -406,10 +406,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 - (IBAction)addPlayerButtonClicked:(id)sender {
     self.shouldShowAddPlayerCell = YES;
     
-    [self.tableView reloadData];
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
-//    
+    [self.tableView reloadData];    
      [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]).textField becomeFirstResponder];
 }
 

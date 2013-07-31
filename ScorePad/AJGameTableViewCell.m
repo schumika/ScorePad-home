@@ -37,7 +37,7 @@
     self.nameLabel.textColor = [UIColor brownColor];
     //self.nameLabel.font = [UIFont fontWithName:@"Zapfino" size:20.0];
     //self.nameLabel.font = [UIFont handwritingBoldFontWithSize:40.0];
-    self.nameLabel.font = [UIFont DKCrayonFontWithSize:40.0];
+    self.nameLabel.font = [UIFont LDBrushFontWithSize:55.0];
     //self.nameLabel.font = [UIFont chalkdusterFontWithSize:25.0];
     self.nameLabel.adjustsFontSizeToFitWidth = YES;
     self.nameLabel.minimumFontSize = 20.0;

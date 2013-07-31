@@ -27,6 +27,8 @@
 
 @property (nonatomic, strong) NSArray *gamesArray;
 
+@property (nonatomic, assign) BOOL shouldShowAddGameCell;
+
 - (void)loadDataAndUpdateUI:(BOOL)updateUI;
 - (void)updateRowIdsForGames;
 - (void)deleteGameFromCellWithIndexPath:(NSIndexPath*)indexPath;
@@ -45,8 +47,8 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = 60.0;
     
-    self.navigationItem.rightBarButtonItem = self.editBarButton;
-    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItem = self.editBarButton;
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@" + " target:self action:@selector(plusButtonClicked:)];;
     
     self.titleViewText = @"ScorePad";
 }
@@ -74,19 +76,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfCells = 0;
-    switch (section) {
-        case 0:
-            numberOfCells = [self.gamesArray count];
-            break;
-        case 1:
-            numberOfCells = 1;
-            break;
-        default:
-            numberOfCells = 0;
-            break;
-    }
-    return numberOfCells;
+    return (section == 0) ? (self.shouldShowAddGameCell ? 1 : 0) : [self.gamesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -95,7 +85,7 @@
     
     UITableViewCell *aCell = nil;
     
-    if (indexPath.section == 0) {
+    if (indexPath.section == 1) {
         AJGameTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:gameCellIdentifier];
         
         if (cell == nil) {
@@ -113,10 +103,10 @@
         if (cell == nil) {
             cell = [[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:newGameCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.textField.placeholder = @"Tap to Add new game ...";
+            cell.textField.placeholder = @"Add new game ...";
             cell.textField.text = @"";
             cell.textField.delegate = self;
-            cell.textField.font = [UIFont DKCrayonFontWithSize:30.0];
+            cell.textField.font = [UIFont LDBrushFontWithSize:43.0];
         }
         aCell = cell;
     }
@@ -127,7 +117,7 @@
 
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (indexPath.section == 0);
+    return (indexPath.section == 1);
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
@@ -142,7 +132,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (indexPath.section == 0);
+    return (indexPath.section == 1);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -157,48 +147,48 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (self.tableView.editing) return;
-    
-    if (indexPath.section == 1) {
-        [((AJNewItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).textField becomeFirstResponder];
-    } else {        
-        AJPlayersTableViewController *playersViewController = [[AJPlayersTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        playersViewController.game = (AJGame *)[self.gamesArray objectAtIndex:indexPath.row];
-        [self.navigationController pushViewController:playersViewController animated:YES];
-    }
+           
+    AJPlayersTableViewController *playersViewController = [[AJPlayersTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    playersViewController.game = (AJGame *)[self.gamesArray objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:playersViewController animated:YES];
 }
 
 #pragma mark - Buttons Actions
 
 - (IBAction)editButtonClicked:(id)sender {
     [self.tableView setEditing:YES animated:YES];
-    self.navigationItem.rightBarButtonItem = self.doneBarButton;
+    self.navigationItem.leftBarButtonItem = self.doneBarButton;
 }
 
 - (IBAction)doneButtonClicked:(id)sender {
     [self.tableView setEditing:NO animated:YES];
-    self.navigationItem.rightBarButtonItem = self.editBarButton;
+    self.navigationItem.leftBarButtonItem = self.editBarButton;
+}
+
+- (IBAction)plusButtonClicked:(id)sender {
+    self.shouldShowAddGameCell = YES;
+    
+    [self.tableView reloadData];
+    [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]).textField becomeFirstResponder];
 }
 
 #pragma mark - UITextFieldDelegate methods
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    return !self.tableView.editing;
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    self.shouldShowAddGameCell = NO;
     
     NSString *text = textField.text;
     if (![NSString isNilOrEmpty:text]) {
-        int maxNo = [self.tableView numberOfRowsInSection:0];
+        int maxNo = [self.tableView numberOfRowsInSection:1];
         [[AJScoresManager sharedInstance] addGameWithName:text andRowId:maxNo+1];
         [textField setText:nil];
 
         [self loadDataAndUpdateUI:YES];
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]
                               atScrollPosition:UITableViewScrollPositionTop animated:NO];
     } else {
-         [self loadDataAndUpdateUI:YES];
+         [self.tableView reloadData];
     }
     
     return YES;

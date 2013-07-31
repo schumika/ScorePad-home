@@ -27,7 +27,7 @@
         
         self.textField = [[UITextField alloc] initWithFrame:CGRectZero];
         self.textField.borderStyle = UITextBorderStyleNone;
-        self.textField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.textField.backgroundColor = [UIColor clearColor];
         self.textField.font = [UIFont fontWithName:@"Thonburi-Bold" size:30.0];
         self.textField.textColor = [UIColor darkGrayColor];
@@ -44,7 +44,6 @@
     
     CGRect textfieldFrame = self.contentView.bounds;
     textfieldFrame.origin.y = -10.0;
-    
     self.textField.frame = textfieldFrame;
     
     CGFloat cellHeight = self.contentView.bounds.size.height, cellWidth = self.contentView.bounds.size.width;
