@@ -19,6 +19,9 @@
 #import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
 
+
+#define CLEAR_ALL_PLAYER_SCORES_ALERT_TAG (0)
+
 static CGFloat kHeaderViewHeight = 35.0;
 static CGFloat kLandscapeMinColumnWidth = 94.0;
 
@@ -387,7 +390,13 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 }
 
 - (IBAction)clearAllButtonClicked:(id)sender {
-    NSLog(@"clear all button clicked");
+
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Are you sure?"
+                                                        message:@"The scores for all players in this game will be deleted."
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+    alertView.tag = CLEAR_ALL_PLAYER_SCORES_ALERT_TAG;
+    [alertView show];
 }
 
 - (IBAction)shareButtonClicked:(id)sender {
@@ -518,18 +527,24 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
 #pragma mark - UIAlertViewDelegate methods
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != alertView.cancelButtonIndex) { // User clicked "delete"
-        AJPlayerTableViewCell *cell = (AJPlayerTableViewCell *)[(AJAlertView *)alertView userInfo][@"cell"];
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        
-        [self.tableView beginUpdates];
-        [[AJScoresManager sharedInstance] deletePlayer:self.playersArray[indexPath.row]];
-        [self loadDataAndUpdateUI:NO];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView endUpdates];
-        
-        [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+    if (buttonIndex != alertView.cancelButtonIndex) {
+        if (alertView.tag == CLEAR_ALL_PLAYER_SCORES_ALERT_TAG) {
+            [[AJScoresManager sharedInstance] deleteScoresForAllPlayersInGame:self.game];
+            [self loadDataAndUpdateUI:YES];
+        } else { // User clicked "delete"
+            AJPlayerTableViewCell *cell = (AJPlayerTableViewCell *)[(AJAlertView *)alertView userInfo][@"cell"];
+            
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            
+            [self.tableView beginUpdates];
+            [[AJScoresManager sharedInstance] deletePlayer:self.playersArray[indexPath.row]];
+            [self loadDataAndUpdateUI:NO];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
+            
+            [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+        }
     }
 }
+
 @end
