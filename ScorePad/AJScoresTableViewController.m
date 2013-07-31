@@ -25,6 +25,7 @@ static CGFloat kFooterViewHeight = 40.0;
 }
 
 @property (nonatomic, assign) BOOL leftScoreViewIsDisplayed;
+@property (nonatomic, assign) BOOL shouldShowAddScoreCell;
 @property (nonatomic, strong) NSIndexPath *indexPathOfSelectedTextField;
 @property (nonatomic, strong) NSIndexPath *indexPathOfCellShowingLeftSide;
 
@@ -61,7 +62,10 @@ static CGFloat kFooterViewHeight = 40.0;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@"Settings" target:self action:@selector(settingsButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@" + " target:self action:@selector(plusButtonClicked:)];
+    self.toolbarItems  = @[[UIBarButtonItem simpleBarButtonItemWithTitle:@"Options" target:self action:@selector(settingsButtonClicked:)],
+                           [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                           [UIBarButtonItem simpleBarButtonItemWithTitle:@"Clear all" target:self action:@selector(clearAllButtonClicked:)]];
     
     self.indexPathOfSelectedTextField = nil;
     
@@ -72,11 +76,10 @@ static CGFloat kFooterViewHeight = 40.0;
     [super viewWillAppear:animated];
     
     [self loadDataAndUpdateUI:YES];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
+    
+    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+        [self.navigationController setToolbarHidden:NO animated:NO];
+    }
 }
 
 #pragma mark - Keyboard notifications
@@ -98,7 +101,7 @@ static CGFloat kFooterViewHeight = 40.0;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (section == 0) ? self.scoresArray.count : 1;
+    return (section == 0) ? (self.shouldShowAddScoreCell ? 1 : 0) : self.scoresArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,21 +111,21 @@ static CGFloat kFooterViewHeight = 40.0;
     
     UITableViewCell *aCell = nil;
     
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
         AJNewItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NewScoreCellIdentifier];
         if (!cell) {
             cell = [[AJNewItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NewScoreCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-            cell.textField.placeholder = @"Tap to add New Score ...";
+            cell.textField.placeholder = @"Add New Score ...";
             cell.textField.text = @"";
             cell.textField.delegate = self;
             cell.textField.font = [UIFont LDBrushFontWithSize:43.0];
         }
         
         aCell = cell;
-    } else if (indexPath.section == 0) {
+    } else if (indexPath.section == 1) {
         AJScoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ScoreCellIdentifier];
         
         if (!cell) {
@@ -147,24 +150,20 @@ static CGFloat kFooterViewHeight = 40.0;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1) {
-        [((AJNewItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).textField becomeFirstResponder];
+    AJScoreTableViewCell *scoreCell = ((AJScoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]);
+    if (self.indexPathOfCellShowingLeftSide == indexPath) {
+        [scoreCell setDisplaysLeftSide:NO];
+        [scoreCell hideLeftView];
     } else {
-        AJScoreTableViewCell *scoreCell = ((AJScoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]);
-        if (self.indexPathOfCellShowingLeftSide == indexPath) {
-            [scoreCell setDisplaysLeftSide:NO];
-            [scoreCell hideLeftView];
-        } else {
-            [scoreCell setDisplaysLeftSide:YES];
-            [UIView animateWithDuration:0.5 animations:^{
-                [scoreCell showLeftView];
-            }];
-        }
+        [scoreCell setDisplaysLeftSide:YES];
+        [UIView animateWithDuration:0.5 animations:^{
+            [scoreCell showLeftView];
+        }];
     }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
+    if (section == 1) {
         AJBrownUnderlinedView *headerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         headerView.backgroundImage = [UIImage imageNamed:@"background.png"];
@@ -218,15 +217,15 @@ static CGFloat kFooterViewHeight = 40.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return (section == 0) ? kHeaderViewHeight : 0.0;
+    return (section == 1) ? kHeaderViewHeight : 0.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return (section == 0) ? kFooterViewHeight : 0.0;
+    return (section == 1) ? kFooterViewHeight : 0.0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 0) {
+    if (section == 1) {
         AJBrownUnderlinedView *footerView = [[AJBrownUnderlinedView alloc] initWithFrame:CGRectZero];
         footerView.backgroundImage = [UIImage imageNamed:@"background.png"];
         footerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kFooterViewHeight);
@@ -246,7 +245,7 @@ static CGFloat kFooterViewHeight = 40.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (indexPath.section == 0) ? 35.0 : 60.0;
+    return (indexPath.section == 1) ? 35.0 : 60.0;
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -257,23 +256,24 @@ static CGFloat kFooterViewHeight = 40.0;
     self.indexPathOfSelectedTextField = nil;
     
     for (int cellIndex = 0; cellIndex < [self.player.scores count]; cellIndex++) {
-        AJScoreTableViewCell *cell = (AJScoreTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:0]];
+        AJScoreTableViewCell *cell = (AJScoreTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:1]];
         if (cell.scoreTextField == textField) {
-            self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:0];
+            self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:1];
             //break;
             return !self.tableView.editing;
         }
     }
     
-    AJNewItemTableViewCell *cell = (AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+    AJNewItemTableViewCell *cell = (AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     if (cell.textField == textField) {
-        self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:0 inSection:1];
+        self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:0 inSection:0];
     }
     
     return !self.tableView.editing;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    self.shouldShowAddScoreCell = NO;
     [textField resignFirstResponder];
     
     NSString *text = textField.text;
@@ -284,6 +284,8 @@ static CGFloat kFooterViewHeight = 40.0;
         [self loadDataAndUpdateUI:YES];
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]
                               atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    } else {
+        [self.tableView reloadData];
     }
     
     return YES;
@@ -324,6 +326,18 @@ static CGFloat kFooterViewHeight = 40.0;
    self.player.sortOrder = @(self.scoresSortingType);
    [[AJScoresManager sharedInstance] saveContext];
     
+    [self loadDataAndUpdateUI:YES];
+}
+
+- (IBAction)plusButtonClicked:(id)sender {
+    self.shouldShowAddScoreCell = YES;
+    
+    [self.tableView reloadData];
+    [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]).textField becomeFirstResponder];
+}
+
+- (IBAction)clearAllButtonClicked:(id)sender {
+    [[AJScoresManager sharedInstance] deleteAllScoresForPlayer:self.player];
     [self loadDataAndUpdateUI:YES];
 }
 
