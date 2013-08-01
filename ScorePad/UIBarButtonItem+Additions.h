@@ -12,6 +12,7 @@
 
 + (UIBarButtonItem *)simpleBarButtonItemWithTitle:(NSString *)title target:(id)target action:(SEL)action;
 + (UIBarButtonItem *)simpleBackButtonItemWithTarget:(id)target action:(SEL)action;
++ (UIBarButtonItem *)simpleBarButtonItemWithImage:(UIImage *)image target:(id)target action:(SEL)action;
 
 + (UIBarButtonItem *)clearBarButtonItemWithTitle:(NSString *)title target:(id)target action:(SEL)action;
 + (UIBarButtonItem *)backButtonItemWithTarget:(id)target action:(SEL)action;

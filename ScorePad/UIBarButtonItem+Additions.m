@@ -82,6 +82,20 @@
     return barButtonItem;
 }
 
++ (UIBarButtonItem *)simpleBarButtonItemWithImage:(UIImage *)image target:(id)target action:(SEL)action {
+    
+    UIBarButtonItem *barButtonItem = nil;
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:image forState:UIControlStateNormal];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    button.frame = (CGRect){CGPointZero, image.size};
+    
+    barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    return barButtonItem;
+}
+
 + (UIBarButtonItem *)simpleBackButtonItemWithTarget:(id)target action:(SEL)action {
     
     UIBarButtonItem *barButtonItem = nil;

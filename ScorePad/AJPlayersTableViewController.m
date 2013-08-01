@@ -119,7 +119,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     [self.view addSubview:self.scrollView];
     [self.scrollView setHidden:YES];
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@" + " target:self action:@selector(addPlayerButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithImage:[UIImage imageNamed:@"plus.png"] target:self action:@selector(addPlayerButtonClicked:)];
     
     self.toolbarItems  = @[[UIBarButtonItem simpleBarButtonItemWithTitle:@"Options" target:self action:@selector(settingsButtonClicked:)],
                            [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],

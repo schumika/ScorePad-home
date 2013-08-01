@@ -48,7 +48,7 @@
     self.tableView.rowHeight = 60.0;
     
     self.navigationItem.leftBarButtonItem = self.editBarButton;
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithTitle:@" + " target:self action:@selector(plusButtonClicked:)];;
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithImage:[UIImage imageNamed:@"plus.png"] target:self action:@selector(plusButtonClicked:)];
     
     self.titleViewText = @"ScorePad";
 }
