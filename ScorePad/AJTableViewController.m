@@ -153,9 +153,9 @@
 
 - (void)updateToolbarWithOrientation:(UIInterfaceOrientation)interfaceOrientation {
     if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-        [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-clear3.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+        [self.navigationController.toolbar setBackgroundImage:[[UIImage imageNamed:@"toolbar-clear3.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 20.0, 2.0, 20.0)] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     } else {
-        [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar-clear3-landscape.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+        [self.navigationController.toolbar setBackgroundImage:[[UIImage imageNamed:@"toolbar-clear3-landscape.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0, 20.0, 2.0, 20.0)] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     }
 }
 
