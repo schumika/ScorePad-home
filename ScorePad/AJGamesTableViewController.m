@@ -169,7 +169,7 @@
     self.shouldShowAddGameCell = YES;
     
     [self.tableView reloadData];
-    [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]).textField becomeFirstResponder];
+    [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField becomeFirstResponder];
 }
 
 #pragma mark - UITextFieldDelegate methods
