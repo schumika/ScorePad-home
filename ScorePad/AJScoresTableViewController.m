@@ -333,7 +333,7 @@ static CGFloat kFooterViewHeight = 40.0;
     self.shouldShowAddScoreCell = YES;
     
     [self.tableView reloadData];
-    [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]).textField becomeFirstResponder];
+    [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField becomeFirstResponder];
 }
 
 - (IBAction)clearAllButtonClicked:(id)sender {

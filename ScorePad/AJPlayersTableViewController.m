@@ -407,7 +407,7 @@ static CGFloat kLandscapeMinColumnWidth = 94.0;
     self.shouldShowAddPlayerCell = YES;
     
     [self.tableView reloadData];    
-     [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]).textField becomeFirstResponder];
+    [((AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField becomeFirstResponder];
 }
 
 #pragma mark - AJSettingsViewControllerDelegate methods
