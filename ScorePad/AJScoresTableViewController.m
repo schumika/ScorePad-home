@@ -65,7 +65,9 @@ static CGFloat kFooterViewHeight = 40.0;
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithImage:[UIImage imageNamed:@"plus.png"] target:self action:@selector(plusButtonClicked:)];
     self.toolbarItems  = @[[UIBarButtonItem simpleBarButtonItemWithTitle:@"Options" target:self action:@selector(settingsButtonClicked:)],
                            [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-                           [UIBarButtonItem simpleBarButtonItemWithTitle:@"Clear all" target:self action:@selector(clearAllButtonClicked:)]];
+                           [UIBarButtonItem simpleBarButtonItemWithTitle:@"Clear all" target:self action:@selector(clearAllButtonClicked:)],
+                           [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                           [UIBarButtonItem simpleBarButtonItemWithTitle:@"Edit" target:self action:@selector(editButtonClicked:)]];
     
     self.indexPathOfSelectedTextField = nil;
     
@@ -248,6 +250,32 @@ static CGFloat kFooterViewHeight = 40.0;
     return (indexPath.section == 1) ? 35.0 : 60.0;
 }
 
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithArray:self.scoresArray];
+    AJScore *scoreToMove = [mutableArray objectAtIndex:fromIndexPath.row];
+    [mutableArray removeObjectAtIndex:fromIndexPath.row];
+    [mutableArray insertObject:scoreToMove atIndex:toIndexPath.row];
+    [self setScoresArray:mutableArray];
+    
+    [self updateRoundsFromRowsIndex];
+    [self loadDataAndUpdateUI:YES];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return (indexPath.section == 1);
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return (indexPath.section == 1);
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView.editing == UITableViewCellEditingStyleDelete) {
+        [self deleteScoreAtRow:indexPath.row];
+    }
+}
+
+
 #pragma mark - UITextFieldDelegate methods
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -255,21 +283,20 @@ static CGFloat kFooterViewHeight = 40.0;
     
     self.indexPathOfSelectedTextField = nil;
     
-    for (int cellIndex = 0; cellIndex < [self.player.scores count]; cellIndex++) {
-        AJScoreTableViewCell *cell = (AJScoreTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:1]];
-        if (cell.scoreTextField == textField) {
-            self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:1];
-            //break;
-            return !self.tableView.editing;
-        }
-    }
-    
     AJNewItemTableViewCell *cell = (AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     if (cell.textField == textField) {
         self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:0 inSection:0];
+    } else {
+        for (int cellIndex = 0; cellIndex < [self.player.scores count]; cellIndex++) {
+            AJScoreTableViewCell *cell = (AJScoreTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:1]];
+            if (cell.scoreTextField == textField) {
+                self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:1];
+                return YES;
+            }
+        }
     }
     
-    return !self.tableView.editing;
+    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -296,14 +323,16 @@ static CGFloat kFooterViewHeight = 40.0;
 - (void)updateRoundsForScores {
     NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
     int rounds = self.scoresArray.count;
-    for (AJScore *score in self.scoresArray) {
+    
+    [self.scoresArray enumerateObjectsUsingBlock:^(AJScore *score, NSUInteger idx, BOOL *stop) {
         if (self.scoresSortingType == AJScoresSortingByRoundDESC) {
-            score.round = [NSNumber numberWithInt:(rounds - [self.scoresArray indexOfObject:score])];
+            score.round = @(rounds - idx);
         } else {
-            score.round = [NSNumber numberWithInt:([self.scoresArray indexOfObject:score]+1)];
+            score.round = @(idx + 1);
         }
         [mutableArray addObject:score];
-    }
+    }];
+    
     [self setScoresArray:mutableArray];
     
     [[AJScoresManager sharedInstance] saveContext];
@@ -341,6 +370,21 @@ static CGFloat kFooterViewHeight = 40.0;
     [self loadDataAndUpdateUI:YES];
 }
 
+- (IBAction)editButtonClicked:(id)sender {
+    if (self.tableView.isEditing) {
+        self.toolbarItems  = @[[UIBarButtonItem simpleBarButtonItemWithTitle:@"Options" target:self action:@selector(settingsButtonClicked:)],
+                               [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                               [UIBarButtonItem simpleBarButtonItemWithTitle:@"Clear all" target:self action:@selector(clearAllButtonClicked:)],
+                               [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                               [UIBarButtonItem simpleBarButtonItemWithTitle:@"Edit" target:self action:@selector(editButtonClicked:)]];
+        [self.tableView setEditing:NO animated:YES];
+    } else {
+        self.toolbarItems  = @[[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                               [UIBarButtonItem simpleBarButtonItemWithTitle:@"Done" target:self action:@selector(editButtonClicked:)]];
+        [self.tableView setEditing:YES animated:YES];
+    }
+}
+
 #pragma mark - AJSettingsViewControllerDelegate methods
 
 - (void)settingsViewController:(AJSettingsViewController *)settingsViewController didFinishEditingItemProperties:(NSDictionary *)itemProperties {
@@ -370,16 +414,7 @@ static CGFloat kFooterViewHeight = 40.0;
     self.indexPathOfSelectedTextField = nil;
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    
-    [self.tableView beginUpdates];
-    [[AJScoresManager sharedInstance] deleteScore:[self.scoresArray objectAtIndex:indexPath.row]];
-    [self loadDataAndUpdateUI:NO];
-    [self.player updateRoundsForScores];
-    self.scoresArray = [self.player orderedScoresArray];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
-
-    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+    [self deleteScoreAtRow:indexPath.row];
 }
 
 #pragma mark - AJScoreTableViewCellDelegate methods
@@ -420,5 +455,32 @@ static CGFloat kFooterViewHeight = 40.0;
     return !self.leftScoreViewIsDisplayed;
 }
 
+#pragma mark - Helper methods
+
+- (void)deleteScoreAtRow:(int)row {
+    [self.tableView beginUpdates];
+    [[AJScoresManager sharedInstance] deleteScore:[self.scoresArray objectAtIndex:row]];
+    [self loadDataAndUpdateUI:NO];
+    [self.player updateRoundsForScores];
+    self.scoresArray = [self.player orderedScoresArray];
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+    
+    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+}
+
+- (void)updateRoundsFromRowsIndex {
+    int rounds = self.scoresArray.count;
+    
+    [self.scoresArray enumerateObjectsUsingBlock:^(AJScore *score, NSUInteger idx, BOOL *stop) {
+        if (self.player.sortOrder.intValue == AJScoresSortingByRoundDESC) {
+            score.round = @(rounds - idx);
+        } else {
+            score.round = @(idx + 1);
+        }
+    }];
+    
+    [[AJScoresManager sharedInstance] saveContext];
+}
 
 @end
