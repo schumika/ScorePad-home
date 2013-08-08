@@ -11,6 +11,7 @@
 #import "AJDefines.h"
 
 #import "UIFont+Additions.h"
+#import "UIColor+Additions.h"
 #import "UIImage+Additions.h"
 #import "NSString+Additions.h"
 
@@ -41,12 +42,13 @@
     self.roundLabel.font = [UIFont LDBrushFontWithSize:30.0];
     self.roundLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
     self.roundLabel.backgroundColor = [UIColor clearColor];
+    self.roundLabel.textColor = [UIColor grayColor];
     self.roundLabel.textAlignment = UITextAlignmentCenter;
     [self.backgroundView addSubview:self.roundLabel];
     
     self.scoreLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.scoreLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.scoreLabel.font = [UIFont LDBrushFontWithSize:40.0];
+    self.scoreLabel.font = [UIFont LDBrushFontWithSize:44.0];
     self.scoreLabel.backgroundColor = [UIColor clearColor];
     self.scoreLabel.textAlignment = UITextAlignmentCenter;
     [self.backgroundView addSubview:self.scoreLabel];
