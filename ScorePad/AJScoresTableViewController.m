@@ -18,11 +18,7 @@
 static CGFloat kHeaderViewHeight = 40.0;
 static CGFloat kFooterViewHeight = 40.0;
 
-@interface AJScoresTableViewController () {
-    BOOL _leftScoreViewIsDisplayed;
-    NSIndexPath *_indexPathOfSelectedTextField;
-    NSIndexPath *_indexPathOfCellShowingLeftSide;
-}
+@interface AJScoresTableViewController ()
 
 @property (nonatomic, assign) BOOL leftScoreViewIsDisplayed;
 @property (nonatomic, assign) BOOL shouldShowAddScoreCell;
@@ -35,14 +31,6 @@ static CGFloat kFooterViewHeight = 40.0;
 
 
 @implementation AJScoresTableViewController
-
-@synthesize player = _player;
-@synthesize scoresArray = _scoresArray;
-
-@synthesize indexPathOfSelectedTextField = _indexPathOfSelectedTextField;
-@synthesize indexPathOfCellShowingLeftSide = _indexPathOfCellShowingLeftSide;
-
-@synthesize scoresSortingType = _scoresSortingType;
 
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
@@ -65,7 +53,9 @@ static CGFloat kFooterViewHeight = 40.0;
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem simpleBarButtonItemWithImage:[UIImage imageNamed:@"plus.png"] target:self action:@selector(plusButtonClicked:)];
     self.toolbarItems  = @[[UIBarButtonItem simpleBarButtonItemWithTitle:@"Options" target:self action:@selector(settingsButtonClicked:)],
                            [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-                           [UIBarButtonItem simpleBarButtonItemWithTitle:@"Clear all" target:self action:@selector(clearAllButtonClicked:)]];
+                           [UIBarButtonItem simpleBarButtonItemWithTitle:@"Clear all" target:self action:@selector(clearAllButtonClicked:)],
+                           [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                           [UIBarButtonItem simpleBarButtonItemWithTitle:@"Edit" target:self action:@selector(editButtonClicked:)]];
     
     self.indexPathOfSelectedTextField = nil;
     
@@ -82,13 +72,34 @@ static CGFloat kFooterViewHeight = 40.0;
     }
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self.tableView reloadData];
+    
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        [self.navigationController setToolbarHidden:NO animated:YES];
+    } else {
+        [self.navigationController setToolbarHidden:YES animated:YES];
+    }
+}
+
 #pragma mark - Keyboard notifications
 
 - (void)keyboardWillShow:(NSNotification *)aNotif {
     [super keyboardWillShow:aNotif];
     
-    if (self.indexPathOfSelectedTextField != nil) {
-        [self.tableView scrollToRowAtIndexPath:self.indexPathOfSelectedTextField atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//    if (self.indexPathOfSelectedTextField != nil) {
+//        [self.tableView scrollToRowAtIndexPath:self.indexPathOfSelectedTextField atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//    }
+    
+    [self.navigationController setToolbarHidden:YES animated:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)aNotif {
+    [super keyboardWillHide:aNotif];
+    
+    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+        [self.navigationController setToolbarHidden:NO animated:YES];
     }
 }
 
@@ -171,30 +182,31 @@ static CGFloat kFooterViewHeight = 40.0;
         headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(tableView.bounds), kHeaderViewHeight);
         
         UIButton *roundButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [roundButton setTitle:@"Round" forState:UIControlStateNormal];
+        BOOL isSortedAsc = self.scoresSortingType == AJScoresSortingByRoundASC;
+        [roundButton setTitle:[NSString stringWithFormat:@"Round%@", isSortedAsc ? [NSString upArrow] : [NSString downArrow]] forState:UIControlStateNormal];
         roundButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
-        [roundButton setTitleColor:[UIColor AJBrownColor] forState:UIControlStateNormal];
-        roundButton.titleLabel.font = [UIFont LDBrushFontWithSize:35.0];
+        [roundButton setTitleColor:[UIColor AJPurpleColor] forState:UIControlStateNormal];
+        roundButton.titleLabel.font = [UIFont LDBrushFontWithSize:40.0];
         roundButton.backgroundColor = [UIColor clearColor];
         [headerView addSubview:roundButton];
         CGSize fitSize = [roundButton.titleLabel sizeThatFits:CGSizeMake(0.0, kHeaderViewHeight)];
         roundButton.frame = CGRectMake(15.0, 3.0, fitSize.width, kHeaderViewHeight);
         [roundButton addTarget:self action:@selector(roundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
-        if (self.scoresSortingType == AJScoresSortingByRoundASC || self.scoresSortingType == AJScoresSortingByRoundDESC) {
-            UILabel *roundArrow = [[UILabel alloc] initWithFrame:CGRectZero];
-            roundArrow.text = self.scoresSortingType == AJScoresSortingByRoundDESC ? [NSString upArrow] : [NSString downArrow];
-            roundArrow.textColor = [UIColor AJBrownColor];
-            roundArrow.font = [UIFont LDBrushFontWithSize:20.0];
-            roundArrow.backgroundColor = [UIColor clearColor];
-            [headerView addSubview:roundArrow];
-            roundArrow.frame = CGRectMake(CGRectGetMaxX(roundButton.frame), 13.0, 20.0, 23.0);
-        }
+//        if (self.scoresSortingType == AJScoresSortingByRoundASC || self.scoresSortingType == AJScoresSortingByRoundDESC) {
+//            UILabel *roundArrow = [[UILabel alloc] initWithFrame:CGRectZero];
+//            roundArrow.text = self.scoresSortingType == AJScoresSortingByRoundDESC ? [NSString upArrow] : [NSString downArrow];
+//            roundArrow.textColor = [UIColor AJPurpleColor];
+//            roundArrow.font = [UIFont LDBrushFontWithSize:20.0];
+//            roundArrow.backgroundColor = [UIColor clearColor];
+//            [headerView addSubview:roundArrow];
+//            roundArrow.frame = CGRectMake(CGRectGetMaxX(roundButton.frame), 13.0, 20.0, 23.0);
+//        }
         
         UILabel *scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(thirdOfTableWidth, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         scoreLabel.text = @"Score";
         scoreLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        scoreLabel.textColor = [UIColor AJBrownColor];
+        scoreLabel.textColor = [UIColor AJPurpleColor];
         scoreLabel.font = [UIFont LDBrushFontWithSize:45.0];
         scoreLabel.backgroundColor = [UIColor clearColor];
         scoreLabel.textAlignment = UITextAlignmentCenter;
@@ -203,7 +215,7 @@ static CGFloat kFooterViewHeight = 40.0;
         UILabel *intemediateLabel = [[UILabel alloc] initWithFrame:CGRectMake(2 * thirdOfTableWidth, 0.0, thirdOfTableWidth, kHeaderViewHeight)];
         intemediateLabel.text = @"Intermediate";
         intemediateLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
-        intemediateLabel.textColor = [UIColor AJBrownColor];
+        intemediateLabel.textColor = [UIColor AJPurpleColor];
         intemediateLabel.font = [UIFont LDBrushFontWithSize:35.0];
         intemediateLabel.backgroundColor = [UIColor clearColor];
         intemediateLabel.textAlignment = UITextAlignmentCenter;
@@ -245,8 +257,34 @@ static CGFloat kFooterViewHeight = 40.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (indexPath.section == 1) ? 35.0 : 60.0;
+    return (indexPath.section == 1) ? 40.0 : 60.0;
 }
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithArray:self.scoresArray];
+    AJScore *scoreToMove = [mutableArray objectAtIndex:fromIndexPath.row];
+    [mutableArray removeObjectAtIndex:fromIndexPath.row];
+    [mutableArray insertObject:scoreToMove atIndex:toIndexPath.row];
+    [self setScoresArray:mutableArray];
+    
+    [self updateRoundsFromRowsIndex];
+    [self loadDataAndUpdateUI:YES];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return (indexPath.section == 1);
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return (indexPath.section == 1);
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView.editing == UITableViewCellEditingStyleDelete) {
+        [self deleteScoreAtRow:indexPath.row];
+    }
+}
+
 
 #pragma mark - UITextFieldDelegate methods
 
@@ -255,21 +293,24 @@ static CGFloat kFooterViewHeight = 40.0;
     
     self.indexPathOfSelectedTextField = nil;
     
-    for (int cellIndex = 0; cellIndex < [self.player.scores count]; cellIndex++) {
-        AJScoreTableViewCell *cell = (AJScoreTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:1]];
-        if (cell.scoreTextField == textField) {
-            self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:1];
-            //break;
-            return !self.tableView.editing;
-        }
-    }
-    
     AJNewItemTableViewCell *cell = (AJNewItemTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     if (cell.textField == textField) {
         self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:0 inSection:0];
+    } else {
+        for (int cellIndex = 0; cellIndex < [self.player.scores count]; cellIndex++) {
+            AJScoreTableViewCell *cell = (AJScoreTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:1]];
+            if (cell.scoreTextField == textField) {
+                self.indexPathOfSelectedTextField = [NSIndexPath indexPathForRow:cellIndex inSection:1];
+                return YES;
+            }
+        }
     }
     
-    return !self.tableView.editing;
+    if (self.indexPathOfSelectedTextField != nil) {
+        [self.tableView scrollToRowAtIndexPath:self.indexPathOfSelectedTextField atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+    
+    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -296,14 +337,16 @@ static CGFloat kFooterViewHeight = 40.0;
 - (void)updateRoundsForScores {
     NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
     int rounds = self.scoresArray.count;
-    for (AJScore *score in self.scoresArray) {
+    
+    [self.scoresArray enumerateObjectsUsingBlock:^(AJScore *score, NSUInteger idx, BOOL *stop) {
         if (self.scoresSortingType == AJScoresSortingByRoundDESC) {
-            score.round = [NSNumber numberWithInt:(rounds - [self.scoresArray indexOfObject:score])];
+            score.round = @(rounds - idx);
         } else {
-            score.round = [NSNumber numberWithInt:([self.scoresArray indexOfObject:score]+1)];
+            score.round = @(idx + 1);
         }
         [mutableArray addObject:score];
-    }
+    }];
+    
     [self setScoresArray:mutableArray];
     
     [[AJScoresManager sharedInstance] saveContext];
@@ -341,6 +384,21 @@ static CGFloat kFooterViewHeight = 40.0;
     [self loadDataAndUpdateUI:YES];
 }
 
+- (IBAction)editButtonClicked:(id)sender {
+    if (self.tableView.isEditing) {
+        self.toolbarItems  = @[[UIBarButtonItem simpleBarButtonItemWithTitle:@"Options" target:self action:@selector(settingsButtonClicked:)],
+                               [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                               [UIBarButtonItem simpleBarButtonItemWithTitle:@"Clear all" target:self action:@selector(clearAllButtonClicked:)],
+                               [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                               [UIBarButtonItem simpleBarButtonItemWithTitle:@"Edit" target:self action:@selector(editButtonClicked:)]];
+        [self.tableView setEditing:NO animated:YES];
+    } else {
+        self.toolbarItems  = @[[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                               [UIBarButtonItem simpleBarButtonItemWithTitle:@"Done" target:self action:@selector(editButtonClicked:)]];
+        [self.tableView setEditing:YES animated:YES];
+    }
+}
+
 #pragma mark - AJSettingsViewControllerDelegate methods
 
 - (void)settingsViewController:(AJSettingsViewController *)settingsViewController didFinishEditingItemProperties:(NSDictionary *)itemProperties {
@@ -370,16 +428,7 @@ static CGFloat kFooterViewHeight = 40.0;
     self.indexPathOfSelectedTextField = nil;
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    
-    [self.tableView beginUpdates];
-    [[AJScoresManager sharedInstance] deleteScore:[self.scoresArray objectAtIndex:indexPath.row]];
-    [self loadDataAndUpdateUI:NO];
-    [self.player updateRoundsForScores];
-    self.scoresArray = [self.player orderedScoresArray];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
-
-    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+    [self deleteScoreAtRow:indexPath.row];
 }
 
 #pragma mark - AJScoreTableViewCellDelegate methods
@@ -420,5 +469,32 @@ static CGFloat kFooterViewHeight = 40.0;
     return !self.leftScoreViewIsDisplayed;
 }
 
+#pragma mark - Helper methods
+
+- (void)deleteScoreAtRow:(int)row {
+    [self.tableView beginUpdates];
+    [[AJScoresManager sharedInstance] deleteScore:[self.scoresArray objectAtIndex:row]];
+    [self loadDataAndUpdateUI:NO];
+    [self.player updateRoundsForScores];
+    self.scoresArray = [self.player orderedScoresArray];
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+    
+    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.3];
+}
+
+- (void)updateRoundsFromRowsIndex {
+    int rounds = self.scoresArray.count;
+    
+    [self.scoresArray enumerateObjectsUsingBlock:^(AJScore *score, NSUInteger idx, BOOL *stop) {
+        if (self.player.sortOrder.intValue == AJScoresSortingByRoundDESC) {
+            score.round = @(rounds - idx);
+        } else {
+            score.round = @(idx + 1);
+        }
+    }];
+    
+    [[AJScoresManager sharedInstance] saveContext];
+}
 
 @end
