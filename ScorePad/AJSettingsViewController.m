@@ -61,12 +61,14 @@ static CGFloat kHeaderViewHeight = 35.0;
     
     self.itemProperties = [NSMutableDictionary dictionaryWithDictionary:itemProperties];
     self.itemType = itemType;
-    self.colorsArray = [[NSArray alloc] initWithObjects:[UIColor blackColor], [UIColor AJBlueColor], [UIColor AJBrownColor],
+    self.colorsArray = @[[UIColor blackColor], [UIColor AJBlueColor], [UIColor AJBrownColor],
                         [UIColor AJGreenColor], [UIColor AJOrangeColor], [UIColor AJPinkColor], [UIColor AJPurpleColor],
-                        [UIColor AJRedColor], [UIColor AJYellowColor], [UIColor whiteColor], nil];
+                        [UIColor AJRedColor], [UIColor AJLightBlueColor], [UIColor AJLightGreenColor], [UIColor AJDarkBlueColor]
+                        /*, [UIColor AJVioletColor], [UIColor AJBrightPinkColor], [UIColor AJBrightOrangeColor]*/];
     
     self.pencilsArray = @[@"pencil_black.png", @"pencil_blue.png", @"pencil_brown.png", @"pencil_green.png", @"pencil_orange.png",
-                          @"pencil_pink.png", @"pencil_purple.png", @"pencil_red.png", @"pencil_yellow.png", @"pencil_white.png"];
+                          @"pencil_pink.png", @"pencil_purple.png", @"pencil_red.png", @"pencil_light_blue.png", @"pencil_light_green.png",
+                          @"pencil_dark_blue.png"/*, @"pencil_violet.png", @"pencil_bright_pink.png", @"pencil_bright_orange.png"*/];
     
     
     return self;
@@ -116,7 +118,8 @@ static CGFloat kHeaderViewHeight = 35.0;
     self.nameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.nameTextField.text = self.itemProperties[kAJNameKey];
     
-    self.colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 40.0, 300.0, 100.0)];
+    self.colorsContainerView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 40.0, self.view.bounds.size.width - 20.0, 100.0)];
+    self.colorsContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.colorsContainerView.backgroundColor = [UIColor clearColor];
     UIImageView *containerFrameImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]];
     containerFrameImageView.frame = self.colorsContainerView.bounds;
@@ -124,10 +127,10 @@ static CGFloat kHeaderViewHeight = 35.0;
     
     CGSize pencilSize = CGSizeMake(40.0, 40.0);
     CGFloat pencilOffset = (self.colorsContainerView.frame.size.width) / (self.pencilsArray.count);
-    CGFloat xOffset = 10.0;
-    CGFloat yOffset = 10.0;
+    __block CGFloat xOffset = 10.0;
+    __block CGFloat yOffset = 10.0;
     
-    for (NSString *pencilImageName in self.pencilsArray) {
+    [self.pencilsArray enumerateObjectsUsingBlock:^(NSString *pencilImageName, NSUInteger pencilIndex, BOOL *stop) {
         UIButton *pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [pencilButton setFrame:CGRectMake(xOffset, yOffset, pencilSize.width, pencilSize.height)];
         
@@ -138,7 +141,7 @@ static CGFloat kHeaderViewHeight = 35.0;
             xOffset += pencilSize.width - 15.0 + pencilOffset;
         }
         
-        [pencilButton setTag:[self.pencilsArray indexOfObject:pencilImageName]];
+        [pencilButton setTag:pencilIndex];
         [pencilButton setImageEdgeInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
         
         UIImage *pencilImage = [UIImage imageNamed:pencilImageName];
@@ -146,7 +149,7 @@ static CGFloat kHeaderViewHeight = 35.0;
         
         [pencilButton addTarget:self action:@selector(pencilButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.colorsContainerView addSubview:pencilButton];
-    }
+    }];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -160,12 +163,13 @@ static CGFloat kHeaderViewHeight = 35.0;
 }
 
 - (void)loadSelectedPencil {
+    NSString *itemColorString = self.itemProperties[kAJColorStringKey];
     for (UIView *pencilButton in self.colorsContainerView.subviews) {
         if ([pencilButton isKindOfClass:[UIButton class]]) {
             int colorIndex = pencilButton.tag;
             
-            UIColor *pencilColor = [self.colorsArray objectAtIndex:colorIndex];
-            if ([self.itemProperties[kAJColorStringKey] isEqualToString:[pencilColor toHexString:YES]]) {
+            NSString *pencilColorString = [self.colorsArray[colorIndex] toHexString:YES];
+            if ([itemColorString isEqualToString:pencilColorString]) {
                 [(UIButton *)pencilButton setBackgroundImage:[[UIImage imageNamed:@"round.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0]
                                                     forState:UIControlStateNormal];
             } else {
@@ -362,7 +366,7 @@ static CGFloat kHeaderViewHeight = 35.0;
 #pragma mark - Buttons Actions
 
 -(IBAction)pencilButtonClicked:(UIButton *)sender {
-    self.itemProperties[kAJColorStringKey] = [(UIColor *)[self.colorsArray objectAtIndex:sender.tag] toHexString:YES];
+    self.itemProperties[kAJColorStringKey] = [self.colorsArray[sender.tag] toHexString:YES];
     
     [self loadSelectedPencil];
 }

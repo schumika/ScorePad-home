@@ -23,5 +23,11 @@
 + (UIColor *)AJPurpleColor;
 + (UIColor *)AJRedColor;
 + (UIColor *)AJYellowColor;
++ (UIColor *)AJLightBlueColor;
++ (UIColor *)AJLightGreenColor;
++ (UIColor *)AJVioletColor;
++ (UIColor *)AJBrightOrangeColor;
++ (UIColor *)AJBrightPinkColor;
++ (UIColor *)AJDarkBlueColor;
 
 @end

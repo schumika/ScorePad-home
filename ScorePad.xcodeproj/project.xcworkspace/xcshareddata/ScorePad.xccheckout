@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C1B0C5A6-EA59-41C9-820E-EDC2B3128255</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ScorePad</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7C08BA32-201E-4992-BE4F-3D2E7D4CA173</key>
+		<string>https://github.com/schumika/ScorePad-home.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ScorePad.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7C08BA32-201E-4992-BE4F-3D2E7D4CA173</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/schumika/ScorePad-home.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7C08BA32-201E-4992-BE4F-3D2E7D4CA173</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7C08BA32-201E-4992-BE4F-3D2E7D4CA173</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ScorePad-master</string>
+		</dict>
+	</array>
+</dict>
+</plist>

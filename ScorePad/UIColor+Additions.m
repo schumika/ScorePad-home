@@ -87,4 +87,28 @@
     return [UIColor colorWithHexString:@"ffff00"];
 }
 
++ (UIColor *)AJLightBlueColor {
+    return [UIColor colorWithHexString:@"2dcbd9"];
+}
+
++ (UIColor *)AJLightGreenColor {
+    return [UIColor colorWithHexString:@"63e017"];
+}
+
++ (UIColor *)AJVioletColor {
+    return [UIColor colorWithHexString:@"9264ad"];
+}
+
++ (UIColor *)AJBrightOrangeColor {
+    return [UIColor colorWithHexString:@"f87b19"];
+}
+
++ (UIColor *)AJBrightPinkColor {
+    return [UIColor colorWithHexString:@"f819af"];
+}
+
++ (UIColor *)AJDarkBlueColor {
+    return [UIColor colorWithHexString:@"1a2e8f"];
+}
+
 @end
