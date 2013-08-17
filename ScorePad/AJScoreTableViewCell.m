@@ -232,6 +232,8 @@
     if ([self.delegate respondsToSelector:@selector(scoreCell:didEndEditingScoreWithNewScoreValue:)]) {
         [self.delegate scoreCell:self didEndEditingScoreWithNewScoreValue:@(newScore)];
     }
+    
+    [self.delegate scoreCellDidHideLeftView:self];
 
 }
 

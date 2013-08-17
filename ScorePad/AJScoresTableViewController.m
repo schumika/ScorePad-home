@@ -32,6 +32,12 @@ static CGFloat kFooterViewHeight = 40.0;
 
 @implementation AJScoresTableViewController
 
+- (void)setLeftScoreViewIsDisplayed:(BOOL)leftScoreViewIsDisplayed {
+    _leftScoreViewIsDisplayed = leftScoreViewIsDisplayed;
+    
+    NSLog(@"setting leftScoreViewIsDisplayed to %@", leftScoreViewIsDisplayed ? @"YES" : @"NO");
+}
+
 
 - (void)loadDataAndUpdateUI:(BOOL)updateUI {
     self.scoresArray = self.player.orderedScoresArray;
@@ -88,9 +94,9 @@ static CGFloat kFooterViewHeight = 40.0;
 - (void)keyboardWillShow:(NSNotification *)aNotif {
     [super keyboardWillShow:aNotif];
     
-//    if (self.indexPathOfSelectedTextField != nil) {
-//        [self.tableView scrollToRowAtIndexPath:self.indexPathOfSelectedTextField atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//    }
+    if (self.indexPathOfSelectedTextField != nil) {
+        [self performSelector:@selector(scrollAtIndexPath:) withObject:self.indexPathOfSelectedTextField afterDelay:0.1];
+    }
     
     [self.navigationController setToolbarHidden:YES animated:YES];
 }
@@ -102,6 +108,7 @@ static CGFloat kFooterViewHeight = 40.0;
         [self.navigationController setToolbarHidden:NO animated:YES];
     }
 }
+
 
 #pragma mark - Table view data source
 
@@ -351,6 +358,11 @@ static CGFloat kFooterViewHeight = 40.0;
     
     [[AJScoresManager sharedInstance] saveContext];
 }
+
+- (void)scrollAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
 
 #pragma mark - Actions
 - (IBAction)settingsButtonClicked:(id)sender {
